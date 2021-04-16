@@ -60,6 +60,6 @@ public class HibernateConfiguration {
     }
 
     private Integer getGroupNumber() {
-        return 999;
+        return 13;
     }
 }
