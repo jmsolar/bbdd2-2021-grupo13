@@ -1,6 +1,6 @@
 package ar.edu.unlp.info.bd2.services;
 import ar.edu.unlp.info.bd2.models.*;
-import ar.edu.unlp.info.bd2.repositories.MLException;
+import ar.edu.unlp.info.bd2.exceptions.MLException;
 
 import java.util.Date;
 import java.util.Optional;
