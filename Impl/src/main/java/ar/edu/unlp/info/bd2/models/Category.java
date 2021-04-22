@@ -1,7 +1,16 @@
 package ar.edu.unlp.info.bd2.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "BD2_CATEGORY")
 public class Category {
+	@GeneratedValue
+	@Column(name = "id_category")
+	@Id
 	public int Id;
+	
+	@Column(name = "category_name")
 	public String name;
 	
 	public int getId() {
@@ -9,7 +18,7 @@ public class Category {
 	}
 
 	public void setId(int id) {
-		Id = id;
+		this.Id = id;
 	}
 
 	public String getName() {
