@@ -2,7 +2,15 @@ package ar.edu.unlp.info.bd2.models;
 
 public class PaymentMethod {
 	public String name;
-
+	public int Id;
+	
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		Id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}

@@ -27,10 +27,19 @@ public class User {
 	public void setDayOfBirth(Date dayOfBirth) {
 		this.dayOfBirth = dayOfBirth;
 	}
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		this.Id = id;
+	}
+	
+	public int Id;
 	public String fullname;
 	public String email;
 	public String password;
 	public Date dayOfBirth;
+	
 	
 	public User (String email, String fullname, String password, Date dayOfBirth) {
 		this.email = email;

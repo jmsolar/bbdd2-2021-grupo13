@@ -16,7 +16,14 @@ public class Provider {
 	public void setCuit(Long cuit) {
 		this.cuit = cuit;
 	}
-
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		this.Id = id;
+	}
+	
+	public int Id;
 	public String name;
 	public Long cuit;
 	

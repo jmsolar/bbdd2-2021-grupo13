@@ -57,6 +57,14 @@ public class Purchase {
 	public void setDateOfPurchase(Date dateOfPurchase) {
 		this.dateOfPurchase = dateOfPurchase;
 	}
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		this.Id = id;
+	}
+	
+	public int Id;
 	public ProductOnSale productOnSale;
 	public Integer quantity;
 	public User client;

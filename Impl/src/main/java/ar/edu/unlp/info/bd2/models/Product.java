@@ -19,6 +19,13 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		this.Id = id;
+	}
+	public int Id;
 	public String name;
 	public Float weight;
 	public Category category;

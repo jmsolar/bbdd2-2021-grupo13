@@ -32,7 +32,14 @@ public class DeliveryMethod {
 	public void setEndWeight(Float endWeight) {
 		this.endWeight = endWeight;
 	}
-
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		this.Id = id;
+	}
+	
+	public int Id;
 	public String name;
 	public Float cost; 
 	public Float startWeight;

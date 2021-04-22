@@ -27,6 +27,14 @@ public class ProductOnSale{
 	public void setInitialDate(Date initialDate) {
 		this.initialDate = initialDate;
 	}
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		this.Id = id;
+	}
+	
+	public int Id;
 	public Product product;
 	public Provider provider; 
 	public Float price; 
