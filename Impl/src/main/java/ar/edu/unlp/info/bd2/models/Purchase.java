@@ -2,7 +2,33 @@ package ar.edu.unlp.info.bd2.models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "BD2_PURCHASE")
 public class Purchase {
+	@GeneratedValue
+	@Column(name = "id_purchase")
+	@Id
+	@OneToOne(mappedBy="paymentMethod")
+	//@OneToOne(mappedBy="deliveryMethod")
+	
+	public int Id;
+	public ProductOnSale productOnSale;
+	public Integer quantity;
+	public User client;
+	public DeliveryMethod deliveryMethod;
+	public PaymentMethod paymentMethod;
+	public String address;
+	public Float coordX;
+	public Float coordY;
+	public Date dateOfPurchase;
+	
 	public ProductOnSale getProductOnSale() {
 		return productOnSale;
 	}
@@ -63,17 +89,6 @@ public class Purchase {
 	public void setId(int id) {
 		this.Id = id;
 	}
-	
-	public int Id;
-	public ProductOnSale productOnSale;
-	public Integer quantity;
-	public User client;
-	public DeliveryMethod deliveryMethod;
-	public PaymentMethod paymentMethod;
-	public String address;
-	public Float coordX;
-	public Float coordY;
-	public Date dateOfPurchase;
 	
 	public Purchase(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,
 			PaymentMethod paymentMethod, String address, Float coordX, Float coordY, Date dateOfPurchase) {

@@ -1,6 +1,24 @@
 package ar.edu.unlp.info.bd2.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "BD2_DELIVERY_METHOD")
 public class DeliveryMethod {
+	@GeneratedValue
+	@Column(name = "id_delivery_method")
+	@Id
+	
+	public int Id;
+	public String name;
+	public Float cost; 
+	public Float startWeight;
+	public Float endWeight;
+	
 	public String getName() {
 		return name;
 	}
@@ -38,12 +56,6 @@ public class DeliveryMethod {
 	public void setId(int id) {
 		this.Id = id;
 	}
-	
-	public int Id;
-	public String name;
-	public Float cost; 
-	public Float startWeight;
-	public Float endWeight;
 	
 	public DeliveryMethod(String name, Float cost, Float startWeight, Float endWeight) {
 		this.name = name;

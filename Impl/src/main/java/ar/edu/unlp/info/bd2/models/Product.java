@@ -1,6 +1,26 @@
 package ar.edu.unlp.info.bd2.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "BD2_PRODUCT")
+
 public class Product {
+	@OneToOne(mappedBy="category")
+	@GeneratedValue
+	@Column(name = "id_product")
+	@Id
+	
+	public int Id;
+	public String name;
+	public Float weight;
+	public Category category;
+	
 	public String getName() {
 		return name;
 	}
@@ -25,10 +45,6 @@ public class Product {
 	public void setId(int id) {
 		this.Id = id;
 	}
-	public int Id;
-	public String name;
-	public Float weight;
-	public Category category;
 	
 	public Product(String name, Float weight, Category category) {
 		this.name = name;

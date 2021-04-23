@@ -8,6 +8,7 @@ public class Category {
 	@GeneratedValue
 	@Column(name = "id_category")
 	@Id
+	
 	public int Id;
 	
 	@Column(name = "category_name")
