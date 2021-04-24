@@ -2,7 +2,6 @@ package ar.edu.unlp.info.bd2.models;
 
 import java.util.ArrayList;
 import java.util.Date;
-//Preguntar!!
 import java.util.List;
 
 import javax.persistence.Column;

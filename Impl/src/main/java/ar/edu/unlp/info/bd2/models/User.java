@@ -32,7 +32,7 @@ public class User {
 	@Column
 	public Date dayOfBirth;
 	
-	@OneToMany(mappedBy="purchases")
+	@OneToMany(mappedBy = "client")
 	public List<Purchase> purchases = new ArrayList<Purchase>();
 	
 	@Version
