@@ -101,6 +101,13 @@ public class Purchase {
 		this.Id = id;
 	}
 	
+	public Float getAmount() {
+		Float weight = this.getProductOnSale().getProduct().getWeight();
+		Float cost = this.deliveryMethod.getCost();
+		
+		return weight + cost;
+	}
+	
 	public Purchase(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,
 			PaymentMethod paymentMethod, String address, Float coordX, Float coordY, Date dateOfPurchase) {
 		this.productOnSale = productOnSale;

@@ -1,5 +1,7 @@
 package ar.edu.unlp.info.bd2.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,6 +56,10 @@ public class Product {
 	}
 	public void setId(int id) {
 		this.Id = id;
+	}
+	
+	public List<ProductOnSale> getProductsOnSale() {
+		// retorna la lista de productsOnSale donde el name del product sea igual al name del objeto llamante
 	}
 	
 	public Product(String name, Float weight, Category category) {

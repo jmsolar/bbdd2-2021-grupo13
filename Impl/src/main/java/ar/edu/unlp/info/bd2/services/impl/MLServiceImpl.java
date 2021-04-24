@@ -220,6 +220,5 @@ public class MLServiceImpl implements MLService {
 	@Override
 	public Optional<Purchase> getPurchaseById(Long id) {
 		return this.getRepository().getPurchaseById(id);
-	}
-	
+	}	
 }
