@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "BD2_PRODUCT_ON_SALE")
@@ -19,16 +20,26 @@ public class ProductOnSale{
 	@GeneratedValue
 	@Column(name = "id_product_on_sale")
 	@Id
-	@OneToMany(mappedBy="historicProductsOnSale")
-	@OneToOne(mappedBy="provider")
-	//@OneToOne(mappedBy="product")
-	
 	public int Id;
+	
+	@OneToOne(mappedBy="product")
 	public Product product;
-	public Provider provider; 
+	
+	@OneToOne(mappedBy="provider")
+	public Provider provider;
+	
+	@Column
 	public Float price; 
+	
+	@Column
 	public Date initialDate;
+	
+	@OneToMany(mappedBy="historicProductsOnSale")
 	public List<ProductOnSale> historicProductsOnSale = new ArrayList<ProductOnSale>();
+	
+	@Version
+	@Column(name = "version")
+	private int version;
 	
 	public Product getProduct() {
 		return product;

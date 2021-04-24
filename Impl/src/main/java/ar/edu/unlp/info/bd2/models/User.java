@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "BD2_USER")
@@ -17,14 +18,26 @@ public class User {
 	@GeneratedValue
 	@Column(name = "id_user")
 	@Id	
-	@OneToMany(mappedBy="purchases")
-	
 	public int Id;
+	
+	@Column
 	public String fullname;
+	
+	@Column
 	public String email;
+	
+	@Column
 	public String password;
+	
+	@Column
 	public Date dayOfBirth;
+	
+	@OneToMany(mappedBy="purchases")
 	public List<Purchase> purchases = new ArrayList<Purchase>();
+	
+	@Version
+	@Column(name = "version")
+	private int version;
 	
 	public String getFullname() {
 		return fullname;

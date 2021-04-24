@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "BD2_DELIVERY_METHOD")
@@ -12,12 +13,23 @@ public class DeliveryMethod {
 	@GeneratedValue
 	@Column(name = "id_delivery_method")
 	@Id
-	
 	public int Id;
+	
+	@Column
 	public String name;
+	
+	@Column
 	public Float cost; 
+	
+	@Column
 	public Float startWeight;
+	
+	@Column
 	public Float endWeight;
+	
+	@Version
+	@Column(name = "version")
+	private int version;
 	
 	public String getName() {
 		return name;

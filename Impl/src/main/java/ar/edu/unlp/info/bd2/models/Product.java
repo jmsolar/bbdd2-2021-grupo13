@@ -6,20 +6,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "BD2_PRODUCT")
 
 public class Product {
-	@OneToOne(mappedBy="category")
 	@GeneratedValue
 	@Column(name = "id_product")
 	@Id
-	
 	public int Id;
+	
+	@Column
 	public String name;
+	
+	@Column
 	public Float weight;
+	
+	@OneToOne(mappedBy="category")
 	public Category category;
+	
+	@Version
+	@Column(name = "version")
+	private int version;
 	
 	public String getName() {
 		return name;
@@ -33,6 +42,7 @@ public class Product {
 	public void setWeight(Float weight) {
 		this.weight = weight;
 	}
+	
 	public Category getCategory() {
 		return category;
 	}

@@ -6,8 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "BD2_PURCHASE")
@@ -15,15 +17,25 @@ public class Purchase {
 	@GeneratedValue
 	@Column(name = "id_purchase")
 	@Id
-	@OneToOne(mappedBy="paymentMethod")
-	//@OneToOne(mappedBy="deliveryMethod")
-	
-	public int Id;
+	public int Id;	
+
+	@OneToOne(mappedBy="productOnSale")
 	public ProductOnSale productOnSale;
-	public Integer quantity;
+	
+	@OneToMany(mappedBy="user")
 	public User client;
+	
+	@OneToOne(mappedBy="deliveryMethod")
 	public DeliveryMethod deliveryMethod;
+	
+	@OneToOne(mappedBy="paymentMethod")
 	public PaymentMethod paymentMethod;
+	
+	@Version
+	@Column(name = "version")
+	private int version;
+	
+	public Integer quantity;
 	public String address;
 	public Float coordX;
 	public Float coordY;

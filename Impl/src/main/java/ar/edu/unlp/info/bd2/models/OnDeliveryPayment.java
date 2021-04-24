@@ -1,18 +1,13 @@
 package ar.edu.unlp.info.bd2.models;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "BD2_ON_DELIVERY_PAYMENT")
+@Entity(name = "BD2_ON_DELIVERY_PAYMENT")
+@DiscriminatorValue("on_delivery_payment")
 public class OnDeliveryPayment extends PaymentMethod{
-	@GeneratedValue
-	@Column(name = "id_on_delivery_payment")
-	@Id
-	
+	@Column
 	public Float promisedAmount;
 
 	public Float getPromisedAmount() {

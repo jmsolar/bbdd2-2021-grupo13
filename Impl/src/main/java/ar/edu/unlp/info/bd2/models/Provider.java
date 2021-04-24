@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "BD2_PROVIDER")
@@ -16,12 +17,20 @@ public class Provider {
 	@GeneratedValue
 	@Column(name = "id_provider")
 	@Id
-	@OneToMany(mappedBy="productsOnSale")
-	
 	public int Id;
+		
+	@Column
 	public String name;
+	
+	@Column
 	public Long cuit;
+	
+	@OneToMany(mappedBy="productsOnSale")
 	public List<ProductOnSale> productsOnSale = new ArrayList<ProductOnSale>();
+	
+	@Version
+	@Column(name = "version")
+	private int version;
 
 	public String getName() {
 		return name;
