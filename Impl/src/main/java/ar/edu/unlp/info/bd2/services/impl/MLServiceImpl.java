@@ -33,6 +33,8 @@ public class MLServiceImpl implements MLService {
 		if (categoryInDB.isPresent()) ex.categoryExist();
 		
 		Category newCategory = new Category(name);
+		this.getRepository().save(newCategory);
+		
 		return newCategory;
 	}
 
@@ -48,6 +50,7 @@ public class MLServiceImpl implements MLService {
 		if (productInDB.isPresent()) ex.productExist();
 		
 		Product newProduct = new Product(name, weight, category);
+		this.getRepository().save(newProduct);
 		
 		return newProduct;
 	}
@@ -65,6 +68,7 @@ public class MLServiceImpl implements MLService {
 		if (userDB.isPresent()) ex.emailExist();
 		
 		User newUser = new User(email, fullname, password, dayOfBirth);
+		this.getRepository().save(newUser);
 		
 		return newUser;
 	}
@@ -80,6 +84,7 @@ public class MLServiceImpl implements MLService {
 		if (providerDB.isPresent()) ex.cuitExist();
 		
 		Provider newProvider = new Provider(name, cuit);
+		this.getRepository().save(newProvider);
 		
 		return newProvider;
 	}
@@ -97,9 +102,10 @@ public class MLServiceImpl implements MLService {
 		Optional<DeliveryMethod> deliveryMethodInDB = getDeliveryMethodByName(name);
 		if (deliveryMethodInDB.isPresent()) ex.nameExist();
 		
-		DeliveryMethod deliveryMethod = new DeliveryMethod(name, cost, startWeight, endWeight);
+		DeliveryMethod newDeliveryMethod = new DeliveryMethod(name, cost, startWeight, endWeight);
+		this.getRepository().save(newDeliveryMethod);
 		
-		return deliveryMethod;
+		return newDeliveryMethod;
 	}
 
 	@Override
@@ -117,9 +123,10 @@ public class MLServiceImpl implements MLService {
 		Optional<CreditCardPayment> creditCardPaymentInDB = getCreditCardPaymentByName(name);
 		if (creditCardPaymentInDB.isPresent()) ex.nameExist();
 		
-		CreditCardPayment creditCardPayment = new CreditCardPayment(name, brand, number, expiry, cvv, owner);
+		CreditCardPayment newCreditCardPayment = new CreditCardPayment(name, brand, number, expiry, cvv, owner);
+		this.getRepository().save(newCreditCardPayment);
 		
-		return creditCardPayment;
+		return newCreditCardPayment;
 	}
 
 	@Override
@@ -132,9 +139,10 @@ public class MLServiceImpl implements MLService {
 		Optional<OnDeliveryPayment> onDeliveryPaymentInDB = getOnDeliveryPaymentByName(name);
 		if (onDeliveryPaymentInDB.isPresent()) ex.nameExist();
 		
-		OnDeliveryPayment onDeliveryPayment = new OnDeliveryPayment(name, promisedAmount);
+		OnDeliveryPayment newOnDeliveryPayment = new OnDeliveryPayment(name, promisedAmount);
+		this.getRepository().save(newOnDeliveryPayment);
 		
-		return onDeliveryPayment;
+		return newOnDeliveryPayment;
 	}
 
 	@Override
@@ -146,6 +154,7 @@ public class MLServiceImpl implements MLService {
 		if (initialDate == null) ex.initialDateRequired();
 		
 		ProductOnSale newProductOnSale = new ProductOnSale(product, provider, price, initialDate);
+		this.getRepository().save(newProductOnSale);
 		
 		return newProductOnSale;
 	}
@@ -163,14 +172,14 @@ public class MLServiceImpl implements MLService {
 		if (dateOfPurchase == null) ex.dateOfPurchaseRequired();
 		
 		Purchase newPurchase = new Purchase(productOnSale, quantity, client, deliveryMethod, paymentMethod, address, coordX, coordY, dateOfPurchase);
+		this.getRepository().save(newPurchase);
 		
 		return newPurchase;
 	}
 
 	@Override
 	public Optional<User> getUserByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getUserByEmail(email);
 	}
 
 	@Override
@@ -181,44 +190,37 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public Optional<Category> getCategoryByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getCategoryByName(name);
 	}
 
 	@Override
 	public Optional<Product> getProductByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getProductByName(name);
 	}
 
 	@Override
 	public ProductOnSale getProductOnSaleById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getProductOnSaleById(id);
 	}
 
 	@Override
 	public Optional<DeliveryMethod> getDeliveryMethodByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getDeliveryMethodByName(name);
 	}
 
 	@Override
 	public Optional<CreditCardPayment> getCreditCardPaymentByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getCreditCardPaymentByName(name);
 	}
 
 	@Override
 	public Optional<OnDeliveryPayment> getOnDeliveryPaymentByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getOnDeliveryPaymentByName(name);
 	}
 
 	@Override
 	public Optional<Purchase> getPurchaseById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getPurchaseById(id);
 	}
 	
 }
