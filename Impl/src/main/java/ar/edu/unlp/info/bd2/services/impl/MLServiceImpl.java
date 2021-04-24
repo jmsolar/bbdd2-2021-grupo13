@@ -184,8 +184,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public Optional<Provider> getProviderByCuit(long cuit) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getProviderByCuit(cuit);
 	}
 
 	@Override
