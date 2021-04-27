@@ -57,10 +57,11 @@ public class Product {
 	public void setId(int id) {
 		this.Id = id;
 	}
-	
+	/*
 	public List<ProductOnSale> getProductsOnSale() {
 		// retorna la lista de productsOnSale donde el name del product sea igual al name del objeto llamante
 	}
+	*/
 	
 	public Product(String name, Float weight, Category category) {
 		this.name = name;
