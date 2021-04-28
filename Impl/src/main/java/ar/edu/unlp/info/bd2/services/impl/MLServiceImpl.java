@@ -1,6 +1,8 @@
 package ar.edu.unlp.info.bd2.services.impl;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Optional;
 
 import ar.edu.unlp.info.bd2.models.*;
@@ -149,13 +151,31 @@ public class MLServiceImpl implements MLService {
 	public ProductOnSale createProductOnSale(Product product, Provider provider, Float price, Date initialDate)
 			throws MLException {
 		ProductOnSaleException ex = new ProductOnSaleException();
-		
+		// El precio no puede ser nulo
 		if (price == null) ex.priceRequired();
+		// La fecha inicial no puede ser nula
 		if (initialDate == null) ex.initialDateRequired();
+		// Buscamos al proveedor por cuit
+		Optional<Provider> prov = this.getRepository().getProviderByCuit(provider.cuit);
+		// Se valida si no existe
+		if (prov == null) throw new MLException("El proveedor no existe");
+		// Si existe el proveedor obtengo la ultima oferta para el producto en cuestión
+		ProductOnSale prodOnSale = this.getRepository().getLastProductOnSaleById(product.Id);
+		// Si la oferta no es nula y la fecha inicial de la oferta a guardar es menor a la fecha inicial de la ultima oferta guardada
+		if (prodOnSale != null && prodOnSale.getInitialDate().before(initialDate)) throw new MLException("La fecha de inicio es anterior a la de la última oferta");
+		// Actualizo la fecha final de la ultima oferta que tenia el producto
+		if (prodOnSale != null) {
+			// Restamos un día a la fecha inicial de la oferta en cuestión para setear la fecha final de la última oferta que tenia el producto
+			GregorianCalendar cal = new GregorianCalendar();
+			cal.setTime(initialDate);
+			cal.add(Calendar.DATE, -1);
+			prodOnSale.setFinalDate(cal.getTime());
+			this.getRepository().update(prodOnSale);
+		}
 		
 		ProductOnSale newProductOnSale = new ProductOnSale(product, provider, price, initialDate);
 		this.getRepository().save(newProductOnSale);
-		
+			
 		return newProductOnSale;
 	}
 

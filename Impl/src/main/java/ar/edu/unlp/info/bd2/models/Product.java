@@ -17,7 +17,7 @@ public class Product {
 	@GeneratedValue
 	@Column(name = "id_product")
 	@Id
-	public int Id;
+	public Long Id;
 	
 	@Column
 	public String name;
@@ -51,10 +51,10 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	public int getId() {
+	public Long getId() {
 		return Id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.Id = id;
 	}
 	/*

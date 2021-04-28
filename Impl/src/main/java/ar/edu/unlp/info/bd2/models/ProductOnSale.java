@@ -35,11 +35,10 @@ public class ProductOnSale{
 	@Column
 	public Date initialDate;
 	
-	public Date endDate;
+	@Column
+	public Date finalDate;	
 	
-	@OneToMany(mappedBy="historicProductsOnSale")
-	public List<ProductOnSale> historicProductsOnSale = new ArrayList<ProductOnSale>();
-	
+
 	@Version
 	@Column(name = "version")
 	private int version;
@@ -67,29 +66,18 @@ public class ProductOnSale{
 	}
 	public void setInitialDate(Date initialDate) {
 		this.initialDate = initialDate;
-	}
-	
-	public Date getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+	}	
 	public int getId() {
 		return Id;
 	}
 	public void setId(int id) {
 		this.Id = id;
 	}
-	public List<ProductOnSale> getHistoricsOnSale() {
-		return historicProductsOnSale;
-	}	
-	public void setHistoricProductsOnSale(List<ProductOnSale> historicProductsOnSale) {
-		this.historicProductsOnSale = historicProductsOnSale;
+	public Date getFinalDate() {
+		return finalDate;
 	}
-	
-	public List<ProductOnSale> getFinalDate() {
-		return this.getHistoricsOnSale();
+	public void setFinalDate(Date finalDate) {
+		this.finalDate = finalDate;
 	}
 	
 	public ProductOnSale(Product product, Provider provider, Float price, Date initialDate) {
@@ -97,16 +85,6 @@ public class ProductOnSale{
 		this.provider = provider;
 		this.price = price;
 		this.initialDate = initialDate;
-		this.historicProductsOnSale = new ArrayList<ProductOnSale>(); // se almacena el historico
-		
-		if ((this.getProvider() != null) && (this.getPrice() != null)) {
-			GregorianCalendar cal = new GregorianCalendar();
-			cal.setTime(this.getInitialDate());
-			cal.add(Calendar.DATE, -1);
-			this.setEndDate(cal.getTime());
-			
-			this.getHistoricsOnSale().add(this);
-			this.setPrice(price);
-		}
+		//this.finalDate = null;
 	}
 }
