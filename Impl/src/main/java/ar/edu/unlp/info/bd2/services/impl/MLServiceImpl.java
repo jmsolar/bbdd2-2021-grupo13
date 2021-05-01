@@ -160,7 +160,7 @@ public class MLServiceImpl implements MLService {
 		// Se valida si no existe
 		if (prov == null) throw new MLException("El proveedor no existe");
 		// Si existe el proveedor obtengo la ultima oferta para el producto en cuestión
-		ProductOnSale prodOnSale = this.getRepository().getLastProductOnSaleById(product.Id);
+		ProductOnSale prodOnSale = this.getRepository().getLastProductOnSaleById(product.Id,provider.getId());
 		// Si la oferta no es nula y la fecha inicial de la oferta a guardar es menor a la fecha inicial de la ultima oferta guardada
 		if (prodOnSale != null && prodOnSale.getInitialDate().before(initialDate)) throw new MLException("La fecha de inicio es anterior a la de la última oferta");
 		// Actualizo la fecha final de la ultima oferta que tenia el producto

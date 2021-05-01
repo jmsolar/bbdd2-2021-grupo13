@@ -73,9 +73,9 @@ public class MLRepository {
 		return this.sessionFactory.getCurrentSession().createQuery("from BD2_PRODUCT_ON_SALE where id = :id", ProductOnSale.class).uniqueResult();
 	}
 	
-	public ProductOnSale getLastProductOnSaleById(Long id) {
-		return this.sessionFactory.getCurrentSession().createQuery("from BD2_PRODUCT_ON_SALE where id = :id and final_date = null", ProductOnSale.class).uniqueResult();
-	}
+	public ProductOnSale getLastProductOnSaleById(Long id, int idProvider) {
+		return this.sessionFactory.getCurrentSession().createQuery("from BD2_PRODUCT_ON_SALE POS inner join BD2_PROVIDER PRO ON (POS.id_product_on_sale = PRO.productsOnSale) where POS.id_product_on_sale = :id and final_date IS NULL and PRO.id = :idProvider", ProductOnSale.class).uniqueResult();
+	}	
 	
 	public Optional<DeliveryMethod> getDeliveryMethodByName(String name) {
 		return this.sessionFactory.getCurrentSession().createQuery("from BD2_DELIVERY_METHOD where name in :name", DeliveryMethod.class).uniqueResultOptional();
