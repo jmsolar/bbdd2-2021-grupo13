@@ -8,15 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unlp.info.bd2.exceptions.MLException;
-import ar.edu.unlp.info.bd2.models.Category;
-import ar.edu.unlp.info.bd2.models.CreditCardPayment;
-import ar.edu.unlp.info.bd2.models.DeliveryMethod;
-import ar.edu.unlp.info.bd2.models.OnDeliveryPayment;
-import ar.edu.unlp.info.bd2.models.Product;
-import ar.edu.unlp.info.bd2.models.ProductOnSale;
-import ar.edu.unlp.info.bd2.models.Provider;
-import ar.edu.unlp.info.bd2.models.Purchase;
-import ar.edu.unlp.info.bd2.models.User;
+import ar.edu.unlp.info.bd2.models.*;
 
 public class MLRepository {
 	@Autowired
@@ -51,8 +43,6 @@ public class MLRepository {
 		}
 	}
 	
-	// Pueden cambiarse los metodos por sp?
-	
 	public Optional<User> getUserByEmail(String email) {
 		return this.sessionFactory.getCurrentSession().createQuery("from BD2_USER where email in :email", User.class).uniqueResultOptional();
 	}
@@ -62,7 +52,7 @@ public class MLRepository {
 	}
 	
 	public Optional<Category> getCategoryByName(String name) {
-		return this.sessionFactory.getCurrentSession().createQuery("from BD2_CATEGORY where name in :name", Category.class).uniqueResultOptional();
+		return this.sessionFactory.getCurrentSession().createQuery("from Category WHERE name = :name", Category.class).uniqueResultOptional();
 	}
 	
 	public Optional<Product> getProductByName(String name) {

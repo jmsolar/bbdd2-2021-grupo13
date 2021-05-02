@@ -17,18 +17,18 @@ public class Purchase {
 	@Column(name = "id_purchase")
 	@Id
 	public int Id;	
-
+/*
 	@OneToOne(mappedBy="productOnSale")
-	public ProductOnSale productOnSale;
-	
+	public ProductOnSale productOnSale;*/
+	/*
 	@OneToOne(mappedBy="client")
-	public User client;
-	
+	public User client;*/
+	/*
 	@OneToOne(mappedBy="deliveryMethod")
-	public DeliveryMethod deliveryMethod;
-	
+	public DeliveryMethod deliveryMethod;*/
+	/*
 	@OneToOne(mappedBy="paymentMethod")
-	public PaymentMethod paymentMethod;
+	public PaymentMethod paymentMethod;*/
 	
 	@Version
 	@Column(name = "version")
@@ -39,25 +39,27 @@ public class Purchase {
 	public Float coordX;
 	public Float coordY;
 	public Date dateOfPurchase;
-	
+	/*
 	public ProductOnSale getProductOnSale() {
 		return productOnSale;
 	}
 	public void setProductOnSale(ProductOnSale productOnSale) {
 		this.productOnSale = productOnSale;
-	}
+	}*/
 	public Integer getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+	/*
 	public User getClient() {
 		return client;
 	}
 	public void setClient(User client) {
 		this.client = client;
 	}
+	
 	public DeliveryMethod getDeliveryMethod() {
 		return deliveryMethod;
 	}
@@ -69,7 +71,7 @@ public class Purchase {
 	}
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
 		this.paymentMethod = paymentMethod;
-	}
+	}*/
 	public String getAddress() {
 		return address;
 	}
@@ -102,19 +104,20 @@ public class Purchase {
 	}
 	
 	public Float getAmount() {
-		Float weight = this.getProductOnSale().getProduct().getWeight();
+		/*Float weight = this.getProductOnSale().getProduct().getWeight();
 		Float cost = this.deliveryMethod.getCost();
 		
-		return weight + cost;
+		return weight + cost;*/
+		return (float) 1;
 	}
 	
-	public Purchase(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,
-			PaymentMethod paymentMethod, String address, Float coordX, Float coordY, Date dateOfPurchase) {
-		this.productOnSale = productOnSale;
+	public Purchase(/*ProductOnSale productOnSale, */Integer quantity, User client, /*DeliveryMethod deliveryMethod,
+			PaymentMethod paymentMethod,*/ String address, Float coordX, Float coordY, Date dateOfPurchase) {
+		/*this.productOnSale = productOnSale;*/
 		this.quantity = quantity;
-		this.client = client;
+		/*this.client = client;
 		this.deliveryMethod = deliveryMethod;
-		this.paymentMethod = paymentMethod;
+		this.paymentMethod = paymentMethod;*/
 		this.address = address;
 		this.coordX = coordX;
 		this.coordY = coordY;

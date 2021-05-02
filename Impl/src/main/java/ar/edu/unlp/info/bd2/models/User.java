@@ -17,7 +17,7 @@ import javax.persistence.Version;
 public class User {
 	@GeneratedValue
 	@Column(name = "id_user")
-	@Id	
+	@Id
 	public int Id;
 	
 	@Column
@@ -31,9 +31,9 @@ public class User {
 	
 	@Column
 	public Date dayOfBirth;
-	
+	/*
 	@OneToMany(mappedBy = "client")
-	public List<Purchase> purchases = new ArrayList<Purchase>();
+	public List<Purchase> purchases = new ArrayList<Purchase>();*/
 	
 	@Version
 	@Column(name = "version")
@@ -69,13 +69,14 @@ public class User {
 	public void setId(int id) {
 		this.Id = id;
 	}
+	/*
 	public List<Purchase> getPurchases() {
 		return purchases;
 	}
 	public void setPurchases(List<Purchase> purchases) {
 		this.purchases = purchases;
 	}
-	
+	*/
 	public User (String email, String fullname, String password, Date dayOfBirth) {
 		this.email = email;
 		this.fullname = fullname;

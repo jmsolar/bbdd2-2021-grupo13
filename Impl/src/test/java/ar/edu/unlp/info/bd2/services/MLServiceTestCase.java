@@ -1,9 +1,8 @@
 package ar.edu.unlp.info.bd2.services;
-
-import ar.edu.unlp.info.bd2.config.AppConfig;
-import ar.edu.unlp.info.bd2.config.HibernateConfiguration;
-import ar.edu.unlp.info.bd2.models.*;
+import ar.edu.unlp.info.bd2.config.*;
 import ar.edu.unlp.info.bd2.exceptions.MLException;
+import ar.edu.unlp.info.bd2.models.Category;
+import ar.edu.unlp.info.bd2.services.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,7 +28,6 @@ public class MLServiceTestCase {
     @Autowired
     MLService service;
     
-   /* 
     @Test
     public void testCreateCategory() throws MLException {
         Category c = this.service.createCategory("Hogar");
@@ -44,7 +41,7 @@ public class MLServiceTestCase {
         assertNotNull(cat.getId());
         assertEquals("Hogar",cat.getName());
     }
-    
+   /*
     @Test
     public void testCreateUser() throws MLException{
         Calendar cal = Calendar.getInstance();

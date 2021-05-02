@@ -6,6 +6,7 @@ import javax.persistence.Version;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 @Table(name = "BD2_CATEGORY")

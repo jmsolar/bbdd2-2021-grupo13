@@ -22,12 +22,12 @@ public class ProductOnSale{
 	@Column(name = "id_product_on_sale")
 	@Id
 	public int Id;
-	
-	@OneToOne(mappedBy="product")
-	public Product product;
-	
-	@OneToOne(mappedBy="provider")
-	public Provider provider;
+	/*
+	@OneToOne(mappedBy="product")*/
+	/*public Product product;*/
+	/*
+	@OneToOne(mappedBy="provider")*/
+	/*public Provider provider;*/
 	
 	@Column
 	public Float price; 
@@ -38,11 +38,10 @@ public class ProductOnSale{
 	@Column
 	public Date finalDate;	
 	
-
 	@Version
 	@Column(name = "version")
 	private int version;
-	
+	/*
 	public Product getProduct() {
 		return product;
 	}
@@ -54,7 +53,7 @@ public class ProductOnSale{
 	}
 	public void setProvider(Provider provider) {
 		this.provider = provider;
-	}
+	}*/
 	public Float getPrice() {
 		return price;
 	}
@@ -80,11 +79,10 @@ public class ProductOnSale{
 		this.finalDate = finalDate;
 	}
 	
-	public ProductOnSale(Product product, Provider provider, Float price, Date initialDate) {
-		this.product = product;
-		this.provider = provider;
+	public ProductOnSale(/*Product product, Provider provider, */Float price, Date initialDate) {
+		/*this.product = product;
+		this.provider = provider;*/
 		this.price = price;
 		this.initialDate = initialDate;
-		//this.finalDate = null;
 	}
 }

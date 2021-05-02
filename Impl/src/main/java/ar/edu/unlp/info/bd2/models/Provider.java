@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.persistence.OneToMany;
 
-
 @Entity
 @Table(name = "BD2_PROVIDER")
 public class Provider {
@@ -25,9 +24,9 @@ public class Provider {
 	
 	@Column
 	public Long cuit;
-	
+	/*
 	@OneToMany(mappedBy="productsOnSale")
-	public List<ProductOnSale> productsOnSale = new ArrayList<ProductOnSale>();
+	public List<ProductOnSale> productsOnSale = new ArrayList<ProductOnSale>();*/
 	
 	@Version
 	@Column(name = "version")
@@ -54,17 +53,17 @@ public class Provider {
 	public void setId(int id) {
 		this.Id = id;
 	}
-	
-	public Provider(String name, Long cuit) {
-		this.name = name;
-		this.cuit = cuit;
-	}
-	
+	/*
 	public List<ProductOnSale> getProductsOnSale() {
 		return productsOnSale;
 	}
 
 	public void setProductsOnSale(List<ProductOnSale> productsOnSale) {
 		this.productsOnSale = productsOnSale;
+	}*/
+	
+	public Provider(String name, Long cuit) {
+		this.name = name;
+		this.cuit = cuit;
 	}
 }

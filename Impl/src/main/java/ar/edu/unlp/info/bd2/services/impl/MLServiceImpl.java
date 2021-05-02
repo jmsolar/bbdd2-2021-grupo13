@@ -31,8 +31,8 @@ public class MLServiceImpl implements MLService {
 		
 		if (name == null|| name.trim().isEmpty()) ex.nameRequired();
 		
-		Optional<Category> categoryInDB = getCategoryByName(name);
-		if (categoryInDB.isPresent()) ex.categoryExist();
+		Optional<Category> categoryInDB = this.getRepository().getCategoryByName(name);
+		if (categoryInDB != null) ex.categoryExist();
 		
 		Category newCategory = new Category(name);
 		this.getRepository().save(newCategory);
@@ -173,7 +173,7 @@ public class MLServiceImpl implements MLService {
 			this.getRepository().update(prodOnSale);
 		}
 		
-		ProductOnSale newProductOnSale = new ProductOnSale(product, provider, price, initialDate);
+		ProductOnSale newProductOnSale = new ProductOnSale(/*product, provider, */price, initialDate);
 		this.getRepository().save(newProductOnSale);
 			
 		return newProductOnSale;
@@ -191,7 +191,7 @@ public class MLServiceImpl implements MLService {
 		if (coordY == null) ex.coordYRequired();
 		if (dateOfPurchase == null) ex.dateOfPurchaseRequired();
 		
-		Purchase newPurchase = new Purchase(productOnSale, quantity, client, deliveryMethod, paymentMethod, address, coordX, coordY, dateOfPurchase);
+		Purchase newPurchase = new Purchase(/*productOnSale, */quantity, client/*, deliveryMethod, paymentMethod*/, address, coordX, coordY, dateOfPurchase);
 		this.getRepository().save(newPurchase);
 		
 		return newPurchase;
