@@ -44,42 +44,42 @@ public class MLRepository {
 	}
 	
 	public Optional<User> getUserByEmail(String email) {
-		return this.sessionFactory.getCurrentSession().createQuery("from BD2_USER where email in :email", User.class).uniqueResultOptional();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM User WHERE email = ?1", User.class).setParameter(1, email).uniqueResultOptional();
 	}
 	
 	public Optional<Provider> getProviderByCuit(long cuit) {
-		return this.sessionFactory.getCurrentSession().createQuery("from BD2_PROVIDER where cuit in :cuit", Provider.class).uniqueResultOptional();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM Provider WHERE cuit = ?1", Provider.class).setParameter(1, cuit).uniqueResultOptional();
 	}
 	
 	public Optional<Category> getCategoryByName(String name) {
-		return this.sessionFactory.getCurrentSession().createQuery("from Category WHERE name = :name", Category.class).uniqueResultOptional();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM Category WHERE name = ?1", Category.class).setParameter(1, name).uniqueResultOptional();
 	}
 	
 	public Optional<Product> getProductByName(String name) {
-		return this.sessionFactory.getCurrentSession().createQuery("from BD2_PRODUCT where name in :name", Product.class).uniqueResultOptional();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM Product WHERE name = ?1", Product.class).setParameter(1, name).uniqueResultOptional();
 	}
 	
 	public ProductOnSale getProductOnSaleById(Long id) {
-		return this.sessionFactory.getCurrentSession().createQuery("from BD2_PRODUCT_ON_SALE where id = :id", ProductOnSale.class).uniqueResult();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM ProductOnSale WHERE id = ?1", ProductOnSale.class).setParameter(1, id).uniqueResult();
 	}
 	
 	public ProductOnSale getLastProductOnSaleById(Long id, int idProvider) {
-		return this.sessionFactory.getCurrentSession().createQuery("from BD2_PRODUCT_ON_SALE POS inner join BD2_PROVIDER PRO ON (POS.id_product_on_sale = PRO.productsOnSale) where POS.id_product_on_sale = :id and final_date IS NULL and PRO.id = :idProvider", ProductOnSale.class).uniqueResult();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM ProductOnSale pos INNER JOIN Provider pro ON (pos.id_product_on_sale = pro.productsOnSale) where POS.id_product_on_sale = ?1 and final_date IS NULL and PRO.id = ?2", ProductOnSale.class).setParameter(1, id).setParameter(2, idProvider).uniqueResult();
 	}	
 	
 	public Optional<DeliveryMethod> getDeliveryMethodByName(String name) {
-		return this.sessionFactory.getCurrentSession().createQuery("from BD2_DELIVERY_METHOD where name in :name", DeliveryMethod.class).uniqueResultOptional();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM DeliveryMethod WHERE name = ?1", DeliveryMethod.class).setParameter(1, name).uniqueResultOptional();
 	}
 
 	public Optional<CreditCardPayment> getCreditCardPaymentByName(String name) {
-		return this.sessionFactory.getCurrentSession().createQuery("from BD2_PAYMENT_METHOD where name in :name AND payment_type = 'credit_card_payment'", CreditCardPayment.class).uniqueResultOptional();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM PaymentMethod WHERE name = ?1 AND payment_type = ?2", CreditCardPayment.class).setParameter(1, name).setParameter(2, "'credit_card_payment'").uniqueResultOptional();
 	}
 
 	public Optional<OnDeliveryPayment> getOnDeliveryPaymentByName(String name) {
-		return this.sessionFactory.getCurrentSession().createQuery("from BD2_PAYMENT_METHOD where name in :name AND payment_type = 'on_delivery_payment'", OnDeliveryPayment.class).uniqueResultOptional();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM PaymentMethod WHERE name = ?1 AND payment_type = ?2", OnDeliveryPayment.class).setParameter(1, name).setParameter(2, "'on_delivery_payment'").uniqueResultOptional();
 	}
 
 	public Optional<Purchase> getPurchaseById(Long id) {
-		return this.sessionFactory.getCurrentSession().createQuery("from BD2_PURCHASE where id in :name", Purchase.class).uniqueResultOptional();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM Purchase WHERE id = ?1", Purchase.class).setParameter(1, id).uniqueResultOptional();
 	}
 }

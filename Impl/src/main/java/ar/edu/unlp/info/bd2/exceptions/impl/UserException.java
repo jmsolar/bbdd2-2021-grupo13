@@ -21,6 +21,6 @@ public class UserException extends MLException {
 	}
 	
 	public void emailExist() throws MLException {
-		throw new MLException("User email is already exist");
+		throw new MLException("Constraint Violation");
 	}
 }

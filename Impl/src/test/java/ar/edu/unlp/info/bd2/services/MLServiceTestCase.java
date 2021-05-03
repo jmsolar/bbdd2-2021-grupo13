@@ -1,7 +1,7 @@
 package ar.edu.unlp.info.bd2.services;
 import ar.edu.unlp.info.bd2.config.*;
 import ar.edu.unlp.info.bd2.exceptions.MLException;
-import ar.edu.unlp.info.bd2.models.Category;
+import ar.edu.unlp.info.bd2.models.*;
 import ar.edu.unlp.info.bd2.services.*;
 
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ public class MLServiceTestCase {
         assertNotNull(cat.getId());
         assertEquals("Hogar",cat.getName());
     }
-   /*
+   
     @Test
     public void testCreateUser() throws MLException{
         Calendar cal = Calendar.getInstance();
@@ -65,7 +65,6 @@ public class MLServiceTestCase {
         assertEquals("Constraint Violation",ex.getMessage());
     }
     
-
     @Test
     public void testCreateProvider() throws MLException {
         Provider p = this.service.createProvider("Philips",30715589634L);
@@ -157,7 +156,7 @@ public class MLServiceTestCase {
         assertNotNull(dp.getId());
         assertEquals(Float.valueOf(100F),dp.getPromisedAmount());
     }
-    
+    /*
     @Test
     public void testCreateProductOnSale() throws MLException {
         Provider p = this.service.createProvider("Philips",30715589634L);

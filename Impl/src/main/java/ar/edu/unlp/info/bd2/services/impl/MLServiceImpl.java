@@ -31,8 +31,8 @@ public class MLServiceImpl implements MLService {
 		
 		if (name == null|| name.trim().isEmpty()) ex.nameRequired();
 		
-		Optional<Category> categoryInDB = this.getRepository().getCategoryByName(name);
-		if (categoryInDB != null) ex.categoryExist();
+		Optional<Category> categoryInDB = getCategoryByName(name);
+		if (categoryInDB.isPresent()) ex.categoryExist();
 		
 		Category newCategory = new Category(name);
 		this.getRepository().save(newCategory);
@@ -66,8 +66,8 @@ public class MLServiceImpl implements MLService {
 		if (password == null|| password.trim().isEmpty()) ex.passwordRequired();
 		if (dayOfBirth == null) ex.dayOfBirthRequired();
 		
-		Optional<User> userDB = getUserByEmail(email);
-		if (userDB.isPresent()) ex.emailExist();
+		Optional<User> userInDB = getUserByEmail(email);
+		if (userInDB.isPresent()) ex.emailExist();
 		
 		User newUser = new User(email, fullname, password, dayOfBirth);
 		this.getRepository().save(newUser);
