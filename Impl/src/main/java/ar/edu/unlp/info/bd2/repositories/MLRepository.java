@@ -72,11 +72,11 @@ public class MLRepository {
 	}
 
 	public Optional<CreditCardPayment> getCreditCardPaymentByName(String name) {
-		return this.sessionFactory.getCurrentSession().createQuery("FROM PaymentMethod WHERE name = ?1 AND payment_type = ?2", CreditCardPayment.class).setParameter(1, name).setParameter(2, "'credit_card_payment'").uniqueResultOptional();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM PaymentMethod WHERE name = ?1 AND payment_type = ?2", CreditCardPayment.class).setParameter(1, name).setParameter(2, 1).uniqueResultOptional();
 	}
 
 	public Optional<OnDeliveryPayment> getOnDeliveryPaymentByName(String name) {
-		return this.sessionFactory.getCurrentSession().createQuery("FROM PaymentMethod WHERE name = ?1 AND payment_type = ?2", OnDeliveryPayment.class).setParameter(1, name).setParameter(2, "'on_delivery_payment'").uniqueResultOptional();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM PaymentMethod WHERE name = ?1 AND payment_type = ?2", OnDeliveryPayment.class).setParameter(1, name).setParameter(2, 2).uniqueResultOptional();
 	}
 
 	public Optional<Purchase> getPurchaseById(Long id) {

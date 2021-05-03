@@ -12,6 +12,6 @@ public class ProviderException extends MLException {
 	}
 	
 	public void cuitExist() throws MLException {
-		throw new MLException("Provider cuit is already exist");
+		throw new MLException("Constraint Violation");
 	}
 }

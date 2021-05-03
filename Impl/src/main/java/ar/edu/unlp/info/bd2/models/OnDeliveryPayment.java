@@ -5,7 +5,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity(name = "BD2_ON_DELIVERY_PAYMENT")
-@DiscriminatorValue("on_delivery_payment")
+@DiscriminatorValue("2")
 public class OnDeliveryPayment extends PaymentMethod{
 	@Column
 	public Float promisedAmount;

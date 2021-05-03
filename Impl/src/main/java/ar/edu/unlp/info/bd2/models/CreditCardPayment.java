@@ -7,7 +7,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity(name = "BD2_CREDIT_CARD_PAYMENT")
-@DiscriminatorValue("credit_card_payment")
+@DiscriminatorValue("1")
 public class CreditCardPayment extends PaymentMethod {
 	@Column
 	public String brand;

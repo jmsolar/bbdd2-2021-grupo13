@@ -13,6 +13,6 @@ public class ProductException extends MLException {
 	}
 	
 	public void productExist() throws MLException {
-		throw new MLException("Product name is already exist");
+		throw new MLException("Constraint Violation");
 	}
 }

@@ -2,6 +2,7 @@ package ar.edu.unlp.info.bd2.models;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,7 +14,7 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "BD2_PAYMENT_METHOD")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "payment_type")
+@DiscriminatorColumn(name = "payment_type", discriminatorType = DiscriminatorType.INTEGER)
 public class PaymentMethod {
 	@GeneratedValue
 	@Column(name = "id_payment_method")
