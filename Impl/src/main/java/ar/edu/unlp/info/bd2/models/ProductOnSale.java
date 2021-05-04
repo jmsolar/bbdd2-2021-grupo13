@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -21,33 +22,35 @@ public class ProductOnSale{
 	@GeneratedValue
 	@Column(name = "id_product_on_sale")
 	@Id
-	public int Id;
-	/*
-	@OneToOne(mappedBy="product")*/
-	/*public Product product;*/
+	private int Id;
+	
+	@OneToOne
+	@JoinColumn(name = "id_purchase")
+	private Product product;
 	/*
 	@OneToOne(mappedBy="provider")*/
 	/*public Provider provider;*/
 	
 	@Column
-	public Float price; 
+	private Float price; 
 	
 	@Column
-	public Date initialDate;
+	private Date initialDate;
 	
 	@Column
-	public Date finalDate;	
+	private Date finalDate;	
 	
 	@Version
 	@Column(name = "version")
 	private int version;
-	/*
+	
 	public Product getProduct() {
 		return product;
 	}
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+	/*
 	public Provider getProvider() {
 		return provider;
 	}

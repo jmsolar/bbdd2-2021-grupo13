@@ -20,9 +20,9 @@ public class Purchase {
 	@Column(name = "id_purchase")
 	@Id
 	private int Id;	
-/*
-	@OneToOne(mappedBy="productOnSale")
-	public ProductOnSale productOnSale;*/
+
+	@OneToOne(fetch = FetchType.EAGER)
+	private ProductOnSale productOnSale;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
@@ -52,13 +52,13 @@ public class Purchase {
 	
 	@Column
 	private Date dateOfPurchase;
-	/*
+	
 	public ProductOnSale getProductOnSale() {
 		return productOnSale;
 	}
 	public void setProductOnSale(ProductOnSale productOnSale) {
 		this.productOnSale = productOnSale;
-	}*/
+	}
 	public Integer getQuantity() {
 		return quantity;
 	}
