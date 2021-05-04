@@ -156,7 +156,7 @@ public class MLServiceImpl implements MLService {
 		// La fecha inicial no puede ser nula
 		if (initialDate == null) ex.initialDateRequired();
 		// Buscamos al proveedor por cuit
-		Optional<Provider> prov = this.getRepository().getProviderByCuit(provider.cuit);
+		Optional<Provider> prov = this.getRepository().getProviderByCuit(provider.getCuit());
 		// Se valida si no existe
 		if (prov == null) throw new MLException("El proveedor no existe");
 		// Si existe el proveedor obtengo la ultima oferta para el producto en cuestión
@@ -173,7 +173,7 @@ public class MLServiceImpl implements MLService {
 			this.getRepository().update(prodOnSale);
 		}
 		
-		ProductOnSale newProductOnSale = new ProductOnSale(/*product, provider, */price, initialDate);
+		ProductOnSale newProductOnSale = new ProductOnSale(product, provider, price, initialDate);
 		this.getRepository().save(newProductOnSale);
 			
 		return newProductOnSale;
@@ -191,7 +191,7 @@ public class MLServiceImpl implements MLService {
 		if (coordY == null) ex.coordYRequired();
 		if (dateOfPurchase == null) ex.dateOfPurchaseRequired();
 		
-		Purchase newPurchase = new Purchase(/*productOnSale, */quantity, client/*, deliveryMethod, paymentMethod*/, address, coordX, coordY, dateOfPurchase);
+		Purchase newPurchase = new Purchase(productOnSale, quantity, client, deliveryMethod, paymentMethod, address, coordX, coordY, dateOfPurchase);
 		this.getRepository().save(newPurchase);
 		
 		return newPurchase;

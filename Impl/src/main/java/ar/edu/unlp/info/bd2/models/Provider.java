@@ -2,11 +2,16 @@ package ar.edu.unlp.info.bd2.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.persistence.OneToMany;
@@ -17,16 +22,16 @@ public class Provider {
 	@GeneratedValue
 	@Column(name = "id_provider")
 	@Id
-	public int Id;
+	private int Id;
 		
 	@Column
-	public String name;
+	private String name;
 	
 	@Column
-	public Long cuit;
-	/*
-	@OneToMany(mappedBy="productsOnSale")
-	public List<ProductOnSale> productsOnSale = new ArrayList<ProductOnSale>();*/
+	private Long cuit;
+	
+	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<ProductOnSale> productsOnSale;
 	
 	@Version
 	@Column(name = "version")
@@ -53,14 +58,12 @@ public class Provider {
 	public void setId(int id) {
 		this.Id = id;
 	}
-	/*
-	public List<ProductOnSale> getProductsOnSale() {
+	public Set<ProductOnSale> getProductsOnSale() {
 		return productsOnSale;
 	}
-
-	public void setProductsOnSale(List<ProductOnSale> productsOnSale) {
+	public void setProductsOnSale(Set<ProductOnSale> productsOnSale) {
 		this.productsOnSale = productsOnSale;
-	}*/
+	}
 	
 	public Provider(String name, Long cuit) {
 		this.name = name;

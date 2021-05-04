@@ -5,12 +5,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -27,9 +30,10 @@ public class ProductOnSale{
 	@OneToOne
 	@JoinColumn(name = "id_purchase")
 	private Product product;
-	/*
-	@OneToOne(mappedBy="provider")*/
-	/*public Provider provider;*/
+	
+	@ManyToOne()
+	@JoinColumn(name = "id_provider")
+	private Provider provider;
 	
 	@Column
 	private Float price; 
@@ -50,13 +54,13 @@ public class ProductOnSale{
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	/*
+	
 	public Provider getProvider() {
 		return provider;
 	}
 	public void setProvider(Provider provider) {
 		this.provider = provider;
-	}*/
+	}
 	public Float getPrice() {
 		return price;
 	}
@@ -82,9 +86,9 @@ public class ProductOnSale{
 		this.finalDate = finalDate;
 	}
 	
-	public ProductOnSale(/*Product product, Provider provider, */Float price, Date initialDate) {
-		/*this.product = product;
-		this.provider = provider;*/
+	public ProductOnSale(Product product, Provider provider, Float price, Date initialDate) {
+		this.product = product;
+		this.provider = provider;
 		this.price = price;
 		this.initialDate = initialDate;
 	}

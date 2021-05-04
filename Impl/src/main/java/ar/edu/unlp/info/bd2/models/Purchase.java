@@ -117,20 +117,19 @@ public class Purchase {
 	}
 	
 	public Float getAmount() {
-		/*Float weight = this.getProductOnSale().getProduct().getWeight();
+		Float weight = this.getProductOnSale().getProduct().getWeight();
 		Float cost = this.deliveryMethod.getCost();
 		
-		return weight + cost;*/
-		return (float) 1;
+		return weight + cost;
 	}
 	
-	public Purchase(/*ProductOnSale productOnSale, */Integer quantity, User client, /*DeliveryMethod deliveryMethod,
-			PaymentMethod paymentMethod,*/ String address, Float coordX, Float coordY, Date dateOfPurchase) {
-		/*this.productOnSale = productOnSale;*/
+	public Purchase(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,
+			PaymentMethod paymentMethod, String address, Float coordX, Float coordY, Date dateOfPurchase) {
+		this.productOnSale = productOnSale;
 		this.quantity = quantity;
 		this.client = client;
-		/*this.deliveryMethod = deliveryMethod;
-		this.paymentMethod = paymentMethod;*/
+		this.deliveryMethod = deliveryMethod;
+		this.paymentMethod = paymentMethod;
 		this.address = address;
 		this.coordX = coordX;
 		this.coordY = coordY;
