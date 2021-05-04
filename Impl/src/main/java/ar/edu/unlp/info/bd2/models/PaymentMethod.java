@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -19,11 +21,22 @@ public class PaymentMethod {
 	@GeneratedValue
 	@Column(name = "id_payment_method")
 	@Id
-	public int Id;
+	private int Id;
 	
 	@Column
-	public String name;
+	private String name;
 	
+	@OneToOne
+	@JoinColumn(name = "id_product_on_sale")
+	private Purchase purchase;
+	
+	public Purchase getPurchase() {
+		return purchase;
+	}
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
+	}
+
 	@Version
 	@Column(name = "version")
 	private int version;

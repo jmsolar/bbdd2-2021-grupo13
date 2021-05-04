@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -13,19 +15,23 @@ public class DeliveryMethod {
 	@GeneratedValue
 	@Column(name = "id_delivery_method")
 	@Id
-	public int Id;
+	private int Id;
 	
 	@Column
-	public String name;
+	private String name;
 	
 	@Column
-	public Float cost; 
+	private Float cost; 
 	
 	@Column
-	public Float startWeight;
+	private Float startWeight;
 	
 	@Column
-	public Float endWeight;
+	private Float endWeight;
+	
+	@OneToOne
+	@JoinColumn(name = "id_product_on_sale")
+	private Purchase purchase;
 	
 	@Version
 	@Column(name = "version")
@@ -67,6 +73,13 @@ public class DeliveryMethod {
 	}
 	public void setId(int id) {
 		this.Id = id;
+	}
+	public Purchase getPurchase() {
+		return purchase;
+	}
+
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
 	}
 	
 	public DeliveryMethod(String name, Float cost, Float startWeight, Float endWeight) {

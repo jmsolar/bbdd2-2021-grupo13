@@ -27,13 +27,13 @@ public class Purchase {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User client;
-	/*
-	@OneToOne(mappedBy="deliveryMethod")
-	public DeliveryMethod deliveryMethod;*/
-	/*
-	@OneToOne(mappedBy="paymentMethod")
-	public PaymentMethod paymentMethod;*/
 	
+	@OneToOne(fetch = FetchType.EAGER)
+	private DeliveryMethod deliveryMethod;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	private PaymentMethod paymentMethod;
+
 	@Version
 	@Column(name = "version")
 	private int version;
@@ -72,7 +72,7 @@ public class Purchase {
 	public void setClient(User client) {
 		this.client = client;
 	}
-	/*
+	
 	public DeliveryMethod getDeliveryMethod() {
 		return deliveryMethod;
 	}
@@ -84,7 +84,7 @@ public class Purchase {
 	}
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
 		this.paymentMethod = paymentMethod;
-	}*/
+	}
 	public String getAddress() {
 		return address;
 	}
