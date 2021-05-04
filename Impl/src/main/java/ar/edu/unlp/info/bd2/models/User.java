@@ -3,7 +3,9 @@ package ar.edu.unlp.info.bd2.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,22 +20,22 @@ public class User {
 	@GeneratedValue
 	@Column(name = "id_user")
 	@Id
-	public int Id;
+	private int Id;
 	
 	@Column
-	public String fullname;
+	private String fullname;
 	
 	@Column
-	public String email;
+	private String email;
 	
 	@Column
-	public String password;
+	private String password;
 	
 	@Column
-	public Date dayOfBirth;
-	/*
-	@OneToMany(mappedBy = "client")
-	public List<Purchase> purchases = new ArrayList<Purchase>();*/
+	private Date dayOfBirth;
+	
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Purchase> purchases;
 	
 	@Version
 	@Column(name = "version")
@@ -69,14 +71,14 @@ public class User {
 	public void setId(int id) {
 		this.Id = id;
 	}
-	/*
-	public List<Purchase> getPurchases() {
+	
+	public Set<Purchase> getPurchases() {
 		return purchases;
 	}
-	public void setPurchases(List<Purchase> purchases) {
+	public void setPurchases(Set<Purchase> purchases) {
 		this.purchases = purchases;
 	}
-	*/
+	
 	public User (String email, String fullname, String password, Date dayOfBirth) {
 		this.email = email;
 		this.fullname = fullname;

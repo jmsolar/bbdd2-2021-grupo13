@@ -14,10 +14,10 @@ public class Category {
 	@GeneratedValue
 	@Column(name = "id_category")
 	@Id
-	public int Id;
+	private int Id;
 	
 	@Column
-	public String name;
+	private String name;
 	
 	@Version
 	@Column(name = "version")
