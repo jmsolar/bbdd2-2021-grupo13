@@ -1,13 +1,18 @@
 package ar.edu.unlp.info.bd2.models;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -18,16 +23,19 @@ public class Product {
 	@GeneratedValue
 	@Column(name = "id_product")
 	@Id
-	public Long Id;
+	public Long id;
 	
 	@Column
-	public String name;
+	private String name;
 	
 	@Column
-	public Float weight;
+	private Float weight;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Category category;
+	private Category category;
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<ProductOnSale> productOnSale;
 	
 	@Version
 	@Column(name = "version")
@@ -54,15 +62,22 @@ public class Product {
 	}
 	
 	public Long getId() {
-		return Id;
+		return id;
 	}
 	public void setId(Long id) {
-		this.Id = id;
+		this.id = id;
 	}
-
+	public Set<ProductOnSale> getProductsOnSale() {
+		return productOnSale;
+	}
+	public void setProductsOnSale(Set<ProductOnSale> productOnSale) {
+		this.productOnSale = productOnSale;
+	}
+	
 	public Product(String name, Float weight, Category category) {
 		this.name = name;
 		this.weight = weight;
 		this.category = category;
+		this.productOnSale = new HashSet<ProductOnSale>();
 	}
 }

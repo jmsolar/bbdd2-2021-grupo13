@@ -156,7 +156,7 @@ public class MLServiceTestCase {
         assertNotNull(dp.getId());
         assertEquals(Float.valueOf(100F),dp.getPromisedAmount());
     }
-    /*
+    
     @Test
     public void testCreateProductOnSale() throws MLException {
         Provider p = this.service.createProvider("Philips",30715589634L);
@@ -176,7 +176,7 @@ public class MLServiceTestCase {
         assertEquals(id,pos.getInitialDate());
         assertEquals(p.getCuit(),pos.getProvider().getCuit());
     }
-    
+    /* 
     @Test
     public void testUpdateProductOnSale() throws MLException {
         Provider p = this.service.createProvider("Philips",30715589634L);
