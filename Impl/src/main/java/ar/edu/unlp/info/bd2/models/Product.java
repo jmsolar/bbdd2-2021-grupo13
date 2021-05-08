@@ -34,7 +34,7 @@ public class Product {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Category category;
 	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER , cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private Set<ProductOnSale> productOnSale;
 	
 	@Version

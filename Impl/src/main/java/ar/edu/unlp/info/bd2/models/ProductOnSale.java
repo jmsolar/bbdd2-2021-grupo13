@@ -29,11 +29,11 @@ public class ProductOnSale{
 	@Id
 	private int Id;
 	
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "id_product")
 	private Product product;
 	
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "id_provider")
 	private Provider provider;
 	
