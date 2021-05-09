@@ -27,4 +27,8 @@ public class PurchaseException extends MLException {
 	public void purchaseExist() throws MLException {
 		throw new MLException("Purchase is already exist");
 	}
+	
+	public void deliveryInvalid() throws MLException {
+		throw new MLException("método de delivery no válido");
+	}
 }

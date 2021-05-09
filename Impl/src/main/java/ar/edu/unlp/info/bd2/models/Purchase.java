@@ -117,10 +117,10 @@ public class Purchase {
 	}
 	
 	public Float getAmount() {
-		Float weight = this.getProductOnSale().getProduct().getWeight();
+		Float price = this.getProductOnSale().getPrice() * this.quantity;
 		Float cost = this.deliveryMethod.getCost();
 		
-		return weight + cost;
+		return price + cost;
 	}
 	
 	public Purchase(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,

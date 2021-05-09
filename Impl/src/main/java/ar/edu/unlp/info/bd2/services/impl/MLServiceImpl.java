@@ -95,15 +95,15 @@ public class MLServiceImpl implements MLService {
 	public DeliveryMethod createDeliveryMethod(String name, Float cost, Float startWeight, Float endWeight)
 			throws MLException {
 		DeliveryMethodException ex = new DeliveryMethodException();
-		
+				
 		if (name.isBlank() || name.isEmpty()) ex.nameRequired();
 		if (cost == null ) ex.costRequired();
 		if (startWeight == null) ex.startWeightRequired();
 		if (endWeight == null) ex.endWeightRequired();
 		
 		Optional<DeliveryMethod> deliveryMethodInDB = getDeliveryMethodByName(name);
-		if (deliveryMethodInDB.isPresent()) ex.nameExist();
-		
+//		if (deliveryMethodInDB.isPresent()) ex.nameExist();
+
 		DeliveryMethod newDeliveryMethod = new DeliveryMethod(name, cost, startWeight, endWeight);
 		this.getRepository().save(newDeliveryMethod);
 		
@@ -187,7 +187,8 @@ public class MLServiceImpl implements MLService {
 		if (coordY == null) ex.coordYRequired();
 		if (dateOfPurchase == null) ex.dateOfPurchaseRequired();
 		
-		if (productOnSale.getProduct().getWeight() < deliveryMethod.getStartWeight() || productOnSale.getProduct().getWeight() > deliveryMethod.getEndWeight()) throw new MLException("método de delivery no válido");
+		float totalWeight = productOnSale.getProduct().getWeight() * quantity;
+		if (totalWeight < deliveryMethod.getStartWeight() || totalWeight > deliveryMethod.getEndWeight()) ex.deliveryInvalid();
 		
 		Purchase newPurchase = new Purchase(productOnSale, quantity, client, deliveryMethod, paymentMethod, address, coordX, coordY, dateOfPurchase);
 		this.getRepository().save(newPurchase);

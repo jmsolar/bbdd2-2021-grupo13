@@ -18,8 +18,10 @@ public class DeliveryMethodException extends MLException {
 	public void endWeightRequired() throws MLException {
 		throw new MLException("Delivery method end weight is required");
 	}
-	
+
 	public void nameExist() throws MLException {
 		throw new MLException("Delivery method name is already exist");
 	}
+
+
 }
