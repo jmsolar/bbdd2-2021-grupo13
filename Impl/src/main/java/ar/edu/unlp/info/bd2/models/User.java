@@ -79,6 +79,8 @@ public class User {
 		this.purchases = purchases;
 	}
 	
+	public User() {}
+	
 	public User (String email, String fullname, String password, Date dayOfBirth) {
 		this.email = email;
 		this.fullname = fullname;

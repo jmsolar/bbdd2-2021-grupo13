@@ -54,6 +54,8 @@ public class CreditCardPayment extends PaymentMethod {
 	public void setOwner(String owner) {
 		this.owner = owner;
 	}
+	
+	public CreditCardPayment() {}
 
 	public CreditCardPayment(String name, String brand, Long number, Date expiry, Integer cvv, String owner) {
 		super(name);

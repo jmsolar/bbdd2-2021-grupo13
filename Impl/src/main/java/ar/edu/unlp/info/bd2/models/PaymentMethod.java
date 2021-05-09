@@ -56,6 +56,8 @@ public class PaymentMethod {
 		this.name = name;
 	}
 	
+	public PaymentMethod() {}
+	
 	public PaymentMethod(String name) {
 		this.name = name;
 	}

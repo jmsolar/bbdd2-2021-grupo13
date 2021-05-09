@@ -74,6 +74,8 @@ public class Product {
 		this.productOnSale = productOnSale;
 	}
 	
+	public Product() {}
+	
 	public Product(String name, Float weight, Category category) {
 		this.name = name;
 		this.weight = weight;

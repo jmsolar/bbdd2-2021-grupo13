@@ -65,6 +65,7 @@ public class Provider {
 		this.productsOnSale = productsOnSale;
 	}
 	
+	public Provider() {}
 	public Provider(String name, Long cuit) {
 		this.name = name;
 		this.cuit = cuit;

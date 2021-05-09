@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ar.edu.unlp.info.bd2.exceptions.MLException;
 import ar.edu.unlp.info.bd2.models.*;
 
+@Transactional
 public class MLRepository {
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -85,6 +88,6 @@ public class MLRepository {
 	}
 	
 	public List<Purchase> getAllPurchasesMadeByUser(String username) {
-		return this.sessionFactory.getCurrentSession().createQuery("FROM Purchase WHERE user_id = ?1").setParameter(1, username).list();
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR FROM Purchase PUR INNER JOIN PUR.client CLI WHERE CLI.email = ?1").setParameter(1, username).list();
 	}
 }

@@ -88,6 +88,10 @@ public class ProductOnSale{
 		this.finalDate = finalDate;
 	}
 	
+	public ProductOnSale() {
+		
+	}
+	
 	public ProductOnSale(Product product, Provider provider, Float price, Date initialDate) {
 		this.product = product;
 		this.provider = provider;

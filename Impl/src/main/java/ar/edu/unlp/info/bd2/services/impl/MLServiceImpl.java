@@ -29,7 +29,7 @@ public class MLServiceImpl implements MLService {
 	public Category createCategory(String name) throws MLException {
 		MLException ex = new MLException();
 				
-		Optional<Category> categoryInDB = getCategoryByName(name);
+		Optional<Category> categoryInDB = this.getCategoryByName(name);
 		if (categoryInDB.isPresent()) ex.categoryNotFound();
 		
 		Category newCategory = new Category(name);
@@ -42,7 +42,7 @@ public class MLServiceImpl implements MLService {
 	public Product createProduct(String name, Float weight, Category category) throws MLException {
 		MLException ex = new MLException();
 		
-		Optional<Product> productInDB = getProductByName(name);
+		Optional<Product> productInDB = this.getProductByName(name);
 		if (productInDB.isPresent()) ex.constraintViolation();
 		
 		Product newProduct = new Product(name, weight, category);
@@ -55,7 +55,7 @@ public class MLServiceImpl implements MLService {
 	public User createUser(String email, String fullname, String password, Date dayOfBirth) throws MLException {
 		MLException ex = new MLException();
 		
-		Optional<User> userInDB = getUserByEmail(email);
+		Optional<User> userInDB = this.getUserByEmail(email);
 		if (userInDB.isPresent()) ex.constraintViolation();
 		
 		User newUser = new User(email, fullname, password, dayOfBirth);
@@ -68,7 +68,7 @@ public class MLServiceImpl implements MLService {
 	public Provider createProvider(String name, Long cuit) throws MLException {
 		MLException ex = new MLException();
 		
-		Optional<Provider> providerDB = getProviderByCuit(cuit);
+		Optional<Provider> providerDB = this.getProviderByCuit(cuit);
 		if (providerDB.isPresent()) ex.constraintViolation();
 		
 		Provider newProvider = new Provider(name, cuit);
@@ -91,11 +91,6 @@ public class MLServiceImpl implements MLService {
 	@Override
 	public CreditCardPayment createCreditCardPayment(String name, String brand, Long number, Date expiry, Integer cvv,
 			String owner) throws MLException {
-		MLException ex = new MLException();
-				
-		Optional<CreditCardPayment> creditCardPaymentInDB = getCreditCardPaymentByName(name);
-		if (creditCardPaymentInDB.isPresent()) ex.constraintViolation();
-		
 		CreditCardPayment newCreditCardPayment = new CreditCardPayment(name, brand, number, expiry, cvv, owner);
 		this.getRepository().save(newCreditCardPayment);
 		
@@ -104,11 +99,6 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public OnDeliveryPayment createOnDeliveryPayment(String name, Float promisedAmount) throws MLException {
-		MLException ex = new MLException();
-		
-		Optional<OnDeliveryPayment> onDeliveryPaymentInDB = getOnDeliveryPaymentByName(name);
-		if (onDeliveryPaymentInDB.isPresent()) ex.constraintViolation();
-		
 		OnDeliveryPayment newOnDeliveryPayment = new OnDeliveryPayment(name, promisedAmount);
 		this.getRepository().save(newOnDeliveryPayment);
 		

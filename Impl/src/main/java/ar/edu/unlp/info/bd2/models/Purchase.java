@@ -124,6 +124,8 @@ public class Purchase {
 		return result;
 	}
 	
+	public Purchase() {}
+	
 	public Purchase(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,
 			PaymentMethod paymentMethod, String address, Float coordX, Float coordY, Date dateOfPurchase) {
 		this.productOnSale = productOnSale;

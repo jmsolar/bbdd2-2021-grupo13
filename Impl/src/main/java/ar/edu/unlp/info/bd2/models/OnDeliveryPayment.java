@@ -18,6 +18,8 @@ public class OnDeliveryPayment extends PaymentMethod{
 		this.promisedAmount = promisedAmount;
 	}
 	
+	public OnDeliveryPayment() {}
+	
 	public OnDeliveryPayment(String name, Float promisedAmount) {
 		super(name);
 		this.promisedAmount = promisedAmount;
