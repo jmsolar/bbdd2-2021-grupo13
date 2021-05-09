@@ -1,6 +1,7 @@
 package ar.edu.unlp.info.bd2.repositories;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.Session;
@@ -81,5 +82,9 @@ public class MLRepository {
 
 	public Optional<Purchase> getPurchaseById(Long id) {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Purchase WHERE id = ?1", Purchase.class).setParameter(1, id).uniqueResultOptional();
+	}
+	
+	public List<Purchase> getAllPurchasesMadeByUser(String username) {
+		return this.sessionFactory.getCurrentSession().createQuery("FROM Purchase WHERE user_id = ?1").setParameter(1, username).list();
 	}
 }

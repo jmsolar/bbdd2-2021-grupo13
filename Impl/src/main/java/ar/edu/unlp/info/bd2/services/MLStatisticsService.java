@@ -3,14 +3,7 @@ package ar.edu.unlp.info.bd2.services;
 import java.util.Date;
 import java.util.List;
 
-import ar.edu.unlp.info.bd2.models.Category;
-import ar.edu.unlp.info.bd2.models.DeliveryMethod;
-import ar.edu.unlp.info.bd2.models.OnDeliveryPayment;
-import ar.edu.unlp.info.bd2.models.Product;
-import ar.edu.unlp.info.bd2.models.ProductOnSale;
-import ar.edu.unlp.info.bd2.models.Purchase;
-import ar.edu.unlp.info.bd2.models.Provider;
-import ar.edu.unlp.info.bd2.models.User;
+import ar.edu.unlp.info.bd2.models.*;
 
 public interface MLStatisticsService {
 	

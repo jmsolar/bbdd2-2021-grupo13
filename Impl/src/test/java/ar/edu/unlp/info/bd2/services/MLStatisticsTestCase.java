@@ -1,7 +1,7 @@
 package ar.edu.unlp.info.bd2.services;
 
 import ar.edu.unlp.info.bd2.config.*;
-//import ar.edu.unlp.info.bd2.models.*;
+import ar.edu.unlp.info.bd2.models.*;
 import ar.edu.unlp.info.bd2.exceptions.MLException;
 import ar.edu.unlp.info.bd2.utils.DBInitializer;
 import org.junit.Assert;
@@ -25,15 +25,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/*
+
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {AppConfig.class, HibernateConfiguration.class, DBInitializerConfig.class }, loader = AnnotationConfigContextLoader.class)
 @Transactional
 @Rollback(true)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-*/
+
 public class MLStatisticsTestCase {
-	/*
+	
     @Autowired
     DBInitializer initializer;
 
@@ -43,7 +43,7 @@ public class MLStatisticsTestCase {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     @BeforeAll
-    public void prepareDB() throws Exception {
+    public void prepareDB() throws Exception, MLException {
         this.initializer.prepareDB();
     }
     
@@ -64,7 +64,7 @@ public class MLStatisticsTestCase {
     public void testGetAllPurchasesMadeByUser() {
     	assertEquals(5,this.service.getAllPurchasesMadeByUser("silviasez428@gmail.com").size());
     }
-    
+    /*
     @Test
     public void testGetUsersSpendingMoreThanInPurchase() {
     	List<User> users = this.service.getUsersSpendingMoreThanInPurchase(Float.valueOf(920000F));
