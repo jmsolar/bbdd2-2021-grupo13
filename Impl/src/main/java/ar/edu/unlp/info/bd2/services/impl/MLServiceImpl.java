@@ -8,7 +8,7 @@ import java.util.Optional;
 import ar.edu.unlp.info.bd2.models.*;
 import ar.edu.unlp.info.bd2.repositories.MLRepository;
 import ar.edu.unlp.info.bd2.services.MLService;
-import ar.edu.unlp.info.bd2.exceptions.*;;
+import ar.edu.unlp.info.bd2.exceptions.*;
 
 public class MLServiceImpl implements MLService {
 	public MLRepository repository;
