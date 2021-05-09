@@ -101,9 +101,6 @@ public class MLServiceImpl implements MLService {
 		if (startWeight == null) ex.startWeightRequired();
 		if (endWeight == null) ex.endWeightRequired();
 		
-		Optional<DeliveryMethod> deliveryMethodInDB = getDeliveryMethodByName(name);
-		if (deliveryMethodInDB.isPresent()) ex.nameExist();
-		
 		DeliveryMethod newDeliveryMethod = new DeliveryMethod(name, cost, startWeight, endWeight);
 		this.getRepository().save(newDeliveryMethod);
 		
@@ -157,8 +154,8 @@ public class MLServiceImpl implements MLService {
 		Optional<Provider> prov = this.getRepository().getProviderByCuit(provider.getCuit());
 		if (prov == null) throw new MLException("El proveedor no existe");
 		
-		ProductOnSale prodOnSale = this.getRepository().getLastProductOnSaleById(product.getId(), provider.getCuit());
-		if (prodOnSale != null && prodOnSale.getInitialDate().before(initialDate)) throw new MLException("Ya existe un precio para el producto con fecha de inicio de vigencia posterior a la fecha de inicio dada");
+		ProductOnSale prodOnSale = this.getRepository().getLastProductOnSaleById(provider.getId(), product.getId());
+		if (prodOnSale != null && prodOnSale.getInitialDate().after(initialDate)) throw new MLException("Ya existe un precio para el producto con fecha de inicio de vigencia posterior a la fecha de inicio dada");
 
 		if (prodOnSale != null) {
 			GregorianCalendar cal = new GregorianCalendar();
@@ -186,7 +183,7 @@ public class MLServiceImpl implements MLService {
 		if (coordX == null) ex.coordXRequired();
 		if (coordY == null) ex.coordYRequired();
 		if (dateOfPurchase == null) ex.dateOfPurchaseRequired();
-		
+
 		if (productOnSale.getProduct().getWeight() < deliveryMethod.getStartWeight() || productOnSale.getProduct().getWeight() > deliveryMethod.getEndWeight()) throw new MLException("método de delivery no válido");
 		
 		Purchase newPurchase = new Purchase(productOnSale, quantity, client, deliveryMethod, paymentMethod, address, coordX, coordY, dateOfPurchase);

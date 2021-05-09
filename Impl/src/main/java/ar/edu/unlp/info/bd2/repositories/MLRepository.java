@@ -63,8 +63,8 @@ public class MLRepository {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM ProductOnSale WHERE id_product_on_sale = ?1", ProductOnSale.class).setParameter(1, id).uniqueResult();
 	}
 	
-	public ProductOnSale getLastProductOnSaleById(Long id, Long cuit) {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT POS FROM Provider PRO INNER JOIN PRO.productsOnSale POS WHERE PRO.cuit = ?1 AND POS.finalDate IS NULL AND POS.product.id = ?2", ProductOnSale.class).setParameter(1, id).setParameter(2, cuit).uniqueResult();
+	public ProductOnSale getLastProductOnSaleById(int idProvider, Long idProduct) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT POS FROM Provider PRO INNER JOIN PRO.productsOnSale POS WHERE PRO.id = ?1 AND POS.finalDate IS NULL AND POS.product.id = ?2", ProductOnSale.class).setParameter(1, idProvider).setParameter(2, idProduct).uniqueResult();
 	}	
 	
 	public Optional<DeliveryMethod> getDeliveryMethodByName(String name) {
