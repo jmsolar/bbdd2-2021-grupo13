@@ -8,8 +8,7 @@ import java.util.Optional;
 import ar.edu.unlp.info.bd2.models.*;
 import ar.edu.unlp.info.bd2.repositories.MLRepository;
 import ar.edu.unlp.info.bd2.services.MLService;
-import ar.edu.unlp.info.bd2.exceptions.*;
-import ar.edu.unlp.info.bd2.exceptions.impl.*;
+import ar.edu.unlp.info.bd2.exceptions.*;;
 
 public class MLServiceImpl implements MLService {
 	public MLRepository repository;
@@ -27,12 +26,10 @@ public class MLServiceImpl implements MLService {
 	
 	@Override
 	public Category createCategory(String name) throws MLException {
-		CategoryException ex = new CategoryException();
-		
-		if (name == null|| name.trim().isEmpty()) ex.nameRequired();
-		
+		MLException ex = new MLException();
+				
 		Optional<Category> categoryInDB = getCategoryByName(name);
-		if (categoryInDB.isPresent()) ex.categoryExist();
+		if (categoryInDB.isPresent()) ex.categoryNotFound();
 		
 		Category newCategory = new Category(name);
 		this.getRepository().save(newCategory);
@@ -42,14 +39,10 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public Product createProduct(String name, Float weight, Category category) throws MLException {
-		ProductException ex = new ProductException();
-		
-		if (name == null|| name.trim().isEmpty()) ex.nameRequired();
-		
-		if (weight == null) ex.weightRequired();
+		MLException ex = new MLException();
 		
 		Optional<Product> productInDB = getProductByName(name);
-		if (productInDB.isPresent()) ex.productExist();
+		if (productInDB.isPresent()) ex.constraintViolation();
 		
 		Product newProduct = new Product(name, weight, category);
 		this.getRepository().save(newProduct);
@@ -59,15 +52,10 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public User createUser(String email, String fullname, String password, Date dayOfBirth) throws MLException {
-		UserException ex = new UserException();
-		
-		if (email == null|| email.trim().isEmpty()) ex.emailRequired();
-		if (fullname == null|| fullname.trim().isEmpty()) ex.fullnameRequired();
-		if (password == null|| password.trim().isEmpty()) ex.passwordRequired();
-		if (dayOfBirth == null) ex.dayOfBirthRequired();
+		MLException ex = new MLException();
 		
 		Optional<User> userInDB = getUserByEmail(email);
-		if (userInDB.isPresent()) ex.emailExist();
+		if (userInDB.isPresent()) ex.constraintViolation();
 		
 		User newUser = new User(email, fullname, password, dayOfBirth);
 		this.getRepository().save(newUser);
@@ -77,13 +65,10 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public Provider createProvider(String name, Long cuit) throws MLException {
-		ProviderException ex = new ProviderException();
-		
-		if (name == null|| name.trim().isEmpty()) ex.nameRequired();
-		if (cuit == null || cuit <= 0) ex.cuitRequired();
+		MLException ex = new MLException();
 		
 		Optional<Provider> providerDB = getProviderByCuit(cuit);
-		if (providerDB.isPresent()) ex.cuitExist();
+		if (providerDB.isPresent()) ex.constraintViolation();
 		
 		Provider newProvider = new Provider(name, cuit);
 		this.getRepository().save(newProvider);
@@ -94,12 +79,7 @@ public class MLServiceImpl implements MLService {
 	@Override
 	public DeliveryMethod createDeliveryMethod(String name, Float cost, Float startWeight, Float endWeight)
 			throws MLException {
-		DeliveryMethodException ex = new DeliveryMethodException();
-		
-		if (name.isBlank() || name.isEmpty()) ex.nameRequired();
-		if (cost == null ) ex.costRequired();
-		if (startWeight == null) ex.startWeightRequired();
-		if (endWeight == null) ex.endWeightRequired();
+		MLException ex = new MLException();
 		
 		DeliveryMethod newDeliveryMethod = new DeliveryMethod(name, cost, startWeight, endWeight);
 		this.getRepository().save(newDeliveryMethod);
@@ -110,17 +90,10 @@ public class MLServiceImpl implements MLService {
 	@Override
 	public CreditCardPayment createCreditCardPayment(String name, String brand, Long number, Date expiry, Integer cvv,
 			String owner) throws MLException {
-		CreditCardPaymentException ex = new CreditCardPaymentException();
-		
-		if (name == null|| name.trim().isEmpty()) ex.nameRequired();
-		if (brand == null|| brand.trim().isEmpty()) ex.brandRequired();
-		if (number == null ) ex.numberRequired();
-		if (expiry == null) ex.expiryRequired();
-		if (cvv == null) ex.cvvRequired();
-		if (owner == null|| owner.trim().isEmpty()) ex.ownerRequired();
-		
+		MLException ex = new MLException();
+				
 		Optional<CreditCardPayment> creditCardPaymentInDB = getCreditCardPaymentByName(name);
-		if (creditCardPaymentInDB.isPresent()) ex.nameExist();
+		if (creditCardPaymentInDB.isPresent()) ex.constraintViolation();
 		
 		CreditCardPayment newCreditCardPayment = new CreditCardPayment(name, brand, number, expiry, cvv, owner);
 		this.getRepository().save(newCreditCardPayment);
@@ -130,13 +103,10 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public OnDeliveryPayment createOnDeliveryPayment(String name, Float promisedAmount) throws MLException {
-		OnDeliveryPaymentException ex = new OnDeliveryPaymentException();
-		
-		if (name == null|| name.trim().isEmpty()) ex.nameRequired();
-		if (promisedAmount == null) ex.promisedAmountRequired();
+		MLException ex = new MLException();
 		
 		Optional<OnDeliveryPayment> onDeliveryPaymentInDB = getOnDeliveryPaymentByName(name);
-		if (onDeliveryPaymentInDB.isPresent()) ex.nameExist();
+		if (onDeliveryPaymentInDB.isPresent()) ex.constraintViolation();
 		
 		OnDeliveryPayment newOnDeliveryPayment = new OnDeliveryPayment(name, promisedAmount);
 		this.getRepository().save(newOnDeliveryPayment);
@@ -147,15 +117,10 @@ public class MLServiceImpl implements MLService {
 	@Override
 	public ProductOnSale createProductOnSale(Product product, Provider provider, Float price, Date initialDate)
 			throws MLException {
-		ProductOnSaleException ex = new ProductOnSaleException();
-		
-		if (price == null) ex.priceRequired();
-		if (initialDate == null) ex.initialDateRequired();
-		Optional<Provider> prov = this.getRepository().getProviderByCuit(provider.getCuit());
-		if (prov == null) throw new MLException("El proveedor no existe");
-		
+		MLException ex = new MLException();
+			
 		ProductOnSale prodOnSale = this.getRepository().getLastProductOnSaleById(provider.getId(), product.getId());
-		if (prodOnSale != null && prodOnSale.getInitialDate().after(initialDate)) throw new MLException("Ya existe un precio para el producto con fecha de inicio de vigencia posterior a la fecha de inicio dada");
+		if (prodOnSale != null && prodOnSale.getInitialDate().after(initialDate)) ex.priceValidity();
 
 		if (prodOnSale != null) {
 			GregorianCalendar cal = new GregorianCalendar();
@@ -176,15 +141,10 @@ public class MLServiceImpl implements MLService {
 	public Purchase createPurchase(ProductOnSale productOnSale, Integer quantity, User client,
 			DeliveryMethod deliveryMethod, PaymentMethod paymentMethod, String address, Float coordX, Float coordY,
 			Date dateOfPurchase) throws MLException {
-		PurchaseException ex = new PurchaseException();
+		MLException ex = new MLException();
 		
-		if (quantity == null) ex.quantityRequired();
-		if (address == null|| address.trim().isEmpty()) ex.addressRequired();
-		if (coordX == null) ex.coordXRequired();
-		if (coordY == null) ex.coordYRequired();
-		if (dateOfPurchase == null) ex.dateOfPurchaseRequired();
-
-		if (productOnSale.getProduct().getWeight() < deliveryMethod.getStartWeight() || productOnSale.getProduct().getWeight() > deliveryMethod.getEndWeight()) throw new MLException("método de delivery no válido");
+		Float totalWeight = productOnSale.getProduct().getWeight() * quantity;
+		if (totalWeight < deliveryMethod.getStartWeight() || totalWeight > deliveryMethod.getEndWeight()) ex.deliveryMethodInvalid();
 		
 		Purchase newPurchase = new Purchase(productOnSale, quantity, client, deliveryMethod, paymentMethod, address, coordX, coordY, dateOfPurchase);
 		this.getRepository().save(newPurchase);
