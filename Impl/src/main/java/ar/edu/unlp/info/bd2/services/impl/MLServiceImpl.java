@@ -195,8 +195,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public List<User> getUsersSpendingMoreThanInPurchase(Float amount) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getUsersSpendingMoreThanInPurchase(amount);
 	}
 
 	@Override
@@ -231,8 +230,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public List<Product> getProductForCategory(Category category) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getProductForCategory(category);	
 	}
 
 	@Override

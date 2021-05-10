@@ -90,4 +90,18 @@ public class MLRepository {
 	public List<Purchase> getAllPurchasesMadeByUser(String username) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR FROM Purchase PUR INNER JOIN PUR.client CLI WHERE CLI.email = ?1").setParameter(1, username).list();
 	}
+	
+	public List<User> getUsersSpendingMoreThanInPurchase(Float amount) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT US FROM USER US INNER JOIN PURCHASE PUR WHERE PUR.AMOUNT > ?1").setParameter(1, amount).list();
+	}
+	
+	public List<User>  getUsersSpendingMoreThan(Float amount) {
+		// hacer
+		return null;	
+	}
+
+	public List<Product> getProductForCategory(Category category) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PR FROM PRODUCT PR INNER JOIN CATEGORY CAT WHERE CAT.NAME = ?1").setParameter(1, category).list();
+	}
+	
 }

@@ -13,6 +13,7 @@ public interface MLStatisticsService {
 	 */
 	List<Purchase> getAllPurchasesMadeByUser(String username);
 	
+	
 	/**
 	 * @param amount
 	 * @return una lista de los usuarios que han gastando más de <code>amount</code> en alguna compra en la plataforma
