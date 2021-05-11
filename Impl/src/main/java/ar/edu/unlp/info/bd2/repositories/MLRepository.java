@@ -1,6 +1,8 @@
 package ar.edu.unlp.info.bd2.repositories;
 
 import java.io.Serializable;
+//import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,6 +104,19 @@ public class MLRepository {
 
 	public List<Product> getProductForCategory(Category category) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PR FROM PRODUCT PR INNER JOIN CATEGORY CAT WHERE CAT.NAME = ?1").setParameter(1, category).list();
+	}
+	// los clientes son los que realizan las compras, no los proveeedores: VER!
+	public List<Purchase> getPurchasesForProvider(String cuit){
+		return null;
+	}
+	
+	// importa de la clase java.util.Date y no de java.SQL.Date
+	public List<ProductOnSale> getSoldProductsOn(Date day) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT POS FROM ProductOnSale POS INNER JOIN Purchase PUR WHERE PUR.dateOfPurchase = ?1 AND POS.id = PUR.productOnSale").setParameter(1, day).list();
+	}
+	
+	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT Purchase PUR WHERE PUR.dateOfPurchase >= ?1 AND PUR.dateOfPurchase <= ?2  AND POS.id = PUR.productOnSale").setParameter(1, startDate).setParameter(2, endDate).list();
 	}
 	
 }

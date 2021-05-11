@@ -224,8 +224,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getPurchasesInPeriod(startDate, endDate);		
 	}
 
 	@Override
@@ -235,7 +234,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public List<Purchase> getPurchasesForProvider(Long cuit) {
-		// TODO Auto-generated method stub
+		//return this.getRepository().getPurchasesForProvider(cuit);
 		return null;
 	}
 
@@ -270,9 +269,8 @@ public class MLServiceImpl implements MLService {
 	}
 
 	@Override
-	public List<ProductOnSale> getSoldProductsOn(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProductOnSale> getSoldProductsOn(Date day) {		
+		return this.getRepository().getSoldProductsOn(day);
 	}
 
 	@Override
