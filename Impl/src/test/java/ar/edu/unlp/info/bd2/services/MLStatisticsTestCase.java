@@ -66,25 +66,28 @@ public class MLStatisticsTestCase {
     }
     /*
     @Test
+    
     public void testGetUsersSpendingMoreThanInPurchase() {
     	List<User> users = this.service.getUsersSpendingMoreThanInPurchase(Float.valueOf(920000F));
     	assertEquals(3,users.size());
-    	this.assertListEquality(users.stream().map(property -> property.getUsername()).collect(Collectors.toList()),Arrays.asList("carlospascual402@hotmail.com","matiasgarca37@hotmail.com","maracalvo55@yahoo.com"));
+    	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("carlospascual402@hotmail.com","matiasgarca37@hotmail.com","maracalvo55@yahoo.com"));
     }
     
     @Test
     public void testGetUsersSpendingMoreThan() {
     	List<User> users = this.service.getUsersSpendingMoreThan(Float.valueOf(1900000.00F));
     	assertEquals(3,users.size());
-    	this.assertListEquality(users.stream().map(property -> property.getUsername()).collect(Collectors.toList()),Arrays.asList("santiagoserrano157@yahoo.com","santiagomartin638@yahoo.com","florenciaalonso505@yahoo.com"));
+    	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("santiagoserrano157@yahoo.com","santiagomartin638@yahoo.com","florenciaalonso505@yahoo.com"));
     }
+        
     
     @Test
     public void testGetTopNProvidersInPurchases() {
     	List<Provider> providers = this.service.getTopNProvidersInPurchases(3);
     	assertEquals(3,providers.size());
-    	this.assertListEquality(providers.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("Grupo Nucleo S.A.","Refrigeracion MG Repuestos","Seara Refrigeración S.H."));
+    	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("silviasez428@gmail.com","matiasherrero831@gmail.com","santiagoserrano157@yahoo.com","silviaromero99@me.com","florenciaalonso505@yahoo.com","paulacaballero154@yahoo.com","paulamorales955@yahoo.com"));
     }
+    
     
     @Test
     public void testGetTop3MoreExpensiveProducts() {
