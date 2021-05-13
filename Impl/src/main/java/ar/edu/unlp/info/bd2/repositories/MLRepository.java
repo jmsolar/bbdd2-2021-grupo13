@@ -94,7 +94,7 @@ public class MLRepository {
 	}
 	
 	public List<User> getUsersSpendingMoreThanInPurchase(Float amount) {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT US FROM USER US INNER JOIN PURCHASE PUR WHERE PUR.AMOUNT > ?1").setParameter(1, amount).list();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM User US INNER JOIN Purchase PUR WHERE PUR.amount > ?1").setParameter(1, amount).list();
 	}
 	
 	public List<User>  getUsersSpendingMoreThan(Float amount) {
@@ -103,7 +103,7 @@ public class MLRepository {
 	}
 
 	public List<Product> getProductForCategory(Category category) {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT PR FROM PRODUCT PR INNER JOIN CATEGORY CAT WHERE CAT.NAME = ?1").setParameter(1, category).list();
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PR FROM Product PR INNER JOIN Category CAT WHERE CAT.name = ?1").setParameter(1, category).list();
 	}
 	// los clientes son los que realizan las compras, no los proveeedores: VER!
 	public List<Purchase> getPurchasesForProvider(String cuit){
