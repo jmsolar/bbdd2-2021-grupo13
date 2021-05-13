@@ -195,7 +195,11 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public List<User> getUsersSpendingMoreThanInPurchase(Float amount) {
-		return this.getRepository().getUsersSpendingMoreThanInPurchase(amount);
+		// Recorro los usuarios
+			// Sumo todas sus compras
+		// si la compra > amount
+			// Agrego a la lista
+			return this.getRepository().getUsersSpendingMoreThanInPurchase(amount);
 	}
 
 	@Override
@@ -211,9 +215,8 @@ public class MLServiceImpl implements MLService {
 	}
 
 	@Override
-	public List<Product> getTop3MoreExpensiveProducts() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> getTop3MoreExpensiveProducts() {		
+		return this.getRepository().getTop3MoreExpensiveProducts();
 	}
 
 	@Override

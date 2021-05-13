@@ -87,20 +87,26 @@ public class MLRepository {
 	public Optional<Purchase> getPurchaseById(Long id) {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Purchase WHERE id = ?1", Purchase.class).setParameter(1, id).uniqueResultOptional();
 	}
-	
+	// 1 - OK
 	public List<Purchase> getAllPurchasesMadeByUser(String username) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR FROM Purchase PUR INNER JOIN PUR.client CLI WHERE CLI.email = ?1").setParameter(1, username).list();
 	}
-	
+	// 2 - OK
 	public List<User> getUsersSpendingMoreThanInPurchase(Float amount) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT CLI FROM Purchase PUR INNER JOIN PUR.client CLI WHERE PUR.amount > ?1").setParameter(1, amount).list();
 	}
 	
-	public List<User>  getUsersSpendingMoreThan(Float amount) {
-		// hacer
+	// 3 -
+	//Obtiene los usuarios que han gastando más de amount entre todas sus compras en la plataforma
+	public List<User>  getUsersSpendingMoreThan(Float amount) {		
 		return null;	
 	}
-
+	
+	public List<Product>  getTop3MoreExpensiveProducts() {
+		return this.sessionFactory.getCurrentSession().createSQLQuery("SELECT DISTINCT Product INNER JOIN ProductOnSale ON (Product.id_product = ProductOnSale.id_product) ORDER BY ProductOnSale.price DESC LIMIT 3").list();
+	}															  // SELECT DISTINCT PRO FROM Product PRO INNER JOIN	PRO.productOnSale PRO ORDER BY price DESC LIMIT 3").setParameter(1, amount).list();
+															    // SELECT DISTINCT POS FROM ProductOnSale POS INNER JOIN POS.product PRO ORDER BY POS.price DESC LIMIT 3
+	// 8 - OK
 	public List<Product> getProductForCategory(Category category) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PR FROM Product PR INNER JOIN PR.category CAT WHERE CAT.name = ?1").setParameter(1, category.getName()).list();
 	}
@@ -109,10 +115,12 @@ public class MLRepository {
 		return null;
 	}
 	
+	// 15 - FAIL ASSERT
 	public List<ProductOnSale> getSoldProductsOn(Date day) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT POS FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1").setParameter(1, day).list();
 	}
 	
+	// 7 - OK
 	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Purchase WHERE dateOfPurchase >= ?1 AND dateOfPurchase <= ?2").setParameter(1, startDate).setParameter(2, endDate).list();
 	}
