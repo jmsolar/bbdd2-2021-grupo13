@@ -128,7 +128,7 @@ public class Purchase {
 		return result;
 	}
 	
-	public float getAmount() {
+	public Float getAmount() {
 		return amount;
 	}
 	

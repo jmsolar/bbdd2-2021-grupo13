@@ -64,7 +64,7 @@ public class MLStatisticsTestCase {
     public void testGetAllPurchasesMadeByUser() {
     	assertEquals(5,this.service.getAllPurchasesMadeByUser("silviasez428@gmail.com").size());
     }
-    /*
+
     @Test
     
     public void testGetUsersSpendingMoreThanInPurchase() {
@@ -72,14 +72,14 @@ public class MLStatisticsTestCase {
     	assertEquals(3,users.size());
     	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("carlospascual402@hotmail.com","matiasgarca37@hotmail.com","maracalvo55@yahoo.com"));
     }
-    
+    /*
     @Test
     public void testGetUsersSpendingMoreThan() {
     	List<User> users = this.service.getUsersSpendingMoreThan(Float.valueOf(1900000.00F));
     	assertEquals(3,users.size());
     	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("santiagoserrano157@yahoo.com","santiagomartin638@yahoo.com","florenciaalonso505@yahoo.com"));
     }
-        
+   
     
     @Test
     public void testGetTopNProvidersInPurchases() {
@@ -87,8 +87,7 @@ public class MLStatisticsTestCase {
     	assertEquals(3,providers.size());
     	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("silviasez428@gmail.com","matiasherrero831@gmail.com","santiagoserrano157@yahoo.com","silviaromero99@me.com","florenciaalonso505@yahoo.com","paulacaballero154@yahoo.com","paulamorales955@yahoo.com"));
     }
-    
-    
+
     @Test
     public void testGetTop3MoreExpensiveProducts() {
     	List<Product> products = this.service.getTop3MoreExpensiveProducts();
@@ -103,14 +102,14 @@ public class MLStatisticsTestCase {
     	this.assertListEquality(users.stream().map(property -> property.getUsername()).collect(Collectors.toList()),Arrays.asList("silviasez428@gmail.com","matiasherrero831@gmail.com","santiagoserrano157@yahoo.com","silviaromero99@me.com","florenciaalonso505@yahoo.com","paulacaballero154@yahoo.com","paulamorales955@yahoo.com"));
 
     }
-    
+        */
     @Test
     public void testGetPurchasesInPeriod() throws ParseException {
     	List<Purchase> purchases = this.service.getPurchasesInPeriod(sdf.parse("8/1/2020"),sdf.parse("20/01/2020"));
     	assertEquals(4,purchases.size());
     	this.assertListEquality(purchases.stream().map(property -> property.getAddress()).collect(Collectors.toList()),Arrays.asList("Calle 56 Nº1582","Calle 51 Nº399","Calle 44 Nº812","Calle 52 Nº816"));
     }
-    
+
     @Test
     public void testGetProductForCategory() throws MLException {
     	Optional<Category> oc = this.service.getCategoryByName("Calderas");
@@ -122,7 +121,7 @@ public class MLStatisticsTestCase {
     	assertEquals(4,products.size());
     	this.assertListEquality(products.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("Caldera Peisa Diva Duo Ds 32000 Kcal Tiro Forzado","Caldera Mural Orbis 230cto Solo Calefaccion 29000 Kcal Tiro Natural Con Envio","Caldera Mural Orbis 230cto Calefaccion 30000 Kcal + Envio","Caldera A Gas Baxi Eco 4s 24 Doble Servicio Tiro Forzado"));
     }
-    
+    /*
     @Test
     public void testGetPurchasesForProvider() {
     	List<Purchase> purchases = this.service.getPurchasesForProvider(21859773715L);
@@ -153,14 +152,14 @@ public class MLStatisticsTestCase {
     	List<Provider> providers = this.service.getProvidersDoNotSellOn(sdf.parse("29/01/2020"));
     	assertEquals(16,providers.size());
     }
-    
+    */
     @Test
     public void testGetSoldProductsOn() throws ParseException {
     	List<ProductOnSale> products = this.service.getSoldProductsOn(sdf.parse("07/11/2019"));
     	assertEquals(3,products.size());
     	this.assertListEquality(products.stream().map(property -> property.getProduct().getName()).collect(Collectors.toList()),Arrays.asList("Anafe eléctrico Ultracomb AN-2211  negro 220V","Cocina Escorial Candor S2  multigas 4 hornallas  blanca 220V puerta  con visor","Lavavajillas Drean Dish 15.2 DT de 15 cubiertos blanco 220V"));
     }
-    
+    /*
     @Test
     public void testGetProductsNotSold() {
     	List<Product> products = this.service.getProductsNotSold();
