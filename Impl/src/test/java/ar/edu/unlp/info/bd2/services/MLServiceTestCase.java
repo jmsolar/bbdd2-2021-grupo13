@@ -27,7 +27,7 @@ public class MLServiceTestCase {
 
     @Autowired
     MLService service;
-    
+
     @Test
     public void testCreateCategory() throws MLException {
         Category c = this.service.createCategory("Hogar");
@@ -244,5 +244,4 @@ public class MLServiceTestCase {
         MLException ex = assertThrows(MLException.class, () -> this.service.createPurchase(pos, 5, u, d2, dp,"Calle 12 432",Float.valueOf(-54.45F), Float.valueOf(-62.22F), dop));
         assertEquals("método de delivery no válido",ex.getMessage());
     }
-
 }
