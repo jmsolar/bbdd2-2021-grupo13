@@ -267,8 +267,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public List<Provider> getProvidersDoNotSellOn(Date day) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getProvidersDoNotSellOn(day);
 	}
 
 	@Override

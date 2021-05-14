@@ -115,6 +115,11 @@ public class MLRepository {
 		return null;
 	}
 	
+	// 14 - NULL POINTER EXCEPTION
+	public List<Provider> getProvidersDoNotSellOn(Date day) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PRO FROM Provider PRO WHERE PRO.id NOT IN (SELECT Distinct(ProductOnSale.id_provider) FROM ProductOnSale POS INNER JOIN Purchase PUR WHERE PUR.dateOfPurchase = ?1)").setParameter(1, day).list();			
+	}
+	
 	// 15 - FAIL ASSERT
 	public List<ProductOnSale> getSoldProductsOn(Date day) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT POS FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1").setParameter(1, day).list();

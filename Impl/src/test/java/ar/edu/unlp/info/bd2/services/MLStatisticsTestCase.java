@@ -87,7 +87,7 @@ public class MLStatisticsTestCase {
     	assertEquals(3,providers.size());
     	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("silviasez428@gmail.com","matiasherrero831@gmail.com","santiagoserrano157@yahoo.com","silviaromero99@me.com","florenciaalonso505@yahoo.com","paulacaballero154@yahoo.com","paulamorales955@yahoo.com"));
     }
-    */
+    
 
     @Test
     public void testGetTop3MoreExpensiveProducts() {
@@ -95,7 +95,7 @@ public class MLStatisticsTestCase {
     	assertEquals(3, products.size());
     	this.assertListEquality(products.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("Salamandra A Leña Tromen Pehuen 9500 Kcal/h 106 M2 Cuotas","Lavarropas  automático Samsung WW90J5410G inverter plata 9kg 220 V","Nebulizador a pistón Omron NE-C801 blanco 100V/240V"));
     }
-    /*
+    
     @Test
     public void testGetTopNUsersMorePurchase() {
     	List<User> users = this.service.getTopNUsersMorePurchase(7);
@@ -147,13 +147,13 @@ public class MLStatisticsTestCase {
     	Provider provider = this.service.getProviderLessExpensiveProduct();
     	assertEquals(Long.valueOf(20535001383L),provider.getCuit());
     }
-    
+    */
     @Test
     public void testGetProvidersDoNotSellOn() throws ParseException {
     	List<Provider> providers = this.service.getProvidersDoNotSellOn(sdf.parse("29/01/2020"));
     	assertEquals(16,providers.size());
     }
-  
+  /*
     @Test
     public void testGetSoldProductsOn() throws ParseException {
     	List<ProductOnSale> products = this.service.getSoldProductsOn(sdf.parse("07/11/2019"));
