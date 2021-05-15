@@ -195,17 +195,12 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public List<User> getUsersSpendingMoreThanInPurchase(Float amount) {
-		// Recorro los usuarios
-			// Sumo todas sus compras
-		// si la compra > amount
-			// Agrego a la lista
-			return this.getRepository().getUsersSpendingMoreThanInPurchase(amount);
+		return this.getRepository().getUsersSpendingMoreThanInPurchase(amount);
 	}
 
 	@Override
 	public List<User> getUsersSpendingMoreThan(Float amount) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getUsersSpendingMoreThan(amount);
 	}
 
 	@Override
@@ -255,8 +250,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public Provider getProviderLessExpensiveProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getProviderLessExpensiveProduct();
 	}
 
 	@Override
@@ -281,8 +275,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getMoreChangeOnDeliveryMethod();
 	}
 
 	@Override

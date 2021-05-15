@@ -59,7 +59,7 @@ public class MLStatisticsTestCase {
         }
       }
     
-    /*
+
     @Test
     public void testGetAllPurchasesMadeByUser() {
     	assertEquals(5,this.service.getAllPurchasesMadeByUser("silviasez428@gmail.com").size());
@@ -79,7 +79,7 @@ public class MLStatisticsTestCase {
     	assertEquals(3,users.size());
     	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("santiagoserrano157@yahoo.com","santiagomartin638@yahoo.com","florenciaalonso505@yahoo.com"));
     }
-   
+    
     @Test
     public void testGetTopNProvidersInPurchases() {
     	List<Provider> providers = this.service.getTopNProvidersInPurchases(3);
@@ -98,7 +98,7 @@ public class MLStatisticsTestCase {
     public void testGetTopNUsersMorePurchase() {
     	List<User> users = this.service.getTopNUsersMorePurchase(7);
     	assertEquals(7,users.size());
-    	this.assertListEquality(users.stream().map(property -> property.getUsername()).collect(Collectors.toList()),Arrays.asList("silviasez428@gmail.com","matiasherrero831@gmail.com","santiagoserrano157@yahoo.com","silviaromero99@me.com","florenciaalonso505@yahoo.com","paulacaballero154@yahoo.com","paulamorales955@yahoo.com"));
+    	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("silviasez428@gmail.com","matiasherrero831@gmail.com","santiagoserrano157@yahoo.com","silviaromero99@me.com","florenciaalonso505@yahoo.com","paulacaballero154@yahoo.com","paulamorales955@yahoo.com"));
 
     }
     
@@ -176,7 +176,7 @@ public class MLStatisticsTestCase {
     	OnDeliveryPayment odp = this.service.getMoreChangeOnDeliveryMethod();
     	assertEquals("Pago Efectivo pos072",odp.getName());
     }
-    
+   
     @Test
     public void testGetProductWithMoreThan20percentDiferenceInPrice() {
     	List<Product> products = this.service.getProductWithMoreThan20percentDiferenceInPrice();
@@ -193,8 +193,7 @@ public class MLStatisticsTestCase {
     public void testGetCategoryWithLessProducts() {
     	Category category = this.service.getCategoryWithLessProducts();
     	assertEquals("Calderas", category.getName());
-    }
- */
- 
+    } 
+    
 }
 
