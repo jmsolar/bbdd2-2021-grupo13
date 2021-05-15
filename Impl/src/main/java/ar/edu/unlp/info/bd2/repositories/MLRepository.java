@@ -91,69 +91,72 @@ public class MLRepository {
 	public List<Purchase> getAllPurchasesMadeByUser(String username) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR FROM Purchase PUR INNER JOIN PUR.client CLI WHERE CLI.email = ?1").setParameter(1, username).list();
 	}
-	// 2 - OK
+	// 2 - OK - MARQUITOS
 	public List<User> getUsersSpendingMoreThanInPurchase(Float amount) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT CLI FROM Purchase PUR INNER JOIN PUR.client CLI WHERE PUR.amount > ?1").setParameter(1, amount).list();
 	}
 	
-	// 3 -
+	// 3 - PARA CHARLAR
 	//Obtiene los usuarios que han gastando más de amount entre todas sus compras en la plataforma
 	public List<User>  getUsersSpendingMoreThan(Float amount) {		
 		return null;	
 	}
 	
-	// FALLA LA IMPLEMENTACION DEL TEST. VER PORQUE Y DESPUES CORRER LA QUERY
+	// 6- FALLA LA IMPLEMENTACION DEL TEST. VER PORQUE Y DESPUES CORRER LA QUERY - MARQUITOS
 	public List<User> getTopNUsersMorePurchase(int n) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT US FROM User INNER JOIN US.purchases PUR GROUP BY User.id_user ORDER BY COUNT(User.id_user) DESC").setMaxResults(n).list();
 		
 	}
 	
-	
+	// 5 - MATI
 	public List<Product>  getTop3MoreExpensiveProducts() {
 		return this.sessionFactory.getCurrentSession().createSQLQuery("SELECT DISTINCT Product INNER JOIN ProductOnSale ON (Product.id_product = ProductOnSale.id_product) ORDER BY ProductOnSale.price DESC LIMIT 3").list();
 	}															  // SELECT DISTINCT PRO FROM Product PRO INNER JOIN	PRO.productOnSale PRO ORDER BY price DESC LIMIT 3").setParameter(1, amount).list();
 															    // SELECT DISTINCT POS FROM ProductOnSale POS INNER JOIN POS.product PRO ORDER BY POS.price DESC LIMIT 3
-	// 8 - OK
-	public List<Product> getProductForCategory(Category category) {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT PR FROM Product PR INNER JOIN PR.category CAT WHERE CAT.name = ?1").setParameter(1, category.getName()).list();
-	}
-	
-	// 9 - OK
-	public List<Purchase>  getPurchasesForProvider(Long cuit){
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR FROM Purchase PUR INNER JOIN PUR.productOnSale POS INNER JOIN POS.provider PRO WHERE PRO.cuit = ?1").setParameter(1, cuit).list();
-	}																
-	//Obtiene las compras realizadas por el proveedor con el cuit
-
-	
-	// los clientes son los que realizan las compras, no los proveeedores: VER!
-	public List<Purchase> getPurchasesForProvider(String cuit){
-		return null;
-	}
-	
-	// 14 - OK
-	public List<Provider> getProvidersDoNotSellOn(Date day) {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT PRO FROM Provider PRO WHERE PRO.Id NOT IN (SELECT Distinct(POS.provider.Id) FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1)").setParameter(1, day).list();			
-	}
-		
-	// 15 - OK
-	public List<ProductOnSale> getSoldProductsOn(Date day) {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT Distinct(PUR.productOnSale) FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1").setParameter(1, day).list();
-	}
-	
-
-	
-	// 16 - NULL POINTER EXCEPTION
-	public List<Product> getProductsNotSold() {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT PROD FROM Product PROD WHERE id NOT IN (SELECT PUR.ProductOnSale.id_product FROM Purchase PUR INNER JOIN PUR.productOnSale)").list();	
-	}		//Versión original:	SELECT PROD FROM Product PROD WHERE id NOT IN (SELECT POS.product.id FROM ProductOnSale POS INNER JOIN Purchase PUR				
-		
-	
-	// 7 - OK
+	// 7 - OK - MARQUITOS
 	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Purchase WHERE dateOfPurchase >= ?1 AND dateOfPurchase <= ?2").setParameter(1, startDate).setParameter(2, endDate).list();
 	}
 	
-	// 19 - OK
+	// 8 - OK - MARQUITOS
+	public List<Product> getProductForCategory(Category category) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PR FROM Product PR INNER JOIN PR.category CAT WHERE CAT.name = ?1").setParameter(1, category.getName()).list();
+	}
+	
+	// 9 - OK - MARQUITOS
+	public List<Purchase>  getPurchasesForProvider(Long cuit){
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR FROM Purchase PUR INNER JOIN PUR.productOnSale POS INNER JOIN POS.provider PRO WHERE PRO.cuit = ?1").setParameter(1, cuit).list();
+	}																
+				
+	// 14 - OK - MARQUITOS
+	public List<Provider> getProvidersDoNotSellOn(Date day) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PRO FROM Provider PRO WHERE PRO.Id NOT IN (SELECT Distinct(POS.provider.Id) FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1)").setParameter(1, day).list();			
+	}
+		
+	// 15 - OK - MARQUITOS
+	public List<ProductOnSale> getSoldProductsOn(Date day) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT Distinct(PUR.productOnSale) FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1").setParameter(1, day).list();
+	}
+	
+	// 16 - OK - MARQUITOS
+	public List<Product> getProductsNotSold() {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PROD FROM Product PROD WHERE PROD.id NOT IN (SELECT Distinct(PROD.id) FROM Purchase PUR INNER JOIN PUR.productOnSale POS INNER JOIN POS.product PROD)").list();			
+	}		
+	
+	// 17 - OK   MARQUITOS
+	public DeliveryMethod getMostUsedDeliveryMethod() {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.deliveryMethod FROM Purchase PUR GROUP BY PUR.deliveryMethod ORDER BY COUNT(PUR.deliveryMethod) DESC", DeliveryMethod.class).setMaxResults(1).getSingleResult();
+	}  
+	
+		
+	// 18 - VER! - MARQUITOS
+	public Product getMoreChangeOnDeliveryMethod() {
+		return this.sessionFactory.getCurrentSession().createQuery("FROM OnDeliveryPayment ODP GROUP BY ODP.Id ORDER BY COUNT(ODP.promisedAmount) DESC", Product.class).setMaxResults(1).getSingleResult();
+	}																	                     //GROUP BY User.id_user ORDER BY COUNT(User.id_user) DESC
+	//Obtiene el onDeliveryPayment que mayor vuelto debe dar
+															
+	
+	// 19 - OK - MARQUITOS
 	public Product getHeaviestProduct() {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Product PRO ORDER BY PRO.weight DESC", Product.class).setMaxResults(1).getSingleResult();
 	}

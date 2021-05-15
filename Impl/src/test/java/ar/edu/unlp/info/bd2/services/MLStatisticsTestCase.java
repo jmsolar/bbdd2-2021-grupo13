@@ -153,32 +153,32 @@ public class MLStatisticsTestCase {
     	List<Provider> providers = this.service.getProvidersDoNotSellOn(sdf.parse("29/01/2020"));
     	assertEquals(16,providers.size());
     }
- */
+ 
     @Test
     public void testGetSoldProductsOn() throws ParseException {
     	List<ProductOnSale> products = this.service.getSoldProductsOn(sdf.parse("07/11/2019"));
     	assertEquals(3,products.size());
     	this.assertListEquality(products.stream().map(property -> property.getProduct().getName()).collect(Collectors.toList()),Arrays.asList("Anafe eléctrico Ultracomb AN-2211  negro 220V","Cocina Escorial Candor S2  multigas 4 hornallas  blanca 220V puerta  con visor","Lavavajillas Drean Dish 15.2 DT de 15 cubiertos blanco 220V"));
     }
-    /*
+    
     @Test
     public void testGetProductsNotSold() {
     	List<Product> products = this.service.getProductsNotSold();
     	assertEquals(49,products.size());
     }
-    /*
+    */
     @Test
     public void testGetMostUsedDeliveryMethod() {
     	DeliveryMethod dm = this.service.getMostUsedDeliveryMethod();
     	assertEquals("Flete",dm.getName());
     }
-    
+    /*
     @Test
     public void testGetMoreChangeOnDeliveryMethod() {
     	OnDeliveryPayment odp = this.service.getMoreChangeOnDeliveryMethod();
     	assertEquals("Pago Efectivo pos072",odp.getName());
     }
-    
+    /*
     @Test
     public void testGetProductWithMoreThan20percentDiferenceInPrice() {
     	List<Product> products = this.service.getProductWithMoreThan20percentDiferenceInPrice();
