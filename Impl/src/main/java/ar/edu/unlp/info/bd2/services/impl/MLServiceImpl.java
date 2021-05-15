@@ -237,8 +237,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public List<Purchase> getPurchasesForProvider(Long cuit) {
-		//return this.getRepository().getPurchasesForProvider(cuit);
-		return null;
+		return this.getRepository().getPurchasesForProvider(cuit);		
 	}
 
 	@Override
@@ -277,8 +276,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public List<Product> getProductsNotSold() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getProductsNotSold();		
 	}
 
 	@Override
@@ -295,8 +293,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public Product getHeaviestProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getHeaviestProduct(); 	
 	}
 
 	@Override

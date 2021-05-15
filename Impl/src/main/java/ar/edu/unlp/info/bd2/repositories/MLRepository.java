@@ -110,6 +110,14 @@ public class MLRepository {
 	public List<Product> getProductForCategory(Category category) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PR FROM Product PR INNER JOIN PR.category CAT WHERE CAT.name = ?1").setParameter(1, category.getName()).list();
 	}
+	
+	// 9 - OK
+	public List<Purchase>  getPurchasesForProvider(Long cuit){
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR FROM Purchase PUR INNER JOIN PUR.productOnSale POS INNER JOIN POS.provider PRO WHERE PRO.cuit = ?1").setParameter(1, cuit).list();
+	}																
+	//Obtiene las compras realizadas por el proveedor con el cuit
+
+	
 	// los clientes son los que realizan las compras, no los proveeedores: VER!
 	public List<Purchase> getPurchasesForProvider(String cuit){
 		return null;
@@ -125,9 +133,21 @@ public class MLRepository {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT POS FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1").setParameter(1, day).list();
 	}
 	
+	// 16 - NULL POINTER EXCEPTION
+	public List<Product> getProductsNotSold() {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PROD FROM Product PROD WHERE id NOT IN (SELECT PUR.ProductOnSale.id_product FROM Purchase PUR INNER JOIN PUR.productOnSale)").list();	
+	}		//Versión original:	SELECT PROD FROM Product PROD WHERE id NOT IN (SELECT POS.product.id FROM ProductOnSale POS INNER JOIN Purchase PUR				
+		
+	
 	// 7 - OK
 	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Purchase WHERE dateOfPurchase >= ?1 AND dateOfPurchase <= ?2").setParameter(1, startDate).setParameter(2, endDate).list();
 	}
 	
+	// 19 - OK
+	public Product getHeaviestProduct() {
+		return this.sessionFactory.getCurrentSession().createQuery("FROM Product PRO ORDER BY PRO.weight DESC", Product.class).setMaxResults(1).getSingleResult();
+	}
+
+		
 }
