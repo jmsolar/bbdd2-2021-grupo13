@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+
 @Entity
 @Table(name = "BD2_PRODUCT")
 public class Product {
@@ -31,7 +32,7 @@ public class Product {
 	@Column
 	private Float weight;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Category category;
 	
 	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER , cascade = CascadeType.PERSIST, orphanRemoval = true)

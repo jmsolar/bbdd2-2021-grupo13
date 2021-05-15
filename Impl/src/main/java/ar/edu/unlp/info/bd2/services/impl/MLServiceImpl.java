@@ -210,8 +210,7 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public List<Provider> getTopNProvidersInPurchases(int n) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getTopNProvidersInPurchases(n);
 	}
 
 	@Override
@@ -241,20 +240,17 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public Product getBestSellingProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getBestSellingProduct();	
 	}
 
 	@Override
 	public List<Product> getProductsOnePrice() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getProductsOnePrice();	
 	}
 
 	@Override
 	public List<Product> getProductWithMoreThan20percentDiferenceInPrice() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().getProductWithMoreThan20percentDiferenceInPrice();
 	}
 
 	@Override
@@ -296,7 +292,6 @@ public class MLServiceImpl implements MLService {
 
 	@Override
 	public Category getCategoryWithLessProducts() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getRepository().testGetCategoryWithLessProducts(); 	
 	}
 }

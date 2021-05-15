@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
 public class MLStatisticsTestCase {
-	
+
     @Autowired
     DBInitializer initializer;
 
@@ -46,7 +46,7 @@ public class MLStatisticsTestCase {
     public void prepareDB() throws Exception, MLException {
         this.initializer.prepareDB();
     }
-    
+ 
     private <T> void assertListEquality(List<T> list1, List<T> list2) {
         if (list1.size() != list2.size()) {
           Assert.fail("Lists have different size");
@@ -72,7 +72,7 @@ public class MLStatisticsTestCase {
     	assertEquals(3,users.size());
     	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("carlospascual402@hotmail.com","matiasgarca37@hotmail.com","maracalvo55@yahoo.com"));
     }
-    /*
+    
     @Test
     public void testGetUsersSpendingMoreThan() {
     	List<User> users = this.service.getUsersSpendingMoreThan(Float.valueOf(1900000.00F));
@@ -80,22 +80,20 @@ public class MLStatisticsTestCase {
     	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("santiagoserrano157@yahoo.com","santiagomartin638@yahoo.com","florenciaalonso505@yahoo.com"));
     }
    
-    
     @Test
     public void testGetTopNProvidersInPurchases() {
     	List<Provider> providers = this.service.getTopNProvidersInPurchases(3);
     	assertEquals(3,providers.size());
-    	this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("silviasez428@gmail.com","matiasherrero831@gmail.com","santiagoserrano157@yahoo.com","silviaromero99@me.com","florenciaalonso505@yahoo.com","paulacaballero154@yahoo.com","paulamorales955@yahoo.com"));
+    	this.assertListEquality(providers.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("Grupo Nucleo S.A.","Refrigeracion MG Repuestos","Seara Refrigeración S.H."));
     }
-    
-
+   
     @Test
     public void testGetTop3MoreExpensiveProducts() {
     	List<Product> products = this.service.getTop3MoreExpensiveProducts();
     	assertEquals(3, products.size());
     	this.assertListEquality(products.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("Salamandra A Leña Tromen Pehuen 9500 Kcal/h 106 M2 Cuotas","Lavarropas  automático Samsung WW90J5410G inverter plata 9kg 220 V","Nebulizador a pistón Omron NE-C801 blanco 100V/240V"));
     }
-    
+
     @Test
     public void testGetTopNUsersMorePurchase() {
     	List<User> users = this.service.getTopNUsersMorePurchase(7);
@@ -129,19 +127,19 @@ public class MLStatisticsTestCase {
 		assertEquals(3,purchases.size());
 		this.assertListEquality(purchases.stream().map(property -> property.getAddress()).collect(Collectors.toList()),Arrays.asList("Calle 40 Nº137","Calle 57 Nº1637","Calle 62 Nº1158"));
     }
-    
+ 
     @Test
     public void testGetBestSellingProduct() {
     	Product product = this.service.getBestSellingProduct();
     	assertEquals(product.getName(),"Lavarropas  automático Samsung WW90J5410G inverter plata 9kg 220 V");
     }
-    
+
     @Test
     public void testGetProductsOnePrice() {
     	List<Product> products = this.service.getProductsOnePrice();
     	assertEquals(12,products.size());
     }
-    
+ 
     @Test
     public void testGetProviderLessExpensiveProduct() {
     	Provider provider = this.service.getProviderLessExpensiveProduct();
@@ -166,19 +164,19 @@ public class MLStatisticsTestCase {
     	List<Product> products = this.service.getProductsNotSold();
     	assertEquals(49,products.size());
     }
-    */
+   
     @Test
     public void testGetMostUsedDeliveryMethod() {
     	DeliveryMethod dm = this.service.getMostUsedDeliveryMethod();
     	assertEquals("Flete",dm.getName());
     }
-    /*
+ 
     @Test
     public void testGetMoreChangeOnDeliveryMethod() {
     	OnDeliveryPayment odp = this.service.getMoreChangeOnDeliveryMethod();
     	assertEquals("Pago Efectivo pos072",odp.getName());
     }
-    /*
+    
     @Test
     public void testGetProductWithMoreThan20percentDiferenceInPrice() {
     	List<Product> products = this.service.getProductWithMoreThan20percentDiferenceInPrice();
@@ -197,5 +195,6 @@ public class MLStatisticsTestCase {
     	assertEquals("Calderas", category.getName());
     }
  */
+ 
 }
 

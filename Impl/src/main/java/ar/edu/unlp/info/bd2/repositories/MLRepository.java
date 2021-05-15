@@ -102,16 +102,23 @@ public class MLRepository {
 		return null;	
 	}
 	
+	// 4	
+	public List<Provider> getTopNProvidersInPurchases(int n){
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.productOnSale.provider FROM Purchase PUR GROUP BY PUR.productOnSale.provider ORDER BY SUM(PUR.quantity) DESC", Provider.class).setMaxResults(n).list();
+	}
+	
+	// 5 - MATI
+	public List<Product>  getTop3MoreExpensiveProducts() {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT POS.product FROM ProductOnSale POS ORDER BY POS.price DESC", Product.class).setMaxResults(3).list();
+	}
+	//variante 1 con distinct RIGHT JOIN no funciona -> SELECT DISTINCT PRO.product, POS.price ProductOnSale POS RIGHT JOIN Product PRO ORDER BY POS.price DESC
+	//variante 2 con distinct SUBCONSULTA no funciona -> SELECT ProductOnSale.product FROM (SELECT POS.product, POS.price FROM ProductOnSale INNER JOIN POS.product POS ORDER BY POS.price DESC
+	
 	// 6- FALLA LA IMPLEMENTACION DEL TEST. VER PORQUE Y DESPUES CORRER LA QUERY - MARQUITOS
 	public List<User> getTopNUsersMorePurchase(int n) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT US FROM User INNER JOIN US.purchases PUR GROUP BY User.id_user ORDER BY COUNT(User.id_user) DESC").setMaxResults(n).list();		
 	}
 	
-	// 5 - MATI
-	public List<Product>  getTop3MoreExpensiveProducts() {
-		return this.sessionFactory.getCurrentSession().createSQLQuery("SELECT DISTINCT Product INNER JOIN ProductOnSale ON (Product.id_product = ProductOnSale.id_product) ORDER BY ProductOnSale.price DESC LIMIT 3").list();
-	}															  // SELECT DISTINCT PRO FROM Product PRO INNER JOIN	PRO.productOnSale PRO ORDER BY price DESC LIMIT 3").setParameter(1, amount).list();
-															    // SELECT DISTINCT POS FROM ProductOnSale POS INNER JOIN POS.product PRO ORDER BY POS.price DESC LIMIT 3
 	// 7 - OK - MARQUITOS
 	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Purchase WHERE dateOfPurchase >= ?1 AND dateOfPurchase <= ?2").setParameter(1, startDate).setParameter(2, endDate).list();
@@ -125,7 +132,25 @@ public class MLRepository {
 	// 9 - OK - MARQUITOS
 	public List<Purchase>  getPurchasesForProvider(Long cuit){
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR FROM Purchase PUR INNER JOIN PUR.productOnSale POS INNER JOIN POS.provider PRO WHERE PRO.cuit = ?1").setParameter(1, cuit).list();
-	}																
+	}
+	
+	// 10
+	public Product getBestSellingProduct() {
+		 return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.productOnSale.product FROM Purchase PUR GROUP BY PUR.productOnSale.product ORDER BY COUNT(PUR.productOnSale.product) DESC", Product.class).setMaxResults(1).getSingleResult();
+		 //return this.sessionFactory.getCurrentSession().createQuery("SELECT POS.product FROM ProductOnSale POS WHERE POS.price = (SELECT MAX(POS.price) FROM POS.price)", Product.class).uniqueResult();
+	}	
+	
+	// 11
+	public List<Product> getProductsOnePrice() {
+		 return this.sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT POS.product FROM ProductOnSale POS WHERE POS.product.id NOT IN (SELECT POS.product.id FROM ProductOnSale POS WHERE POS.version != 0)", Product.class).list();
+		 //		 return this.sessionFactory.getCurrentSession().createQuery("SELECT PRO.product FROM ProductOnSale PRO WHERE PRO.product NOT IN (SELECT PRO.product FROM ProductOnSale PRO WHERE PRO.finalDate <> null) ", Product.class).list();
+	}	
+	
+	// 12
+	public List<Product> getProductWithMoreThan20percentDiferenceInPrice() {
+		 return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.productOnSale.product FROM Purchase PUR GROUP BY PUR.productOnSale.product ORDER BY COUNT(PUR.productOnSale.product) DESC", Product.class).list();
+		 //return this.sessionFactory.getCurrentSession().createQuery("SELECT POS.product FROM ProductOnSale POS WHERE POS.price = (SELECT MAX(POS.price) FROM POS.price GROUP BY POS.product)", Product.class).uniqueResult();
+	}	
 				
 	// 14 - OK - MARQUITOS
 	public List<Provider> getProvidersDoNotSellOn(Date day) {
@@ -155,6 +180,11 @@ public class MLRepository {
 	// 19 - OK - MARQUITOS
 	public Product getHeaviestProduct() {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Product PRO ORDER BY PRO.weight DESC", Product.class).setMaxResults(1).getSingleResult();
+	}
+	
+	// 20	
+	public Category testGetCategoryWithLessProducts() {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PRO.category FROM Product PRO GROUP BY PRO.category ORDER BY COUNT(PRO.category) ASC", Category.class).setMaxResults(1).getSingleResult();
 	}
 
 }
