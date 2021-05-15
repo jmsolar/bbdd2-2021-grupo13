@@ -102,6 +102,13 @@ public class MLRepository {
 		return null;	
 	}
 	
+	// FALLA LA IMPLEMENTACION DEL TEST. VER PORQUE Y DESPUES CORRER LA QUERY
+	public List<User> getTopNUsersMorePurchase(int n) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT US FROM User INNER JOIN US.purchases PUR GROUP BY User.id_user ORDER BY COUNT(User.id_user) DESC").setMaxResults(n).list();
+		
+	}
+	
+	
 	public List<Product>  getTop3MoreExpensiveProducts() {
 		return this.sessionFactory.getCurrentSession().createSQLQuery("SELECT DISTINCT Product INNER JOIN ProductOnSale ON (Product.id_product = ProductOnSale.id_product) ORDER BY ProductOnSale.price DESC LIMIT 3").list();
 	}															  // SELECT DISTINCT PRO FROM Product PRO INNER JOIN	PRO.productOnSale PRO ORDER BY price DESC LIMIT 3").setParameter(1, amount).list();
@@ -123,15 +130,17 @@ public class MLRepository {
 		return null;
 	}
 	
-	// 14 - NULL POINTER EXCEPTION
+	// 14 - OK
 	public List<Provider> getProvidersDoNotSellOn(Date day) {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT PRO FROM Provider PRO WHERE PRO.id NOT IN (SELECT Distinct(ProductOnSale.id_provider) FROM ProductOnSale POS INNER JOIN Purchase PUR WHERE PUR.dateOfPurchase = ?1)").setParameter(1, day).list();			
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT PRO FROM Provider PRO WHERE PRO.Id NOT IN (SELECT Distinct(POS.provider.Id) FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1)").setParameter(1, day).list();			
+	}
+		
+	// 15 - OK
+	public List<ProductOnSale> getSoldProductsOn(Date day) {
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT Distinct(PUR.productOnSale) FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1").setParameter(1, day).list();
 	}
 	
-	// 15 - FAIL ASSERT
-	public List<ProductOnSale> getSoldProductsOn(Date day) {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT POS FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1").setParameter(1, day).list();
-	}
+
 	
 	// 16 - NULL POINTER EXCEPTION
 	public List<Product> getProductsNotSold() {
