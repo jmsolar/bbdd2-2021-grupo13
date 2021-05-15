@@ -104,8 +104,7 @@ public class MLRepository {
 	
 	// 6- FALLA LA IMPLEMENTACION DEL TEST. VER PORQUE Y DESPUES CORRER LA QUERY - MARQUITOS
 	public List<User> getTopNUsersMorePurchase(int n) {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT US FROM User INNER JOIN US.purchases PUR GROUP BY User.id_user ORDER BY COUNT(User.id_user) DESC").setMaxResults(n).list();
-		
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT US FROM User INNER JOIN US.purchases PUR GROUP BY User.id_user ORDER BY COUNT(User.id_user) DESC").setMaxResults(n).list();		
 	}
 	
 	// 5 - MATI
@@ -146,20 +145,16 @@ public class MLRepository {
 	// 17 - OK   MARQUITOS
 	public DeliveryMethod getMostUsedDeliveryMethod() {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.deliveryMethod FROM Purchase PUR GROUP BY PUR.deliveryMethod ORDER BY COUNT(PUR.deliveryMethod) DESC", DeliveryMethod.class).setMaxResults(1).getSingleResult();
-	}  
-	
+	}  	
 		
 	// 18 - VER! - MARQUITOS
 	public Product getMoreChangeOnDeliveryMethod() {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM OnDeliveryPayment ODP GROUP BY ODP.Id ORDER BY COUNT(ODP.promisedAmount) DESC", Product.class).setMaxResults(1).getSingleResult();
-	}																	                     //GROUP BY User.id_user ORDER BY COUNT(User.id_user) DESC
-	//Obtiene el onDeliveryPayment que mayor vuelto debe dar
+	}																	                     
 															
-	
 	// 19 - OK - MARQUITOS
 	public Product getHeaviestProduct() {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Product PRO ORDER BY PRO.weight DESC", Product.class).setMaxResults(1).getSingleResult();
 	}
 
-		
 }
