@@ -160,8 +160,8 @@ public class MLRepository {
 		
 	// 18 - VER! - MARQUITOS
 	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.paymentMethod FROM Purchase PUR WHERE PUR.paymentMethod.payment_type = ?1 ", OnDeliveryPayment.class).setParameter(1, 2).getSingleResult();
-	}																	                     
+		return this.sessionFactory.getCurrentSession().createQuery("select pm from Purchase pur join pur.paymentMethod pm where type(pm) = OnDeliveryPayment order by (pm.promisedAmount - pur.amount) desc", OnDeliveryPayment.class).uniqueResult();
+	}											//select PUR.paymentMethod FROM Purchase PUR INNER JOIN PUR.paymentMethod PM WHERE PM.payment_type = ?1 ORDER BY (PM.promisedAmount - PUR.amount) desc				                     
 															
 	public Product getHeaviestProduct() {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Product PRO ORDER BY PRO.weight DESC", Product.class).setMaxResults(1).getSingleResult();
