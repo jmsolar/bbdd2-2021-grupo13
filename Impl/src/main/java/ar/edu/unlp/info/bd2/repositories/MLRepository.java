@@ -134,7 +134,7 @@ public class MLRepository {
 	}	
 	
 	public List<Product> getProductWithMoreThan20percentDiferenceInPrice() {
-		 return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.productOnSale.product FROM Purchase PUR GROUP BY PUR.productOnSale.product ORDER BY COUNT(PUR.productOnSale.product) DESC", Product.class).list();
+		 return this.sessionFactory.getCurrentSession().createQuery("SELECT POS.product FROM ProductOnSale POS WHERE POS.version = 0 GROUP BY POS.product HAVING COUNT(POS.version) > 1 AND (MAX(POS.price)-MIN(POS.price))/MIN(POS.price)*100 > 20", Product.class).list();
 	}
 	
 	public Provider getProviderLessExpensiveProduct() {
@@ -158,7 +158,7 @@ public class MLRepository {
 		
 	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {
 		return ((OnDeliveryPayment) this.sessionFactory.getCurrentSession().createQuery("SELECT ODP FROM Purchase PUR INNER JOIN PUR.paymentMethod ODP WHERE TYPE(ODP) = OnDeliveryPayment ORDER BY (ODP.promisedAmount - PUR.amount) DESC").setMaxResults(1).uniqueResult());
-	}																	                     
+	}
 															
 	public Product getHeaviestProduct() {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Product PRO ORDER BY PRO.weight DESC", Product.class).setMaxResults(1).getSingleResult();
