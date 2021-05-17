@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unlp.info.bd2.exceptions.MLException;
@@ -69,13 +70,13 @@ public class MLRepository {
 	}
 	
 	public ProductOnSale getLastProductOnSaleById(int idProvider, Long idProduct) {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT POS FROM Provider PRO INNER JOIN PRO.productsOnSale POS WHERE PRO.id = ?1 AND POS.finalDate IS NULL AND POS.product.id = ?2", ProductOnSale.class).setParameter(1, idProvider).setParameter(2, idProduct).uniqueResult();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM ProductOnSale POS JOIN FETCH POS.provider PRO WHERE PRO.id = ?1 AND POS.finalDate IS NULL AND POS.product.id = ?2", ProductOnSale.class).setParameter(1, idProvider).setParameter(2, idProduct).uniqueResult();
 	}	
 	
 	public Optional<DeliveryMethod> getDeliveryMethodByName(String name) {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM DeliveryMethod WHERE name = ?1", DeliveryMethod.class).setParameter(1, name).uniqueResultOptional();
 	}
-
+	
 	public Optional<CreditCardPayment> getCreditCardPaymentByName(String name) {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM CreditCardPayment WHERE name = ?1 AND payment_type = ?2").setParameter(1, name).setParameter(2, 1).uniqueResultOptional();
 	}
@@ -132,15 +133,13 @@ public class MLRepository {
 		 return this.sessionFactory.getCurrentSession().createQuery("SELECT POS.product FROM ProductOnSale POS GROUP BY POS.product HAVING COUNT(POS.product)=1", Product.class).list();
 	}	
 	
-	// 12
 	public List<Product> getProductWithMoreThan20percentDiferenceInPrice() {
 		 return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.productOnSale.product FROM Purchase PUR GROUP BY PUR.productOnSale.product ORDER BY COUNT(PUR.productOnSale.product) DESC", Product.class).list();
 	}
 	
 	public Provider getProviderLessExpensiveProduct() {
-		return null;
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT POS.provider FROM ProductOnSale POS WHERE POS.finalDate IS NULL GROUP BY POS.provider ORDER BY MIN(POS.price)", Provider.class).setMaxResults(1).getSingleResult();
 	}
-				
 	public List<Provider> getProvidersDoNotSellOn(Date day) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PRO FROM Provider PRO WHERE PRO.Id NOT IN (SELECT Distinct(POS.provider.Id) FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1)").setParameter(1, day).list();			
 	}
@@ -157,10 +156,9 @@ public class MLRepository {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.deliveryMethod FROM Purchase PUR GROUP BY PUR.deliveryMethod ORDER BY COUNT(PUR.deliveryMethod) DESC", DeliveryMethod.class).setMaxResults(1).getSingleResult();
 	}  	
 		
-	// 18 - VER! - MARQUITOS
-	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {   // ver el problema en el select
-		return this.sessionFactory.getCurrentSession().createQuery("select type(pm) from Purchase pur inner join pur.paymentMethod pm where type(pm) = ?1 order by (pm.promisedAmount - pur.amount) desc", OnDeliveryPayment.class).setParameter(1, "PaymentMethod").uniqueResult();
-	}											//select PUR.paymentMethod FROM Purchase PUR INNER JOIN PUR.paymentMethod PM WHERE PM.payment_type = ?1 ORDER BY (PM.promisedAmount - PUR.amount) desc				                     
+	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {
+		return ((OnDeliveryPayment) this.sessionFactory.getCurrentSession().createQuery("SELECT ODP FROM Purchase PUR INNER JOIN PUR.paymentMethod ODP WHERE TYPE(ODP) = OnDeliveryPayment ORDER BY (ODP.promisedAmount - PUR.amount) DESC").setMaxResults(1).uniqueResult());
+	}																	                     
 															
 	public Product getHeaviestProduct() {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Product PRO ORDER BY PRO.weight DESC", Product.class).setMaxResults(1).getSingleResult();

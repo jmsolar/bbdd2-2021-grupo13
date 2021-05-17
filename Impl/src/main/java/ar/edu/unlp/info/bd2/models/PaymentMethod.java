@@ -17,7 +17,7 @@ import javax.persistence.Version;
 @Table(name = "BD2_PAYMENT_METHOD")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "payment_type", discriminatorType = DiscriminatorType.INTEGER)
-public class PaymentMethod {
+public abstract class PaymentMethod {
 	@GeneratedValue
 	@Column(name = "id_payment_method")
 	@Id

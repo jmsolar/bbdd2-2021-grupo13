@@ -59,7 +59,6 @@ public class MLStatisticsTestCase {
         }
       }
     
-
     @Test
     public void testGetAllPurchasesMadeByUser() {
     	assertEquals(5,this.service.getAllPurchasesMadeByUser("silviasez428@gmail.com").size());
@@ -194,6 +193,5 @@ public class MLStatisticsTestCase {
     	Category category = this.service.getCategoryWithLessProducts();
     	assertEquals("Calderas", category.getName());
     } 
-    
 }
 
