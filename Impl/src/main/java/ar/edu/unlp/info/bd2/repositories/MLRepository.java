@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unlp.info.bd2.exceptions.MLException;
@@ -69,12 +70,13 @@ public class MLRepository {
 	}
 	
 	public ProductOnSale getLastProductOnSaleById(int idProvider, Long idProduct) {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT POS FROM Provider PRO INNER JOIN PRO.productsOnSale POS WHERE PRO.id = ?1 AND POS.finalDate IS NULL AND POS.product.id = ?2", ProductOnSale.class).setParameter(1, idProvider).setParameter(2, idProduct).uniqueResult();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM ProductOnSale POS JOIN FETCH POS.provider PRO WHERE PRO.id = ?1 AND POS.finalDate IS NULL AND POS.product.id = ?2", ProductOnSale.class).setParameter(1, idProvider).setParameter(2, idProduct).uniqueResult();
 	}	
 	
 	public Optional<DeliveryMethod> getDeliveryMethodByName(String name) {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM DeliveryMethod WHERE name = ?1", DeliveryMethod.class).setParameter(1, name).uniqueResultOptional();
 	}
+	
 
 	public Optional<CreditCardPayment> getCreditCardPaymentByName(String name) {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM CreditCardPayment WHERE name = ?1 AND payment_type = ?2").setParameter(1, name).setParameter(2, 1).uniqueResultOptional();
@@ -139,9 +141,8 @@ public class MLRepository {
 	}
 	
 	public Provider getProviderLessExpensiveProduct() {
-		return null;
+		return this.sessionFactory.getCurrentSession().createQuery("SELECT POS.provider FROM ProductOnSale POS WHERE POS.finalDate IS NULL GROUP BY POS.provider ORDER BY MIN(POS.price)", Provider.class).setMaxResults(1).getSingleResult();
 	}
-				
 	public List<Provider> getProvidersDoNotSellOn(Date day) {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PRO FROM Provider PRO WHERE PRO.Id NOT IN (SELECT Distinct(POS.provider.Id) FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1)").setParameter(1, day).list();			
 	}
@@ -158,9 +159,8 @@ public class MLRepository {
 		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.deliveryMethod FROM Purchase PUR GROUP BY PUR.deliveryMethod ORDER BY COUNT(PUR.deliveryMethod) DESC", DeliveryMethod.class).setMaxResults(1).getSingleResult();
 	}  	
 		
-	// 18 - VER! - MARQUITOS
 	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {
-		return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.paymentMethod FROM Purchase PUR WHERE PUR.paymentMethod.payment_type = ?1 ", OnDeliveryPayment.class).setParameter(1, 2).getSingleResult();
+		return ((OnDeliveryPayment) this.sessionFactory.getCurrentSession().createQuery("SELECT ODP FROM Purchase PUR INNER JOIN PUR.paymentMethod ODP WHERE TYPE(ODP) = OnDeliveryPayment ORDER BY (ODP.promisedAmount - PUR.amount) DESC").setMaxResults(1).uniqueResult());
 	}																	                     
 															
 	public Product getHeaviestProduct() {
