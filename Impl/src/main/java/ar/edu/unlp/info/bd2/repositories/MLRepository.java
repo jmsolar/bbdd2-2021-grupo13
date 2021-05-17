@@ -136,7 +136,7 @@ public class MLRepository {
 	
 	// 12
 	public List<Product> getProductWithMoreThan20percentDiferenceInPrice() {
-		 return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.productOnSale.product FROM Purchase PUR GROUP BY PUR.productOnSale.product ORDER BY COUNT(PUR.productOnSale.product) DESC", Product.class).list();
+		 return this.sessionFactory.getCurrentSession().createQuery("SELECT POS.product FROM ProductOnSale POS WHERE POS.version = 0 GROUP BY POS.product HAVING COUNT(POS.version) > 1 AND (MAX(POS.price)-MIN(POS.price))/MIN(POS.price)*100 > 20", Product.class).list();
 	}
 	
 	public Provider getProviderLessExpensiveProduct() {
