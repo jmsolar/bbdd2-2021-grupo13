@@ -128,9 +128,8 @@ public class MLRepository {
 		 return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.productOnSale.product FROM Purchase PUR GROUP BY PUR.productOnSale.product ORDER BY COUNT(PUR.productOnSale.product) DESC", Product.class).setMaxResults(1).getSingleResult();
 	}	
 	
-	// 11
 	public List<Product> getProductsOnePrice() {
-		 return this.sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT POS.product FROM ProductOnSale POS WHERE POS.product.id NOT IN (SELECT POS.product.id FROM ProductOnSale POS WHERE POS.version != 0)", Product.class).list();
+		 return this.sessionFactory.getCurrentSession().createQuery("SELECT POS.product FROM ProductOnSale POS GROUP BY POS.product HAVING COUNT(POS.product)=1", Product.class).list();
 	}	
 	
 	// 12
@@ -159,8 +158,8 @@ public class MLRepository {
 	}  	
 		
 	// 18 - VER! - MARQUITOS
-	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {
-		return this.sessionFactory.getCurrentSession().createQuery("select pm from Purchase pur join pur.paymentMethod pm where type(pm) = OnDeliveryPayment order by (pm.promisedAmount - pur.amount) desc", OnDeliveryPayment.class).uniqueResult();
+	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {   // ver el problema en el select
+		return this.sessionFactory.getCurrentSession().createQuery("select type(pm) from Purchase pur inner join pur.paymentMethod pm where type(pm) = ?1 order by (pm.promisedAmount - pur.amount) desc", OnDeliveryPayment.class).setParameter(1, "PaymentMethod").uniqueResult();
 	}											//select PUR.paymentMethod FROM Purchase PUR INNER JOIN PUR.paymentMethod PM WHERE PM.payment_type = ?1 ORDER BY (PM.promisedAmount - PUR.amount) desc				                     
 															
 	public Product getHeaviestProduct() {
