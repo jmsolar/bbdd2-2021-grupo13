@@ -21,7 +21,7 @@ public class HibernateConfiguration {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan(
-                new String[] {"ar.edu.unlp.info.bd2.model"});
+                new String[] {"ar.edu.unlp.info.bd2.models"});
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;
@@ -30,10 +30,10 @@ public class HibernateConfiguration {
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/grupo" + this.getGroupNumber()+"?useSSL=false");
-        dataSource.setUsername("grupo999");
-        dataSource.setPassword("pa$$word");
+        dataSource.setUsername("grupo13");
+        dataSource.setPassword("somosGrupo13");
 
         return dataSource;
     }
@@ -60,6 +60,6 @@ public class HibernateConfiguration {
     }
 
     private Integer getGroupNumber() {
-        return 999;
+        return 13;
     }
 }

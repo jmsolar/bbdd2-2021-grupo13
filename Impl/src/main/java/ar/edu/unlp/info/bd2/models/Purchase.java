@@ -2,7 +2,60 @@ package ar.edu.unlp.info.bd2.models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
+
+@Entity
+@Table(name = "BD2_PURCHASE")
 public class Purchase {
+	@GeneratedValue
+	@Column(name = "id_purchase")
+	@Id
+	private int Id;	
+
+	@OneToOne(fetch = FetchType.EAGER)
+	private ProductOnSale productOnSale;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User client;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	private DeliveryMethod deliveryMethod;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	private PaymentMethod paymentMethod;
+
+	@Version
+	@Column(name = "version")
+	private int version;
+	
+	@Column
+	private Integer quantity;
+	
+	@Column
+	private String address;
+	
+	@Column
+	private Float coordX;
+	
+	@Column
+	private Float coordY;
+	
+	@Column
+	private Float amount;
+	
+	@Column
+	private Date dateOfPurchase;
+	
 	public ProductOnSale getProductOnSale() {
 		return productOnSale;
 	}
@@ -15,12 +68,14 @@ public class Purchase {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+	
 	public User getClient() {
 		return client;
 	}
 	public void setClient(User client) {
 		this.client = client;
 	}
+	
 	public DeliveryMethod getDeliveryMethod() {
 		return deliveryMethod;
 	}
@@ -57,15 +112,27 @@ public class Purchase {
 	public void setDateOfPurchase(Date dateOfPurchase) {
 		this.dateOfPurchase = dateOfPurchase;
 	}
-	public ProductOnSale productOnSale;
-	public Integer quantity;
-	public User client;
-	public DeliveryMethod deliveryMethod;
-	public PaymentMethod paymentMethod;
-	public String address;
-	public Float coordX;
-	public Float coordY;
-	public Date dateOfPurchase;
+	public int getId() {
+		return Id;
+	}
+	
+	public void setId(int id) {
+		this.Id = id;
+	}
+	
+	public Float setAmount() {
+		Float priceProduct = this.getProductOnSale().getPrice();
+		Float deliveryAmount = this.getDeliveryMethod().getCost();
+		Float result = (priceProduct * this.getQuantity()) + deliveryAmount;
+		
+		return result;
+	}
+	
+	public Float getAmount() {
+		return amount;
+	}
+	
+	public Purchase() {}
 	
 	public Purchase(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,
 			PaymentMethod paymentMethod, String address, Float coordX, Float coordY, Date dateOfPurchase) {
@@ -78,5 +145,6 @@ public class Purchase {
 		this.coordX = coordX;
 		this.coordY = coordY;
 		this.dateOfPurchase = dateOfPurchase;
+		this.amount = this.setAmount();
 	}
 }

@@ -2,7 +2,28 @@ package ar.edu.unlp.info.bd2.models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("1")
 public class CreditCardPayment extends PaymentMethod {
+	@Column
+	public String brand;
+	
+	@Column
+	public Long number;
+	
+	@Column
+	public Date expiry;
+	
+	@Column
+	public Integer cvv;
+	
+	@Column
+	public String owner;
+	
 	public String getBrand() {
 		return brand;
 	}
@@ -33,12 +54,9 @@ public class CreditCardPayment extends PaymentMethod {
 	public void setOwner(String owner) {
 		this.owner = owner;
 	}
-	public String brand;
-	public Long number;
-	public Date expiry;
-	public Integer cvv;
-	public String owner;
 	
+	public CreditCardPayment() {}
+
 	public CreditCardPayment(String name, String brand, Long number, Date expiry, Integer cvv, String owner) {
 		super(name);
 		this.brand = brand;
@@ -46,6 +64,5 @@ public class CreditCardPayment extends PaymentMethod {
 		this.expiry = expiry;
 		this.cvv = cvv;
 		this.owner = owner;
-		
 	}
 }

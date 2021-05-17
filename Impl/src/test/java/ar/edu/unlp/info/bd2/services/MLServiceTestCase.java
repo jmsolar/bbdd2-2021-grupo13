@@ -1,9 +1,8 @@
 package ar.edu.unlp.info.bd2.services;
-
-import ar.edu.unlp.info.bd2.config.AppConfig;
-import ar.edu.unlp.info.bd2.config.HibernateConfiguration;
-import ar.edu.unlp.info.bd2.model.*;
-import ar.edu.unlp.info.bd2.repositories.MLException;
+import ar.edu.unlp.info.bd2.config.*;
+import ar.edu.unlp.info.bd2.exceptions.MLException;
+import ar.edu.unlp.info.bd2.models.*;
+import ar.edu.unlp.info.bd2.services.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,8 +27,7 @@ public class MLServiceTestCase {
 
     @Autowired
     MLService service;
-    
-    
+
     @Test
     public void testCreateCategory() throws MLException {
         Category c = this.service.createCategory("Hogar");
@@ -44,7 +41,7 @@ public class MLServiceTestCase {
         assertNotNull(cat.getId());
         assertEquals("Hogar",cat.getName());
     }
-    
+   
     @Test
     public void testCreateUser() throws MLException{
         Calendar cal = Calendar.getInstance();
@@ -68,7 +65,6 @@ public class MLServiceTestCase {
         assertEquals("Constraint Violation",ex.getMessage());
     }
     
-
     @Test
     public void testCreateProvider() throws MLException {
         Provider p = this.service.createProvider("Philips",30715589634L);
@@ -91,14 +87,14 @@ public class MLServiceTestCase {
         assertNotNull(cat.getId());
         Product prod = this.service.createProduct("Lamparita led 7w fria", Float.valueOf(40.5F), cat);
         assertNotNull(prod.getId());
-        assertEquals(40.5F, (float) prod.getWeigth());
+        assertEquals(40.5F, (float) prod.getWeight());
         Optional<Product> p = this.service.getProductByName("Lamparita led 7w fria");
         if (!p.isPresent()) {
             throw new MLException("Product doesn't exists");
         }
         Product product = p.get();
         assertNotNull(product.getId());
-        assertEquals(Float.valueOf(40.5F), product.getWeigth());
+        assertEquals(Float.valueOf(40.5F), product.getWeight());
         assertEquals("Hogar",product.getCategory().getName());
         MLException ex = assertThrows(MLException.class, () -> this.service.createProduct("Lamparita led 7w fria", Float.valueOf(40.5F), cat));
         assertEquals("Constraint Violation",ex.getMessage());
@@ -173,14 +169,14 @@ public class MLServiceTestCase {
         Date id = cal.getTime();
         ProductOnSale pos = this.service.createProductOnSale(prod, p, 158.52F, id);
         assertNotNull(pos.getId());
-        assertEquals(Float.valueOf(40.5F),pos.getProduct().getWeigth());
+        assertEquals(Float.valueOf(40.5F),pos.getProduct().getWeight());
         assertEquals(1,pos.getProduct().getProductsOnSale().size());
         assertEquals(Float.valueOf(158.52F),pos.getPrice());
         assertEquals(null,pos.getFinalDate());
         assertEquals(id,pos.getInitialDate());
         assertEquals(p.getCuit(),pos.getProvider().getCuit());
     }
-    
+
     @Test
     public void testUpdateProductOnSale() throws MLException {
         Provider p = this.service.createProvider("Philips",30715589634L);
@@ -248,5 +244,4 @@ public class MLServiceTestCase {
         MLException ex = assertThrows(MLException.class, () -> this.service.createPurchase(pos, 5, u, d2, dp,"Calle 12 432",Float.valueOf(-54.45F), Float.valueOf(-62.22F), dop));
         assertEquals("método de delivery no válido",ex.getMessage());
     }
-
 }
