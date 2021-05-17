@@ -130,9 +130,8 @@ public class MLRepository {
 		 return this.sessionFactory.getCurrentSession().createQuery("SELECT PUR.productOnSale.product FROM Purchase PUR GROUP BY PUR.productOnSale.product ORDER BY COUNT(PUR.productOnSale.product) DESC", Product.class).setMaxResults(1).getSingleResult();
 	}	
 	
-	// 11
 	public List<Product> getProductsOnePrice() {
-		 return this.sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT POS.product FROM ProductOnSale POS WHERE POS.product.id NOT IN (SELECT POS.product.id FROM ProductOnSale POS WHERE POS.version != 0)", Product.class).list();
+		 return this.sessionFactory.getCurrentSession().createQuery("SELECT POS.product FROM ProductOnSale POS GROUP BY POS.product HAVING COUNT(POS.product)=1", Product.class).list();
 	}	
 	
 	// 12
@@ -161,7 +160,7 @@ public class MLRepository {
 		
 	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {
 		return ((OnDeliveryPayment) this.sessionFactory.getCurrentSession().createQuery("SELECT ODP FROM Purchase PUR INNER JOIN PUR.paymentMethod ODP WHERE TYPE(ODP) = OnDeliveryPayment ORDER BY (ODP.promisedAmount - PUR.amount) DESC").setMaxResults(1).uniqueResult());
-	}																	                     
+	}
 															
 	public Product getHeaviestProduct() {
 		return this.sessionFactory.getCurrentSession().createQuery("FROM Product PRO ORDER BY PRO.weight DESC", Product.class).setMaxResults(1).getSingleResult();
