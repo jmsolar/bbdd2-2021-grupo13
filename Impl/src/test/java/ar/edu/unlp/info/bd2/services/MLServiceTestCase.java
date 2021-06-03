@@ -1,32 +1,43 @@
 package ar.edu.unlp.info.bd2.services;
-import ar.edu.unlp.info.bd2.config.*;
-import ar.edu.unlp.info.bd2.exceptions.MLException;
-import ar.edu.unlp.info.bd2.models.*;
-import ar.edu.unlp.info.bd2.services.*;
+import static org.junit.jupiter.api.Assertions.*;
 
+import ar.edu.unlp.info.bd2.config.SpringDataConfiguration;
+import ar.edu.unlp.info.bd2.model.*;
+import ar.edu.unlp.info.bd2.repositories.MLException;
+
+import java.util.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
-
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {AppConfig.class, HibernateConfiguration.class}, loader = AnnotationConfigContextLoader.class)
 @Transactional
 @Rollback(true)
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(
+        classes = {SpringDataConfiguration.class},
+        loader = AnnotationConfigContextLoader.class)
 public class MLServiceTestCase {
 
     @Autowired
+    @Qualifier("springDataJpaService")
     MLService service;
+
+    protected MLService getService() {
+        return service;
+    }
+
+    @BeforeEach
+    public void setUp() {
+        this.service = this.getService();
+    }
+
 
     @Test
     public void testCreateCategory() throws MLException {
@@ -41,7 +52,7 @@ public class MLServiceTestCase {
         assertNotNull(cat.getId());
         assertEquals("Hogar",cat.getName());
     }
-   
+
     @Test
     public void testCreateUser() throws MLException{
         Calendar cal = Calendar.getInstance();
@@ -64,7 +75,8 @@ public class MLServiceTestCase {
         MLException ex = assertThrows(MLException.class, () -> this.service.createUser("federico.orlando@info.unlp.edu.ar", "Federico Orlando", "pas$w0rd", dob));
         assertEquals("Constraint Violation",ex.getMessage());
     }
-    
+
+
     @Test
     public void testCreateProvider() throws MLException {
         Provider p = this.service.createProvider("Philips",30715589634L);
@@ -80,26 +92,26 @@ public class MLServiceTestCase {
         MLException ex = assertThrows(MLException.class, () -> this.service.createProvider("Philips",30715589634L));
         assertEquals("Constraint Violation",ex.getMessage());
     }
-    
+
     @Test
     public void testCreateProduct() throws MLException {
         Category cat = this.service.createCategory("Hogar");
         assertNotNull(cat.getId());
         Product prod = this.service.createProduct("Lamparita led 7w fria", Float.valueOf(40.5F), cat);
         assertNotNull(prod.getId());
-        assertEquals(40.5F, (float) prod.getWeight());
+        assertEquals(40.5F, (float) prod.getWeigth());
         Optional<Product> p = this.service.getProductByName("Lamparita led 7w fria");
         if (!p.isPresent()) {
             throw new MLException("Product doesn't exists");
         }
         Product product = p.get();
         assertNotNull(product.getId());
-        assertEquals(Float.valueOf(40.5F), product.getWeight());
+        assertEquals(Float.valueOf(40.5F), product.getWeigth());
         assertEquals("Hogar",product.getCategory().getName());
         MLException ex = assertThrows(MLException.class, () -> this.service.createProduct("Lamparita led 7w fria", Float.valueOf(40.5F), cat));
         assertEquals("Constraint Violation",ex.getMessage());
     }
-    
+
     @Test
     public void testCreateDeliveryMethod() throws MLException {
         DeliveryMethod dm = this.service.createDeliveryMethod("Moto menos 1kg", 250.0F, 0.01F, 0.9999F);
@@ -115,7 +127,7 @@ public class MLServiceTestCase {
         assertEquals(Float.valueOf(250.0F),d.getCost());
         assertEquals(Float.valueOf(0.01F),d.getStartWeight());
     }
-    
+
     @Test
     public void testCreateCreditCardPayment() throws MLException {
         Calendar cal = Calendar.getInstance();
@@ -141,7 +153,7 @@ public class MLServiceTestCase {
         assertEquals(exp,c.getExpiry());
         assertEquals(Integer.valueOf(452),c.getCvv());
     }
-    
+
     @Test
     public void testOnDeliveryPayment() throws MLException {
         OnDeliveryPayment od = this.service.createOnDeliveryPayment("Pago Efectivo Lampara", 100F);
@@ -156,7 +168,7 @@ public class MLServiceTestCase {
         assertNotNull(dp.getId());
         assertEquals(Float.valueOf(100F),dp.getPromisedAmount());
     }
-    
+
     @Test
     public void testCreateProductOnSale() throws MLException {
         Provider p = this.service.createProvider("Philips",30715589634L);
@@ -169,7 +181,7 @@ public class MLServiceTestCase {
         Date id = cal.getTime();
         ProductOnSale pos = this.service.createProductOnSale(prod, p, 158.52F, id);
         assertNotNull(pos.getId());
-        assertEquals(Float.valueOf(40.5F),pos.getProduct().getWeight());
+        assertEquals(Float.valueOf(40.5F),pos.getProduct().getWeigth());
         assertEquals(1,pos.getProduct().getProductsOnSale().size());
         assertEquals(Float.valueOf(158.52F),pos.getPrice());
         assertEquals(null,pos.getFinalDate());
@@ -206,7 +218,7 @@ public class MLServiceTestCase {
         MLException ex = assertThrows(MLException.class, () -> this.service.createProductOnSale(prod, p, 200F, id3));
         assertEquals("Ya existe un precio para el producto con fecha de inicio de vigencia posterior a la fecha de inicio dada" ,ex.getMessage());
     }
-    
+
     @Test
     public void testCreatePurchase() throws MLException {
         Provider p = this.service.createProvider("Philips",30715589634L);
@@ -232,7 +244,7 @@ public class MLServiceTestCase {
         Date dop = cal.getTime();
         Purchase pur = this.service.createPurchase(pos, 5, u, d, dp, "Calle 12 432", Float.valueOf(-54.45F), Float.valueOf(-62.22F), dop);
         assertEquals(Integer.valueOf(5), pur.getQuantity());
-        assertEquals(Float.valueOf(1000F), pur.getAmount());
+        assertEquals(Float.valueOf(1000), pur.getAmount());
         assertEquals(u, pur.getClient());
         assertEquals(dop, pur.getDateOfPurchase());
         assertEquals(d,pur.getDeliveryMethod());
@@ -244,4 +256,5 @@ public class MLServiceTestCase {
         MLException ex = assertThrows(MLException.class, () -> this.service.createPurchase(pos, 5, u, d2, dp,"Calle 12 432",Float.valueOf(-54.45F), Float.valueOf(-62.22F), dop));
         assertEquals("método de delivery no válido",ex.getMessage());
     }
+
 }
