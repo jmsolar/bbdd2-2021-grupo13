@@ -2,8 +2,8 @@ package ar.edu.unlp.info.bd2.config;
 
 
 import ar.edu.unlp.info.bd2.services.MLService;
-import ar.edu.unlp.info.bd2.services.SpringDataMLService;
 import ar.edu.unlp.info.bd2.utils.DBInitializer;
+import ar.edu.unlp.info.bd2.services.*;
 
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
