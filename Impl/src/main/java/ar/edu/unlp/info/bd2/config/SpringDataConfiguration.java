@@ -50,7 +50,7 @@ public class SpringDataConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] {"ar.edu.unlp.info.bd2.model"});
+        em.setPackagesToScan(new String[] {"ar.edu.unlp.info.bd2.models"});
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
