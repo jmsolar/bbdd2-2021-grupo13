@@ -4,14 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import ar.edu.unlp.info.bd2.model.Category;
-import ar.edu.unlp.info.bd2.model.DeliveryMethod;
-import ar.edu.unlp.info.bd2.model.OnDeliveryPayment;
-import ar.edu.unlp.info.bd2.model.Product;
-import ar.edu.unlp.info.bd2.model.ProductOnSale;
-import ar.edu.unlp.info.bd2.model.Purchase;
-import ar.edu.unlp.info.bd2.model.Provider;
-import ar.edu.unlp.info.bd2.model.User;
+import ar.edu.unlp.info.bd2.models.Category;
+import ar.edu.unlp.info.bd2.models.DeliveryMethod;
+import ar.edu.unlp.info.bd2.models.OnDeliveryPayment;
+import ar.edu.unlp.info.bd2.models.Product;
+import ar.edu.unlp.info.bd2.models.ProductOnSale;
+import ar.edu.unlp.info.bd2.models.Purchase;
+import ar.edu.unlp.info.bd2.models.Provider;
+import ar.edu.unlp.info.bd2.models.User;
 
 public interface MLStatisticsService {
 
