@@ -296,22 +296,21 @@ public class SpringDataMLService implements MLService {
 
 	@Override
 	public List<User> getTopNUsersMorePurchase(int n) {
-		/*
-		PageRequest pageable = new PageRequest(3);
-		Page<User> result = this.getUserRepository().getTopNUsersMorePurchase(n, pageable);
+		Page<User> result = this.getUserRepository().getTopNUsersMorePurchase(n, PageRequest.of(0, n));
 		
-		return result.getContent(); */
-		return null;
+		return result.getContent();
 	}
 
 	@Override
-	public List <Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {return null;}
+	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {return null;}
 
 	@Override
-	public List <Product> getProductForCategory (Category category){return null;}
+	public List<Product> getProductForCategory (Category category) {return null;}
 
 	@Override
-	public List <Purchase> getPurchasesForProvider(Long cuit) {return null;}
+	public List<Purchase> getPurchasesForProvider(Long cuit) {
+		return this.getProviderRepository().getPurchasesForProvider(cuit);
+	}
 
 	@Override
 	public Product getBestSellingProduct() {return null;}
@@ -320,25 +319,33 @@ public class SpringDataMLService implements MLService {
 	public List<Product> getProductsOnePrice() {return null;}
 
 	@Override
-	public List <Product> getProductWithMoreThan20percentDiferenceInPrice() {return null;}
+	public List<Product> getProductWithMoreThan20percentDiferenceInPrice() {
+		return this.getProductRepository().getProductWithMoreThan20percentDiferenceInPrice();
+	}
 
 	@Override
 	public Provider getProviderLessExpensiveProduct() {return null;}
 
 	@Override
-	public List <Provider> getProvidersDoNotSellOn(Date day) {return null;}
+	public List<Provider> getProvidersDoNotSellOn(Date day) {return null;}
 
 	@Override
-	public List <ProductOnSale> getSoldProductsOn(Date day) {return null;}
+	public List<ProductOnSale> getSoldProductsOn(Date day) {
+		return this.getProductOnSaleRepository().getSoldProductsOn(day);
+	}
 
 	@Override
-	public List <Product> getProductsNotSold() {return null;}
+	public List<Product> getProductsNotSold() {return null;}
 
 	@Override
 	public DeliveryMethod getMostUsedDeliveryMethod() {return null;}
 
 	@Override
-	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {return null;}
+	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {
+		Page<OnDeliveryPayment> result = this.getOnDeliveryPaymentRepository().getMoreChangeOnDeliveryMethod(PageRequest.of(0, 1));
+		
+		return result.getContent().get(0);
+	}
 
 	@Override
 	public Product getHeaviestProduct() {return null;}

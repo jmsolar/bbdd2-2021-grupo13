@@ -96,14 +96,14 @@ public class MLStatisticsTestCase {
         this.assertListEquality(products.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("Salamandra A Leña Tromen Pehuen 9500 Kcal/h 106 M2 Cuotas","Lavarropas  automático Samsung WW90J5410G inverter plata 9kg 220 V","Nebulizador a pistón Omron NE-C801 blanco 100V/240V"));
     }
 */
-    /*
+    
     @Test
     public void testGetTopNUsersMorePurchase() {
         List<User> users = this.service.getTopNUsersMorePurchase(7);
         assertEquals(7,users.size());
         this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("silviasez428@gmail.com","matiasherrero831@gmail.com","santiagoserrano157@yahoo.com","silviaromero99@me.com","florenciaalonso505@yahoo.com","paulacaballero154@yahoo.com","paulamorales955@yahoo.com"));
 
-    }*/
+    }
 /*
     @Test
     public void testGetPurchasesInPeriod() throws ParseException {
@@ -123,14 +123,14 @@ public class MLStatisticsTestCase {
         assertEquals(4,products.size());
         this.assertListEquality(products.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("Caldera Peisa Diva Duo Ds 32000 Kcal Tiro Forzado","Caldera Mural Orbis 230cto Solo Calefaccion 29000 Kcal Tiro Natural Con Envio","Caldera Mural Orbis 230cto Calefaccion 30000 Kcal + Envio","Caldera A Gas Baxi Eco 4s 24 Doble Servicio Tiro Forzado"));
     }
-
+*/
     @Test
     public void testGetPurchasesForProvider() {
         List<Purchase> purchases = this.service.getPurchasesForProvider(21859773715L);
         assertEquals(3,purchases.size());
         this.assertListEquality(purchases.stream().map(property -> property.getAddress()).collect(Collectors.toList()),Arrays.asList("Calle 40 Nº137","Calle 57 Nº1637","Calle 62 Nº1158"));
     }
-
+/*
     @Test
     public void testGetBestSellingProduct() {
         Product product = this.service.getBestSellingProduct();
@@ -154,14 +154,14 @@ public class MLStatisticsTestCase {
         List<Provider> providers = this.service.getProvidersDoNotSellOn(sdf.parse("29/01/2020"));
         assertEquals(16,providers.size());
     }
-
+*/
     @Test
     public void testGetSoldProductsOn() throws ParseException {
         List<ProductOnSale> products = this.service.getSoldProductsOn(sdf.parse("07/11/2019"));
         assertEquals(3,products.size());
         this.assertListEquality(products.stream().map(property -> property.getProduct().getName()).collect(Collectors.toList()),Arrays.asList("Anafe eléctrico Ultracomb AN-2211  negro 220V","Cocina Escorial Candor S2  multigas 4 hornallas  blanca 220V puerta  con visor","Lavavajillas Drean Dish 15.2 DT de 15 cubiertos blanco 220V"));
     }
-
+/*
     @Test
     public void testGetProductsNotSold() {
         List<Product> products = this.service.getProductsNotSold();
@@ -173,7 +173,7 @@ public class MLStatisticsTestCase {
         DeliveryMethod dm = this.service.getMostUsedDeliveryMethod();
         assertEquals("Flete",dm.getName());
     }
-
+*/
     @Test
     public void testGetMoreChangeOnDeliveryMethod() {
         OnDeliveryPayment odp = this.service.getMoreChangeOnDeliveryMethod();
@@ -185,7 +185,7 @@ public class MLStatisticsTestCase {
         List<Product> products = this.service.getProductWithMoreThan20percentDiferenceInPrice();
         assertEquals(29,products.size());
     }
-
+/*
     @Test
     public void testGetHeaviestProduct() {
         Product product = this.service.getHeaviestProduct();

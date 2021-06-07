@@ -1,5 +1,8 @@
 package ar.edu.unlp.info.bd2.repositories;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +17,8 @@ public interface ProductOnSaleRepository extends CrudRepository<ProductOnSale, L
 	
 	@Query("FROM ProductOnSale POS JOIN FETCH POS.provider PRO WHERE PRO.id = ?1 AND POS.finalDate IS NULL AND POS.product.id = ?2")
 	public ProductOnSale getLastProductOnSaleById(int providerId, Long productId);
+	
+	@Query("SELECT Distinct(PUR.productOnSale) FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1")
+	public List<ProductOnSale> getSoldProductsOn(Date day);
+	
 }
