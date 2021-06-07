@@ -35,7 +35,7 @@ public class Product {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Category category;
 	
-	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER , cascade = CascadeType.PERSIST, orphanRemoval = true)
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER , cascade = CascadeType.REFRESH, orphanRemoval = true)
 	private Set<ProductOnSale> productOnSale;
 	
 	@Version

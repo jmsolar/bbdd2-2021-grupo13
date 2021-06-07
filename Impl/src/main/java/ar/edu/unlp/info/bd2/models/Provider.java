@@ -30,7 +30,7 @@ public class Provider {
 	@Column
 	private Long cuit;
 	
-	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "provider", cascade = CascadeType.REFRESH, orphanRemoval = true)
 	private Set<ProductOnSale> productsOnSale;
 	
 	@Version

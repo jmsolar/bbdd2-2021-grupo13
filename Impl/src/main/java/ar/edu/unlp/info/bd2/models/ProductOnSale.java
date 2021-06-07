@@ -27,13 +27,13 @@ public class ProductOnSale{
 	@GeneratedValue
 	@Column(name = "id_product_on_sale")
 	@Id
-	private int Id;
+	private long Id;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "id_product")
 	private Product product;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "id_provider")
 	private Provider provider;
 	
@@ -75,10 +75,10 @@ public class ProductOnSale{
 	public void setInitialDate(Date initialDate) {
 		this.initialDate = initialDate;
 	}	
-	public int getId() {
+	public long getId() {
 		return Id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.Id = id;
 	}
 	public Date getFinalDate() {

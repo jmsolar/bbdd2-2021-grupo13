@@ -1,7 +1,6 @@
 package ar.edu.unlp.info.bd2.config;
 
 
-import ar.edu.unlp.info.bd2.services.MLService;
 import ar.edu.unlp.info.bd2.utils.DBInitializer;
 import ar.edu.unlp.info.bd2.services.*;
 

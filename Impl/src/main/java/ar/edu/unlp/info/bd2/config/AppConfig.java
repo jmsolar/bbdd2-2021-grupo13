@@ -3,6 +3,7 @@ package ar.edu.unlp.info.bd2.config;
 import ar.edu.unlp.info.bd2.repositories.MLRepository;
 import ar.edu.unlp.info.bd2.services.MLService;
 import ar.edu.unlp.info.bd2.services.MLStatisticsService;
+import ar.edu.unlp.info.bd2.services.SpringDataMLService;
 import ar.edu.unlp.info.bd2.services.impl.MLServiceImpl;
 
 import org.springframework.context.annotation.Bean;
