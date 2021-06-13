@@ -275,11 +275,18 @@ public class SpringDataMLService implements MLService {
 	
 	@Override
 	public List<Purchase> getAllPurchasesMadeByUser(String username) {
-		return null;
+		List<Purchase> purchasesOfUser = this.getPurchaseRepository().findByName(username);
+		
+		return purchasesOfUser;
 	}
 
 	@Override
-	public List<User> getUsersSpendingMoreThanInPurchase(Float amount) {return null;}
+	public List<User> getUsersSpendingMoreThanInPurchase(Float amount) {
+		List<User> users = this.getPurchaseRepository().getUsersSpendingMoreThanInPurchase(amount);
+		
+		return users;
+		
+	}
 
 	@Override
 	public List<User> getUsersSpendingMoreThan(Float amount) {

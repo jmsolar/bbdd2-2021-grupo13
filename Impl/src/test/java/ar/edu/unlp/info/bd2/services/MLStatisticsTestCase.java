@@ -62,7 +62,7 @@ public class MLStatisticsTestCase {
         }
     }
 
-/*
+
     @Test
     public void testGetAllPurchasesMadeByUser() {
         assertEquals(5,this.service.getAllPurchasesMadeByUser("silviasez428@gmail.com").size());
@@ -74,7 +74,7 @@ public class MLStatisticsTestCase {
         assertEquals(3,users.size());
         this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("carlospascual402@hotmail.com","matiasgarca37@hotmail.com","maracalvo55@yahoo.com"));
     }
-*/
+
     @Test
     public void testGetUsersSpendingMoreThan() {
         List<User> users = this.service.getUsersSpendingMoreThan(Float.valueOf(1900000.00F));
