@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlp.info.bd2.models.Product;
+import org.springframework.data.domain.Page;
 
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
@@ -15,4 +16,17 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	
 	@Query("SELECT POS.product FROM ProductOnSale POS WHERE POS.version = 0 GROUP BY POS.product HAVING COUNT(POS.version) > 1 AND (MAX(POS.price)-MIN(POS.price))/MIN(POS.price)*100 > 20")
 	public List<Product> getProductWithMoreThan20percentDiferenceInPrice();
+	
+	@Query("SELECT PRO FROM Product PRO ORDER BY PRO.weight DESC")
+	public Page<Product> getHeaviestProduct(Pageable pageable);
+	
+	@Query("SELECT PROD FROM Product PROD WHERE PROD.id NOT IN (SELECT Distinct(PROD.id) FROM Purchase PUR INNER JOIN PUR.productOnSale POS INNER JOIN POS.product PROD)")
+	public List<Product> getProductsNotSold();
+
+	@Query("SELECT POS.product FROM ProductOnSale POS GROUP BY POS.product HAVING COUNT(POS.product)=1")
+	public List<Product> getProductsOnePrice();
+	
+	
+	
+	
 }

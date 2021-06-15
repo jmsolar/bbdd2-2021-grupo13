@@ -320,10 +320,16 @@ public class SpringDataMLService implements MLService {
 	}
 
 	@Override
-	public Product getBestSellingProduct() {return null;}
+	public Product getBestSellingProduct() {
+		Page<Product> product = this.getPurchaseRepository().getBestSellingProduct(PageRequest.of(0, 1));
+		//Page<OnDeliveryPayment> result = this.getOnDeliveryPaymentRepository().getMoreChangeOnDeliveryMethod(PageRequest.of(0, 1));
+		return product.getContent().get(0);
+	}
 
 	@Override
-	public List<Product> getProductsOnePrice() {return null;}
+	public List<Product> getProductsOnePrice() {
+		return this.getProductRepository().getProductsOnePrice();
+	}
 
 	@Override
 	public List<Product> getProductWithMoreThan20percentDiferenceInPrice() {
@@ -342,7 +348,9 @@ public class SpringDataMLService implements MLService {
 	}
 
 	@Override
-	public List<Product> getProductsNotSold() {return null;}
+	public List<Product> getProductsNotSold() {
+		return this.getProductRepository().getProductsNotSold();
+	}
 
 	@Override
 	public DeliveryMethod getMostUsedDeliveryMethod() {return null;}
@@ -355,8 +363,17 @@ public class SpringDataMLService implements MLService {
 	}
 
 	@Override
-	public Product getHeaviestProduct() {return null;}
+	public Product getHeaviestProduct() {
+		Page<Product> product = this.getProductRepository().getHeaviestProduct(PageRequest.of(0,1));
+		
+		return product.getContent().get(0);
+		
+	}
+	
 
 	@Override
-	public Category getCategoryWithLessProducts() {return null;}	
+	public Category getCategoryWithLessProducts() {
+		Page<Category> category = this.getCategoryRepository().getCategoryWithLessProducts(PageRequest.of(0,1));		
+		return category.getContent().get(0);
+	}	
 }

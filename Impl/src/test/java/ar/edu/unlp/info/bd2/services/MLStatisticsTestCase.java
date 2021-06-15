@@ -130,7 +130,7 @@ public class MLStatisticsTestCase {
         assertEquals(3,purchases.size());
         this.assertListEquality(purchases.stream().map(property -> property.getAddress()).collect(Collectors.toList()),Arrays.asList("Calle 40 Nº137","Calle 57 Nº1637","Calle 62 Nº1158"));
     }
-/*
+
     @Test
     public void testGetBestSellingProduct() {
         Product product = this.service.getBestSellingProduct();
@@ -142,7 +142,7 @@ public class MLStatisticsTestCase {
         List<Product> products = this.service.getProductsOnePrice();
         assertEquals(12,products.size());
     }
-
+/*
     @Test
     public void testGetProviderLessExpensiveProduct() {
         Provider provider = this.service.getProviderLessExpensiveProduct();
@@ -161,13 +161,13 @@ public class MLStatisticsTestCase {
         assertEquals(3,products.size());
         this.assertListEquality(products.stream().map(property -> property.getProduct().getName()).collect(Collectors.toList()),Arrays.asList("Anafe eléctrico Ultracomb AN-2211  negro 220V","Cocina Escorial Candor S2  multigas 4 hornallas  blanca 220V puerta  con visor","Lavavajillas Drean Dish 15.2 DT de 15 cubiertos blanco 220V"));
     }
-/*
+
     @Test
     public void testGetProductsNotSold() {
         List<Product> products = this.service.getProductsNotSold();
         assertEquals(49,products.size());
     }
-
+/*
     @Test
     public void testGetMostUsedDeliveryMethod() {
         DeliveryMethod dm = this.service.getMostUsedDeliveryMethod();
@@ -185,17 +185,17 @@ public class MLStatisticsTestCase {
         List<Product> products = this.service.getProductWithMoreThan20percentDiferenceInPrice();
         assertEquals(29,products.size());
     }
-/*
+
     @Test
     public void testGetHeaviestProduct() {
         Product product = this.service.getHeaviestProduct();
         assertEquals("Lavavajillas Drean Dish 15.2 DT de 15 cubiertos blanco 220V",product.getName());
     }
-
+   
     @Test
     public void testGetCategoryWithLessProducts() {
         Category category = this.service.getCategoryWithLessProducts();
         assertEquals("Calderas", category.getName());
     }
-    */
+    
 }

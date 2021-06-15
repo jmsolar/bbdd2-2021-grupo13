@@ -10,9 +10,12 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.unlp.info.bd2.models.DeliveryMethod;
 import ar.edu.unlp.info.bd2.models.OnDeliveryPayment;
+import ar.edu.unlp.info.bd2.models.Product;
 import ar.edu.unlp.info.bd2.models.ProductOnSale;
 import ar.edu.unlp.info.bd2.models.Purchase;
 import ar.edu.unlp.info.bd2.models.User;
+
+import org.springframework.data.domain.Page;
 
 @Repository
 public interface PurchaseRepository extends CrudRepository<Purchase, Long> {
@@ -22,5 +25,9 @@ public interface PurchaseRepository extends CrudRepository<Purchase, Long> {
 	
 	@Query("SELECT CLI FROM Purchase PUR INNER JOIN PUR.client CLI WHERE PUR.amount > ?1")
 	public List<User> getUsersSpendingMoreThanInPurchase(Float amount);
+		
+	@Query("SELECT PUR.productOnSale.product FROM Purchase PUR GROUP BY PUR.productOnSale.product ORDER BY COUNT(PUR.productOnSale.product) DESC")
+	public Page<Product> getBestSellingProduct(Pageable pageable);
+	//public Page<Product> getHeaviestProduct(Pageable pageable);
 	
 }
