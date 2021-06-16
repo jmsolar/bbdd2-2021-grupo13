@@ -81,7 +81,7 @@ public class MLStatisticsTestCase {
         assertEquals(3,users.size());
         this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("santiagoserrano157@yahoo.com","santiagomartin638@yahoo.com","florenciaalonso505@yahoo.com"));
     }
-/*
+
     @Test
     public void testGetTopNProvidersInPurchases() {
         List<Provider> providers = this.service.getTopNProvidersInPurchases(3);
@@ -95,7 +95,7 @@ public class MLStatisticsTestCase {
         assertEquals(3, products.size());
         this.assertListEquality(products.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("Salamandra A Leña Tromen Pehuen 9500 Kcal/h 106 M2 Cuotas","Lavarropas  automático Samsung WW90J5410G inverter plata 9kg 220 V","Nebulizador a pistón Omron NE-C801 blanco 100V/240V"));
     }
-*/
+
     
     @Test
     public void testGetTopNUsersMorePurchase() {
@@ -104,7 +104,7 @@ public class MLStatisticsTestCase {
         this.assertListEquality(users.stream().map(property -> property.getEmail()).collect(Collectors.toList()),Arrays.asList("silviasez428@gmail.com","matiasherrero831@gmail.com","santiagoserrano157@yahoo.com","silviaromero99@me.com","florenciaalonso505@yahoo.com","paulacaballero154@yahoo.com","paulamorales955@yahoo.com"));
 
     }
-/*
+
     @Test
     public void testGetPurchasesInPeriod() throws ParseException {
         List<Purchase> purchases = this.service.getPurchasesInPeriod(sdf.parse("8/1/2020"),sdf.parse("20/01/2020"));
@@ -123,7 +123,7 @@ public class MLStatisticsTestCase {
         assertEquals(4,products.size());
         this.assertListEquality(products.stream().map(property -> property.getName()).collect(Collectors.toList()),Arrays.asList("Caldera Peisa Diva Duo Ds 32000 Kcal Tiro Forzado","Caldera Mural Orbis 230cto Solo Calefaccion 29000 Kcal Tiro Natural Con Envio","Caldera Mural Orbis 230cto Calefaccion 30000 Kcal + Envio","Caldera A Gas Baxi Eco 4s 24 Doble Servicio Tiro Forzado"));
     }
-*/
+
     @Test
     public void testGetPurchasesForProvider() {
         List<Purchase> purchases = this.service.getPurchasesForProvider(21859773715L);
@@ -142,7 +142,7 @@ public class MLStatisticsTestCase {
         List<Product> products = this.service.getProductsOnePrice();
         assertEquals(12,products.size());
     }
-/*
+
     @Test
     public void testGetProviderLessExpensiveProduct() {
         Provider provider = this.service.getProviderLessExpensiveProduct();
@@ -154,7 +154,7 @@ public class MLStatisticsTestCase {
         List<Provider> providers = this.service.getProvidersDoNotSellOn(sdf.parse("29/01/2020"));
         assertEquals(16,providers.size());
     }
-*/
+
     @Test
     public void testGetSoldProductsOn() throws ParseException {
         List<ProductOnSale> products = this.service.getSoldProductsOn(sdf.parse("07/11/2019"));
@@ -167,13 +167,13 @@ public class MLStatisticsTestCase {
         List<Product> products = this.service.getProductsNotSold();
         assertEquals(49,products.size());
     }
-/*
+
     @Test
     public void testGetMostUsedDeliveryMethod() {
         DeliveryMethod dm = this.service.getMostUsedDeliveryMethod();
         assertEquals("Flete",dm.getName());
     }
-*/
+
     @Test
     public void testGetMoreChangeOnDeliveryMethod() {
         OnDeliveryPayment odp = this.service.getMoreChangeOnDeliveryMethod();

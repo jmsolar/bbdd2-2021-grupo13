@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import ar.edu.unlp.info.bd2.models.Category;
 import ar.edu.unlp.info.bd2.models.Product;
 import org.springframework.data.domain.Page;
 
@@ -26,7 +27,10 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	@Query("SELECT POS.product FROM ProductOnSale POS GROUP BY POS.product HAVING COUNT(POS.product)=1")
 	public List<Product> getProductsOnePrice();
 	
+	@Query("SELECT PR FROM Product PR INNER JOIN PR.category CAT WHERE CAT.name = ?1")
+	public List<Product> getProductForCategory(String  nameCategory);
 	
-	
+	@Query("SELECT POS.product FROM ProductOnSale POS ORDER BY POS.price DESC")
+	public List<Product> getTop3MoreExpensiveProducts(Pageable pageable);
 	
 }

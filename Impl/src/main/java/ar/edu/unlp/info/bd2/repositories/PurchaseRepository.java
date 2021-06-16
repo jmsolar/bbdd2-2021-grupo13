@@ -1,5 +1,6 @@
 package ar.edu.unlp.info.bd2.repositories;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -28,6 +29,10 @@ public interface PurchaseRepository extends CrudRepository<Purchase, Long> {
 		
 	@Query("SELECT PUR.productOnSale.product FROM Purchase PUR GROUP BY PUR.productOnSale.product ORDER BY COUNT(PUR.productOnSale.product) DESC")
 	public Page<Product> getBestSellingProduct(Pageable pageable);
-	//public Page<Product> getHeaviestProduct(Pageable pageable);
 	
+	@Query("FROM Purchase WHERE dateOfPurchase >= ?1 AND dateOfPurchase <= ?2")
+	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate);
+	
+	@Query("SELECT PUR FROM Purchase PUR INNER JOIN PUR.productOnSale POS INNER JOIN POS.provider PRO WHERE PRO.cuit = ?1")
+	public List<Purchase> getPurchasesForProvider(long cuit);
 }

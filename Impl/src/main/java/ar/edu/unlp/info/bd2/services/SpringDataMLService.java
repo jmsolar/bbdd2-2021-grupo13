@@ -296,10 +296,14 @@ public class SpringDataMLService implements MLService {
 	}
 
 	@Override
-	public List<Provider> getTopNProvidersInPurchases(int n) {return null;}
+	public List<Provider> getTopNProvidersInPurchases(int n) {
+		return this.getProviderRepository().getTopNProvidersInPurchases(PageRequest.of(0, n));
+	}
 
 	@Override
-	public List<Product> getTop3MoreExpensiveProducts() {return null;}
+	public List<Product> getTop3MoreExpensiveProducts() {
+		return this.getProductRepository().getTop3MoreExpensiveProducts(PageRequest.of(0, 3));
+	}
 
 	@Override
 	public List<User> getTopNUsersMorePurchase(int n) {
@@ -309,20 +313,24 @@ public class SpringDataMLService implements MLService {
 	}
 
 	@Override
-	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {return null;}
+	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {
+		return this.getPurchaseRepository().getPurchasesInPeriod(startDate, endDate);
+	}
 
 	@Override
-	public List<Product> getProductForCategory (Category category) {return null;}
+	public List<Product> getProductForCategory (Category category) {
+		String nameCategory = category.getName();
+		return this.getProductRepository().getProductForCategory(nameCategory);
+	}
 
 	@Override
 	public List<Purchase> getPurchasesForProvider(Long cuit) {
-		return this.getProviderRepository().getPurchasesForProvider(cuit);
+		return this.getPurchaseRepository().getPurchasesForProvider(cuit);
 	}
 
 	@Override
 	public Product getBestSellingProduct() {
 		Page<Product> product = this.getPurchaseRepository().getBestSellingProduct(PageRequest.of(0, 1));
-		//Page<OnDeliveryPayment> result = this.getOnDeliveryPaymentRepository().getMoreChangeOnDeliveryMethod(PageRequest.of(0, 1));
 		return product.getContent().get(0);
 	}
 
@@ -337,10 +345,15 @@ public class SpringDataMLService implements MLService {
 	}
 
 	@Override
-	public Provider getProviderLessExpensiveProduct() {return null;}
+	public Provider getProviderLessExpensiveProduct() {
+		Page<Provider> result = this.getProviderRepository().getProviderLessExpensiveProduct(PageRequest.of(0, 1));
+		return result.getContent().get(0);
+	}
 
 	@Override
-	public List<Provider> getProvidersDoNotSellOn(Date day) {return null;}
+	public List<Provider> getProvidersDoNotSellOn(Date day) {
+		return this.getProviderRepository().getProvidersDoNotSellOn(day);
+	}
 
 	@Override
 	public List<ProductOnSale> getSoldProductsOn(Date day) {
@@ -353,7 +366,11 @@ public class SpringDataMLService implements MLService {
 	}
 
 	@Override
-	public DeliveryMethod getMostUsedDeliveryMethod() {return null;}
+	public DeliveryMethod getMostUsedDeliveryMethod() {
+		Page<DeliveryMethod> result = this.getDeliveryMethodRepository().getMostUsedDeliveryMethod(PageRequest.of(0, 1));
+		
+		return result.getContent().get(0);
+	}
 
 	@Override
 	public OnDeliveryPayment getMoreChangeOnDeliveryMethod() {
