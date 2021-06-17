@@ -49,13 +49,6 @@ public class SpringDataMLService implements MLService {
 	}
 	
 	@Inject
-	private PaymentMethodRepository paymentMethodRepository;
-	
-	public PaymentMethodRepository getPaymentMethodRepository() {
-		return paymentMethodRepository;
-	}
-	
-	@Inject
 	private ProductOnSaleRepository productOnSaleRepository;
 	
 	public ProductOnSaleRepository getProductOnSaleRepository() {
@@ -180,8 +173,7 @@ public class SpringDataMLService implements MLService {
 			GregorianCalendar cal = new GregorianCalendar();
 			cal.setTime(initialDate);
 			cal.add(Calendar.DATE, -1);
-			prodOnSale.setFinalDate(cal.getTime());
-			//this.getProductOnSaleRepository().update(prodOnSale);
+			prodOnSale.setFinalDate(cal.getTime());			
 		}
 		
 		ProductOnSale newProductOnSale = new ProductOnSale(product, provider, price, initialDate);
