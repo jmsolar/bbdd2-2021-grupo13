@@ -21,10 +21,10 @@ import org.springframework.data.domain.Page;
 @Repository
 public interface PurchaseRepository extends CrudRepository<Purchase, Long> {
 	
-	@Query("SELECT PUR FROM Purchase PUR INNER JOIN PUR.client CLI WHERE CLI.email = ?1")
+	@Query("FROM Purchase WHERE client.email = ?1")
 	public List<Purchase> findByName(String name);	
 	
-	@Query("SELECT CLI FROM Purchase PUR INNER JOIN PUR.client CLI WHERE PUR.amount > ?1")
+	@Query("SELECT client FROM Purchase WHERE amount > ?1")
 	public List<User> getUsersSpendingMoreThanInPurchase(Float amount);
 		
 	@Query("SELECT PUR.productOnSale.product FROM Purchase PUR GROUP BY PUR.productOnSale.product ORDER BY COUNT(PUR.productOnSale.product) DESC")
@@ -33,6 +33,7 @@ public interface PurchaseRepository extends CrudRepository<Purchase, Long> {
 	@Query("FROM Purchase WHERE dateOfPurchase >= ?1 AND dateOfPurchase <= ?2")
 	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate);
 	
-	@Query("SELECT PUR FROM Purchase PUR INNER JOIN PUR.productOnSale POS INNER JOIN POS.provider PRO WHERE PRO.cuit = ?1")
+	@Query("FROM Purchase WHERE productOnSale.provider.cuit = ?1")
 	public List<Purchase> getPurchasesForProvider(long cuit);
 }
+

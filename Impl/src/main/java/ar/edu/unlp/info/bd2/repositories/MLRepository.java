@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ar.edu.unlp.info.bd2.exceptions.MLException;
 import ar.edu.unlp.info.bd2.models.*;
 
-@Transactional
+
 public class MLRepository {
 	@Autowired
 	private SessionFactory sessionFactory;

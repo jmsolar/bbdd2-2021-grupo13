@@ -6,6 +6,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import ar.edu.unlp.info.bd2.models.*;
 import ar.edu.unlp.info.bd2.repositories.MLRepository;
 import ar.edu.unlp.info.bd2.services.MLService;
@@ -106,6 +108,7 @@ public class MLServiceImpl implements MLService {
 	}
 
 	@Override
+	@Transactional
 	public ProductOnSale createProductOnSale(Product product, Provider provider, Float price, Date initialDate)
 			throws MLException {
 		MLException ex = new MLException();

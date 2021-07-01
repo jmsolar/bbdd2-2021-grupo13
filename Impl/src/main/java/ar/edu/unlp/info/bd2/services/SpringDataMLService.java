@@ -17,7 +17,8 @@ import ar.edu.unlp.info.bd2.models.Provider;
 import ar.edu.unlp.info.bd2.repositories.*;
 import ar.edu.unlp.info.bd2.services.*;
 
-@Transactional
+
+
 public class SpringDataMLService implements MLService {
 	
 	@Inject
@@ -27,6 +28,7 @@ public class SpringDataMLService implements MLService {
 		return categoryRepository;
 	}
 
+	
 	@Inject
 	private CreditCardPaymentRepository creditCardPaymentRepository;
 	
@@ -170,6 +172,7 @@ public class SpringDataMLService implements MLService {
 	}
 	
 	@Override
+	@Transactional
 	public ProductOnSale createProductOnSale(Product product, Provider provider, Float price, Date initialDate) throws MLException {
 		MLException ex = new MLException();
 			
@@ -181,14 +184,15 @@ public class SpringDataMLService implements MLService {
 			cal.setTime(initialDate);
 			cal.add(Calendar.DATE, -1);
 			prodOnSale.setFinalDate(cal.getTime());
-			//this.getProductOnSaleRepository().update(prodOnSale);
+			this.getProductOnSaleRepository().save(prodOnSale);
 		}
 		
 		ProductOnSale newProductOnSale = new ProductOnSale(product, provider, price, initialDate);
 		product.getProductsOnSale().add(newProductOnSale);
 		this.getProductOnSaleRepository().save(newProductOnSale);
 			
-		return newProductOnSale; } 
+		return newProductOnSale;
+	} 
 	
 	@Override
 	public Purchase createPurchase(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,

@@ -7,6 +7,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
+
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import ar.edu.unlp.info.bd2.exceptions.MLException;
+import ar.edu.unlp.info.bd2.models.*;
+
+
 import ar.edu.unlp.info.bd2.models.ProductOnSale;
 
 @Repository
