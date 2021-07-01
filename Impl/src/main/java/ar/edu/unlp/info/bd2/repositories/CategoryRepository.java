@@ -17,6 +17,4 @@ public interface CategoryRepository extends CrudRepository<Category, Integer> {
 	@Query("SELECT PRO.category FROM Product PRO GROUP BY PRO.category ORDER BY COUNT(PRO.category) ASC")
 	public Page<Category> getCategoryWithLessProducts(Pageable pageable);
 	
-	
-	
 }

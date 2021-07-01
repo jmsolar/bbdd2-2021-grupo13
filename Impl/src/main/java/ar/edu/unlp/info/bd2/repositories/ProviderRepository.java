@@ -20,7 +20,7 @@ public interface ProviderRepository extends CrudRepository<Provider, Long> {
 	@Query("SELECT POS.provider FROM ProductOnSale POS WHERE POS.finalDate IS NULL GROUP BY POS.provider ORDER BY MIN(POS.price)")
 	public Page<Provider> getProviderLessExpensiveProduct(Pageable pageable);
 	
-	@Query("SELECT PRO FROM Provider PRO WHERE PRO.Id NOT IN (SELECT Distinct(POS.provider.Id) FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1)")
+	@Query("FROM Provider WHERE Id NOT IN (SELECT Distinct(productOnSale.provider.Id) FROM Purchase WHERE dateOfPurchase = ?1)")
 	public List<Provider> getProvidersDoNotSellOn(Date day);
 	
 	@Query("SELECT PUR.productOnSale.provider FROM Purchase PUR GROUP BY PUR.productOnSale.provider ORDER BY SUM(PUR.quantity) DESC")
