@@ -311,7 +311,7 @@ public class SpringDataMLService implements MLService {
 
 	@Override
 	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {
-		return this.getPurchaseRepository().getPurchasesInPeriod(startDate, endDate);
+		return this.getPurchaseRepository().findByDateOfPurchaseBetween(startDate, endDate);
 	}
 
 	@Override

@@ -30,8 +30,7 @@ public interface PurchaseRepository extends CrudRepository<Purchase, Long> {
 	@Query("SELECT PUR.productOnSale.product FROM Purchase PUR GROUP BY PUR.productOnSale.product ORDER BY COUNT(PUR.productOnSale.product) DESC")
 	public Page<Product> getBestSellingProduct(Pageable pageable);
 	
-	@Query("FROM Purchase WHERE dateOfPurchase >= ?1 AND dateOfPurchase <= ?2")
-	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate);
+	public List<Purchase> findByDateOfPurchaseBetween(Date startDate, Date endDate);
 	
 	@Query("FROM Purchase WHERE productOnSale.provider.cuit = ?1")
 	public List<Purchase> getPurchasesForProvider(long cuit);

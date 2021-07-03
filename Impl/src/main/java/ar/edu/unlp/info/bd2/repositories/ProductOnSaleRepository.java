@@ -26,7 +26,6 @@ import ar.edu.unlp.info.bd2.models.ProductOnSale;
 
 @Repository
 public interface ProductOnSaleRepository extends CrudRepository<ProductOnSale, Long> {
-	
 	@Query("SELECT POS FROM ProductOnSale POS WHERE id = ?1")
 	public ProductOnSale findByIdentificador(long id);
 	

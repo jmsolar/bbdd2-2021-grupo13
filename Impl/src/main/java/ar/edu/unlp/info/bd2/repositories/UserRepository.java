@@ -12,7 +12,6 @@ import ar.edu.unlp.info.bd2.models.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
-	
 	public User findByEmail(String email);
 		
 	@Query("SELECT PUR.client FROM Purchase PUR GROUP BY PUR.client HAVING SUM(PUR.amount) > CAST(?1 AS float)")
