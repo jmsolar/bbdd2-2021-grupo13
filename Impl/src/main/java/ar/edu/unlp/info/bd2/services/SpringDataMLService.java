@@ -51,13 +51,6 @@ public class SpringDataMLService implements MLService {
 	}
 	
 	@Inject
-	private PaymentMethodRepository paymentMethodRepository;
-	
-	public PaymentMethodRepository getPaymentMethodRepository() {
-		return paymentMethodRepository;
-	}
-	
-	@Inject
 	private ProductOnSaleRepository productOnSaleRepository;
 	
 	public ProductOnSaleRepository getProductOnSaleRepository() {
