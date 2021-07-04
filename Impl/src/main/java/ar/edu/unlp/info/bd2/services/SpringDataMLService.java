@@ -303,7 +303,7 @@ public class SpringDataMLService implements MLService {
 
 	@Override
 	public List<User> getTopNUsersMorePurchase(int n) {
-		Page<User> result = this.getUserRepository().getTopNUsersMorePurchase(n, PageRequest.of(0, n));
+		Page<User> result = this.getUserRepository().getTopNUsersMorePurchase(PageRequest.of(0, n));
 		
 		return result.getContent();
 	}

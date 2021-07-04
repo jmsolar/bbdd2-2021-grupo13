@@ -32,7 +32,7 @@ public interface ProductOnSaleRepository extends CrudRepository<ProductOnSale, L
 	@Query("FROM ProductOnSale POS JOIN FETCH POS.provider PRO WHERE PRO.id = ?1 AND POS.finalDate IS NULL AND POS.product.id = ?2")
 	public ProductOnSale getLastProductOnSaleById(int providerId, Long productId);
 	
-	@Query("SELECT Distinct(PUR.productOnSale) FROM Purchase PUR INNER JOIN PUR.productOnSale POS WHERE PUR.dateOfPurchase = ?1")
+	@Query("SELECT Distinct(productOnSale) FROM Purchase WHERE dateOfPurchase = ?1")
 	public List<ProductOnSale> getSoldProductsOn(Date day);
 	
 }
