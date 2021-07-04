@@ -282,7 +282,6 @@ public class SpringDataMLService implements MLService {
 		List<User> users = this.getPurchaseRepository().getUsersSpendingMoreThanInPurchase(amount);
 		
 		return users;
-		
 	}
 
 	@Override
@@ -381,7 +380,6 @@ public class SpringDataMLService implements MLService {
 		Page<Product> product = this.getProductRepository().getHeaviestProduct(PageRequest.of(0,1));
 		
 		return product.getContent().get(0);
-		
 	}
 	
 
