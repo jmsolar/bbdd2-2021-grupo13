@@ -10,7 +10,6 @@ import ar.edu.unlp.info.bd2.models.DeliveryMethod;
 
 @Repository
 public interface DeliveryMethodRepository extends CrudRepository<DeliveryMethod, Integer> {
-	
 	public Page<DeliveryMethod> findByName(String name, Pageable page);
 	
 	@Query("SELECT PUR.deliveryMethod FROM Purchase PUR GROUP BY PUR.deliveryMethod ORDER BY COUNT(PUR.deliveryMethod) DESC")

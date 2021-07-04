@@ -17,7 +17,8 @@ import ar.edu.unlp.info.bd2.models.Provider;
 import ar.edu.unlp.info.bd2.repositories.*;
 import ar.edu.unlp.info.bd2.services.*;
 
-@Transactional
+
+
 public class SpringDataMLService implements MLService {
 	
 	@Inject
@@ -27,6 +28,7 @@ public class SpringDataMLService implements MLService {
 		return categoryRepository;
 	}
 
+	
 	@Inject
 	private CreditCardPaymentRepository creditCardPaymentRepository;
 	
@@ -163,6 +165,7 @@ public class SpringDataMLService implements MLService {
 	}
 	
 	@Override
+	@Transactional
 	public ProductOnSale createProductOnSale(Product product, Provider provider, Float price, Date initialDate) throws MLException {
 		MLException ex = new MLException();
 			
@@ -173,14 +176,16 @@ public class SpringDataMLService implements MLService {
 			GregorianCalendar cal = new GregorianCalendar();
 			cal.setTime(initialDate);
 			cal.add(Calendar.DATE, -1);
-			prodOnSale.setFinalDate(cal.getTime());			
+			prodOnSale.setFinalDate(cal.getTime());
+			this.getProductOnSaleRepository().save(prodOnSale);
 		}
 		
 		ProductOnSale newProductOnSale = new ProductOnSale(product, provider, price, initialDate);
 		product.getProductsOnSale().add(newProductOnSale);
 		this.getProductOnSaleRepository().save(newProductOnSale);
 			
-		return newProductOnSale; } 
+		return newProductOnSale;
+	} 
 	
 	@Override
 	public Purchase createPurchase(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,
@@ -277,7 +282,6 @@ public class SpringDataMLService implements MLService {
 		List<User> users = this.getPurchaseRepository().getUsersSpendingMoreThanInPurchase(amount);
 		
 		return users;
-		
 	}
 
 	@Override
@@ -299,14 +303,14 @@ public class SpringDataMLService implements MLService {
 
 	@Override
 	public List<User> getTopNUsersMorePurchase(int n) {
-		Page<User> result = this.getUserRepository().getTopNUsersMorePurchase(n, PageRequest.of(0, n));
+		Page<User> result = this.getUserRepository().getTopNUsersMorePurchase(PageRequest.of(0, n));
 		
 		return result.getContent();
 	}
 
 	@Override
 	public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) {
-		return this.getPurchaseRepository().getPurchasesInPeriod(startDate, endDate);
+		return this.getPurchaseRepository().findByDateOfPurchaseBetween(startDate, endDate);
 	}
 
 	@Override
@@ -376,7 +380,6 @@ public class SpringDataMLService implements MLService {
 		Page<Product> product = this.getProductRepository().getHeaviestProduct(PageRequest.of(0,1));
 		
 		return product.getContent().get(0);
-		
 	}
 	
 
