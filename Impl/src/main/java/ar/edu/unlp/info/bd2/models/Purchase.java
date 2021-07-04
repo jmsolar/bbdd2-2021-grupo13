@@ -24,7 +24,7 @@ public class Purchase {
 	@OneToOne(fetch = FetchType.EAGER)
 	private ProductOnSale productOnSale;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User client;
 	
