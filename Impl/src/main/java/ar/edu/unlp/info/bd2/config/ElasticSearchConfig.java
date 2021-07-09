@@ -1,76 +1,50 @@
+package ar.edu.unlp.info.bd2.config;
+
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.*;
+import org.elasticsearch.index.mapper.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
 public class ElasticSearchConfig {
-
-    @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(
-                new String[] {"ar.edu.unlp.info.bd2.models"});
-        sessionFactory.setHibernateProperties(hibernateProperties());
-
-        return sessionFactory;
-    }
-
-    @Bean
-    public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/grupo" + this.getGroupNumber()+"?useSSL=false");
-        dataSource.setUsername("grupo13");
-        dataSource.setPassword("somosGrupo13");
-
-        return dataSource;
-    }
-
-    @Bean
-    public PlatformTransactionManager hibernateTransactionManager() {
-        HibernateTransactionManager transactionManager
-                = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
-        return transactionManager;
-    }
-
-    private final Properties hibernateProperties() {
-        Properties hibernateProperties = new Properties();
-
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");
-        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
-        hibernateProperties.setProperty("hibernate.show_sql", "true");
-        hibernateProperties.setProperty("hibernate.format_sql", "true");
-        hibernateProperties.setProperty("hibernate.use_sql_comments", "false");
-        
-
-        return hibernateProperties;
-    }
-
-    private Integer getGroupNumber() {
-        return 13;
-    }
+	private static final String HOST = "localhost";
+	private static final int PORT_ONE = 9200;
+	private static final int PORT_TWO = 9201;
+	private static final String SCHEME = "http";
+	private static RestHighLevelClient restHighLevelClient;
+	private static ObjectMapper objectMapper;
 	
+	private static synchronized RestHighLevelClient makeConnection() {
+		if(restHighLevelClient == null) {
+	        restHighLevelClient = new RestHighLevelClient(
+	                RestClient.builder(
+	                        new HttpHost(HOST, PORT_ONE, SCHEME),
+	                        new HttpHost(HOST, PORT_TWO, SCHEME)));
+	    }
+	 
+	    return restHighLevelClient;
+	}
 	
+	private static synchronized void closeConnection() throws IOException {
+	    restHighLevelClient.close();
+	    restHighLevelClient = null;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*
+	 * @Bean public LocalSessionFactoryBean sessionFactory() {
+	 * LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+	 * sessionFactory.setDataSource(dataSource()); sessionFactory.setPackagesToScan(
+	 * new String[] {"ar.edu.unlp.info.bd2.models"});
+	 * sessionFactory.setHibernateProperties(hibernateProperties());
+	 * 
+	 * return sessionFactory; }
+	 */
 }

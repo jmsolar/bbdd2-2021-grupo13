@@ -1,9 +1,12 @@
 package ar.edu.unlp.info.bd2.config;
 
 import ar.edu.unlp.info.bd2.repositories.MLRepository;
+import ar.edu.unlp.info.bd2.repositories.elasticSearch.ESRepository;
+import ar.edu.unlp.info.bd2.services.ESService;
 import ar.edu.unlp.info.bd2.services.MLService;
 import ar.edu.unlp.info.bd2.services.MLStatisticsService;
 import ar.edu.unlp.info.bd2.services.SpringDataMLService;
+import ar.edu.unlp.info.bd2.services.impl.ESServiceImpl;
 import ar.edu.unlp.info.bd2.services.impl.MLServiceImpl;
 
 import org.springframework.context.annotation.Bean;
@@ -21,5 +24,11 @@ public class AppConfig {
     @Bean
     public MLRepository createRepository() {
         return new MLRepository();
+    }
+    
+    @Bean
+    public ESService createESService() {
+    	ESRepository repositoryES = new ESRepository();
+    	return new ESServiceImpl(repositoryES);
     }
 }
