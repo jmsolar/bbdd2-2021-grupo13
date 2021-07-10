@@ -9,6 +9,7 @@ import ar.edu.unlp.info.bd2.services.SpringDataMLService;
 import ar.edu.unlp.info.bd2.services.impl.ESServiceImpl;
 import ar.edu.unlp.info.bd2.services.impl.MLServiceImpl;
 
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,7 +29,13 @@ public class AppConfig {
     
     @Bean
     public ESService createESService() {
-    	ESRepository repositoryES = new ESRepository();
+    	ESRepository repositoryES = this.createESRepository();
     	return new ESServiceImpl(repositoryES);
+    }
+    
+    @Bean
+    public ESRepository createESRepository(){
+        RestHighLevelClient client = ElasticSearchConfig.openConnection();
+        return new ESRepository(client);
     }
 }

@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import ar.edu.unlp.info.bd2.exceptions.MLException;
 import ar.edu.unlp.info.bd2.models.Category;
 import ar.edu.unlp.info.bd2.models.CreditCardPayment;
@@ -19,6 +21,7 @@ import ar.edu.unlp.info.bd2.repositories.elasticSearch.ESRepository;
 import ar.edu.unlp.info.bd2.services.*;
 
 public class ESServiceImpl implements ESService {
+	@Autowired
 	public ESRepository repository;
 	
 	public ESRepository getRepository() {
