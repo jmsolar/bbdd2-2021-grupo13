@@ -1,5 +1,6 @@
 package com.grupo13.elasticSearch.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,24 @@ public class CategoryService {
 	public CategoryService(CategoryRepository categoryRepository) {
 		this.categoryRepository = categoryRepository;
 	}
-	
+
+	/**
+	 * @param name nombre de la categoria a buscar
+	 * @return
+	 */
 	public Optional<Category> findByName(String name) {
 		return this.categoryRepository.findByName(name);
 	}
-	
-	public void create(Category category) {
+
+	/**
+	 * Crea y devuelve el id de la categoria creada
+	 * @param category contiene la informacion para la creacion
+	 * @return el id de la categoria creada
+	 */
+	public Long create(Category category) {
 		if (!this.findByName(category.getName()).isPresent())
 			this.categoryRepository.save(category);
+
+		return this.findByName(category.getName()).get().getId();
 	}
 }

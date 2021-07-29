@@ -1,0 +1,46 @@
+package com.grupo13.elasticSearch.models;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+@Document(indexName = "paymentMethods", createIndex = true)
+public abstract class PaymentMethod {
+    @Id
+    @Field(type = FieldType.Auto)
+    private Long Id;
+
+    @Field(type = FieldType.Text)
+    private String name;
+
+    private Purchase purchase;
+
+    public Purchase getPurchase() {
+        return purchase;
+    }
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+    public void setId(Long id) {
+        this.Id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public PaymentMethod() {}
+
+    public PaymentMethod(String name) {
+        this.name = name;
+    }
+}

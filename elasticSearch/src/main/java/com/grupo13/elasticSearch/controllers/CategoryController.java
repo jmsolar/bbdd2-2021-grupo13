@@ -1,5 +1,6 @@
 package com.grupo13.elasticSearch.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class CategoryController {
 	}
 	
 	@PostMapping
-	public void create(@RequestBody Category category) {
-		this.categoryService.create(category);
+	public Long create(@RequestBody Category category) {
+		return this.categoryService.create(category);
 	}
 	
 	@GetMapping("/{name}")
