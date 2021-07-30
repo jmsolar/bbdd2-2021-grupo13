@@ -1,8 +1,8 @@
 package com.grupo13.elasticSearch.services;
 
-import java.util.List;
 import java.util.Optional;
 
+import com.grupo13.elasticSearch.exception.ElasticSearchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import com.grupo13.elasticSearch.repositories.CategoryRepository;
 
 @Service
 public class CategoryService {
-	private CategoryRepository categoryRepository;
+	private final CategoryRepository categoryRepository;
 	
 	@Autowired
 	public CategoryService(CategoryRepository categoryRepository) {
@@ -20,21 +20,26 @@ public class CategoryService {
 
 	/**
 	 * @param name nombre de la categoria a buscar
-	 * @return
+	 * @return Category
 	 */
 	public Optional<Category> findByName(String name) {
 		return this.categoryRepository.findByName(name);
 	}
 
 	/**
-	 * Crea y devuelve el id de la categoria creada
-	 * @param category contiene la informacion para la creacion
-	 * @return el id de la categoria creada
+	 * Crea y devuelve una nueva Catogoria
+	 * @param name nombre del producto a ser creado
+	 * @return la categoria creada
+	 * @throws ElasticSearchException
 	 */
-	public Long create(Category category) {
-		if (!this.findByName(category.getName()).isPresent())
-			this.categoryRepository.save(category);
+	public Category create(String name) throws ElasticSearchException {
+		ElasticSearchException ex = new ElasticSearchException();
 
-		return this.findByName(category.getName()).get().getId();
+		if (this.findByName(name).isPresent()) ex.constraintViolation();
+
+		Category newCategory = new Category(name);
+		this.categoryRepository.save(newCategory);
+
+		return newCategory;
 	}
 }

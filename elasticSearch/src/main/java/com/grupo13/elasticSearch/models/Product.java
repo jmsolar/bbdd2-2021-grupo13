@@ -5,6 +5,9 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Document(indexName = "products", createIndex = true)
 public class Product {
     @Id
@@ -19,9 +22,9 @@ public class Product {
 
 
     private Category category;
-    /*
+
     private Set<ProductOnSale> productOnSale;
-*/
+
     public String getName() {
         return name;
     }
@@ -48,22 +51,20 @@ public class Product {
     public void setId(Long id) {
         this.id = id;
     }
-    /*
+
     public Set<ProductOnSale> getProductsOnSale() {
         return productOnSale;
     }
     public void setProductsOnSale(Set<ProductOnSale> productOnSale) {
         this.productOnSale = productOnSale;
     }
-*/
+
     public Product() {}
 
     public Product(String name, Float weight, Category category) {
         this.name = name;
         this.weight = weight;
         this.category = category;
-        /*
         this.productOnSale = new HashSet<ProductOnSale>();
-        */
     }
 }

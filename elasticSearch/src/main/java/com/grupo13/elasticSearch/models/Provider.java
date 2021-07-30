@@ -5,6 +5,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.util.Set;
+
 @Document(indexName = "categories", createIndex = true)
 public class Provider {
     @Id
@@ -16,9 +18,9 @@ public class Provider {
 
     @Field(type = FieldType.Long)
     private Long cuit;
-/*
+
     private Set<ProductOnSale> productsOnSale;
-*/
+
     public String getName() {
         return name;
     }
@@ -42,14 +44,14 @@ public class Provider {
     public void setId(Long id) {
         this.Id = id;
     }
-/*
+
     public Set<ProductOnSale> getProductsOnSale() {
         return productsOnSale;
     }
     public void setProductsOnSale(Set<ProductOnSale> productsOnSale) {
         this.productsOnSale = productsOnSale;
     }
-*/
+
     public Provider() {}
 
     public Provider(String name, Long cuit) {
