@@ -9,7 +9,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 public abstract class PaymentMethod {
     @Id
     @Field(type = FieldType.Auto)
-    private Long Id;
+    private String Id;
 
     @Field(type = FieldType.Text)
     private String name;
@@ -23,10 +23,10 @@ public abstract class PaymentMethod {
         this.purchase = purchase;
     }
 
-    public Long getId() {
+    public String getId() {
         return Id;
     }
-    public void setId(Long id) {
+    public void setId(String id) {
         this.Id = id;
     }
 

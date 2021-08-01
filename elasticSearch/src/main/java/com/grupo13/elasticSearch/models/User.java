@@ -6,12 +6,13 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
+import java.util.Set;
 
 @Document(indexName = "users", createIndex = true)
 public class User {
     @Id
     @Field(type = FieldType.Auto)
-    private Long Id;
+    private String Id;
 
     @Field(type = FieldType.Text)
     private String fullname;
@@ -25,9 +26,8 @@ public class User {
     @Field(type = FieldType.Date)
     private Date dayOfBirth;
 
-/*
     private Set<Purchase> purchases;
-*/
+
     public String getFullname() {
         return fullname;
     }
@@ -52,20 +52,20 @@ public class User {
     public void setDayOfBirth(Date dayOfBirth) {
         this.dayOfBirth = dayOfBirth;
     }
-    public Long getId() {
+    public String getId() {
         return Id;
     }
-    public void setId(Long id) {
+    public void setId(String id) {
         this.Id = id;
     }
-/*
+
     public Set<Purchase> getPurchases() {
         return purchases;
     }
     public void setPurchases(Set<Purchase> purchases) {
         this.purchases = purchases;
     }
-*/
+
     public User() {}
 
     public User (String email, String fullname, String password, Date dayOfBirth) {

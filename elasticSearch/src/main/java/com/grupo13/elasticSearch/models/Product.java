@@ -12,7 +12,7 @@ import java.util.Set;
 public class Product {
     @Id
     @Field(type = FieldType.Auto)
-    public Long id;
+    public String id;
 
     @Field(type = FieldType.Text)
     private String name;
@@ -45,10 +45,10 @@ public class Product {
         this.category = category;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

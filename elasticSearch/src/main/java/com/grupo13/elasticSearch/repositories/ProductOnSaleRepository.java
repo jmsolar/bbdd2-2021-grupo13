@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ProductOnSaleRepository extends ElasticsearchRepository<ProductOnSale, Long> {
+public interface ProductOnSaleRepository extends ElasticsearchRepository<ProductOnSale, String> {
     Optional<ProductOnSale> findById(Long id);
 
-    ProductOnSale findLastById(Long providerId, Long productId);
+    ProductOnSale findLastById(String providerId, String productId);
 }

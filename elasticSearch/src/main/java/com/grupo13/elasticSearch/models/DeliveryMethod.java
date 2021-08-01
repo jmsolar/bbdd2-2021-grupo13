@@ -9,7 +9,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 public class DeliveryMethod {
     @Id
     @Field(type = FieldType.Auto)
-    private Long Id;
+    private String Id;
 
     @Field(type = FieldType.Text)
     private String name;
@@ -56,10 +56,10 @@ public class DeliveryMethod {
     public void setEndWeight(Float endWeight) {
         this.endWeight = endWeight;
     }
-    public Long getId() {
+    public String getId() {
         return Id;
     }
-    public void setId(Long id) {
+    public void setId(String id) {
         this.Id = id;
     }
     public Purchase getPurchase() {

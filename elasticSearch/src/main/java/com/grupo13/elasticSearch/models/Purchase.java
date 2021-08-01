@@ -11,7 +11,7 @@ import java.util.Date;
 public class Purchase {
     @Id
     @Field(type = FieldType.Auto)
-    private Long Id;
+    private String Id;
 
     private ProductOnSale productOnSale;
 
@@ -95,11 +95,11 @@ public class Purchase {
     public void setDateOfPurchase(Date dateOfPurchase) {
         this.dateOfPurchase = dateOfPurchase;
     }
-    public Long getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.Id = id;
     }
 

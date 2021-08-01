@@ -11,7 +11,7 @@ import java.util.Set;
 public class Provider {
     @Id
     @Field(type = FieldType.Auto)
-    private Long Id;
+    private String Id;
 
     @Field(type = FieldType.Text)
     private String name;
@@ -37,11 +37,11 @@ public class Provider {
         this.cuit = cuit;
     }
 
-    public Long getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.Id = id;
     }
 
