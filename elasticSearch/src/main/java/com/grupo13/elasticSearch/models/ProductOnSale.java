@@ -7,7 +7,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
-@Document(indexName = "productsOnSale", createIndex = true)
+@Document(indexName = "products_on_sale", createIndex = true)
 public class ProductOnSale {
     @Id
     @Field(type = FieldType.Auto)

@@ -1,10 +1,12 @@
 package com.grupo13.elasticSearch.models;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
+@Document(indexName = "credit_card_payments", createIndex = true)
 public class CreditCardPayment extends PaymentMethod {
     @Field(type = FieldType.Text)
     public String brand;

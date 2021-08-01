@@ -7,7 +7,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Set;
 
-@Document(indexName = "categories", createIndex = true)
+@Document(indexName = "providers", createIndex = true)
 public class Provider {
     @Id
     @Field(type = FieldType.Auto)

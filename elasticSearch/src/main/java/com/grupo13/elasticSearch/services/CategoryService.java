@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.grupo13.elasticSearch.models.Category;
 import com.grupo13.elasticSearch.repositories.CategoryRepository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class CategoryService {
-	private final CategoryRepository categoryRepository;
+	private CategoryRepository categoryRepository;
 	
 	@Autowired
 	public CategoryService(CategoryRepository categoryRepository) {
@@ -22,8 +23,12 @@ public class CategoryService {
 	 * @param name nombre de la categoria a buscar
 	 * @return Category
 	 */
+
 	public Optional<Category> findByName(String name) {
-		return this.categoryRepository.findByName(name);
+		Category category = this.categoryRepository.findByName(name);
+		Optional<Category> opt = Optional.ofNullable(category);
+
+		return opt;
 	}
 
 	/**
@@ -32,7 +37,7 @@ public class CategoryService {
 	 * @return la categoria creada
 	 * @throws ElasticSearchException
 	 */
-	public Category create(String name) throws ElasticSearchException {
+	public Category create(@PathVariable String name) throws ElasticSearchException {
 		ElasticSearchException ex = new ElasticSearchException();
 
 		if (this.findByName(name).isPresent()) ex.constraintViolation();

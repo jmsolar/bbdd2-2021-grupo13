@@ -25,7 +25,7 @@ public class ElasticSearchConfiguration extends AbstractElasticsearchConfigurati
 	
 	@Value("${elasticSearch.socketTimeout}")
 	public Duration socketTimeOut;
-		
+
 	@Override
 	@Bean
 	public RestHighLevelClient elasticsearchClient() {
@@ -37,17 +37,4 @@ public class ElasticSearchConfiguration extends AbstractElasticsearchConfigurati
 
 		return RestClients.create(clientConfiguration).rest();
 	}
-/*
-	
-	@Bean
-	@Override
-	public RestHighLevelClient elasticsearchClient() {
-		final ClientConfiguration clientConfiguration = ClientConfiguration
-				.builder()
-				.connectedTo(this.elasticSearchUrl).build();
-		return RestClients
-				.create(clientConfiguration)
-				.rest();
-	}
-	*/
 }

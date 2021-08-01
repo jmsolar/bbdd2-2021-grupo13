@@ -5,7 +5,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "paymentMethods", createIndex = true)
+@Document(indexName = "payment_methods", createIndex = true)
 public abstract class PaymentMethod {
     @Id
     @Field(type = FieldType.Auto)

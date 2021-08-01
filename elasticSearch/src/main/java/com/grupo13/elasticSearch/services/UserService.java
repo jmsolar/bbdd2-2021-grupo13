@@ -5,13 +5,13 @@ import com.grupo13.elasticSearch.models.User;
 import com.grupo13.elasticSearch.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 import java.util.Optional;
 
 @Service
 public class UserService {
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -36,7 +36,7 @@ public class UserService {
      * @return el usuario creado
      * @throws ElasticSearchException
      */
-    public User create(@PathVariable String email, @PathVariable String fullname, @PathVariable String password, @PathVariable Date dayOfBirth) throws ElasticSearchException {
+    public User create(String email, String fullname, String password, Date dayOfBirth) throws ElasticSearchException {
         ElasticSearchException ex = new ElasticSearchException();
 
         if (this.findByEmail(email).isPresent()) ex.constraintViolation();

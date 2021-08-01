@@ -1,8 +1,10 @@
 package com.grupo13.elasticSearch.models;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+@Document(indexName = "on_delivery_payments", createIndex = true)
 public class OnDeliveryPayment extends PaymentMethod {
     @Field(type = FieldType.Float)
     public Float promisedAmount;
