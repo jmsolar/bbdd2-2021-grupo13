@@ -22,16 +22,8 @@ public class ElasticSearchApplication {
 		SpringApplication.run(ElasticSearchApplication.class, args);
 	}
 
-	@Autowired
-	public boolean createIndexes(RestHighLevelClient restHighLevelClient) throws ElasticsearchException {
-		/*
-		 * Mejorar proceso de eliminacion de indices
-		 * */
-		boolean status = false;
+	private boolean deleteIndexes(RestHighLevelClient restHighLevelClient) {
 		try {
-			/*
-			* PASO 1: Elimino los indices si existieran
-			* */
 			DeleteIndexRequest categoryIndex = new DeleteIndexRequest("categories");
 			DeleteIndexRequest creditCardPaymentIndex = new DeleteIndexRequest("credit_card_payments");
 			DeleteIndexRequest deliveryMethodIndex = new DeleteIndexRequest("delivery_methods");
@@ -51,10 +43,15 @@ public class ElasticSearchApplication {
 			restHighLevelClient.indices().delete(providerIndex, RequestOptions.DEFAULT);
 			restHighLevelClient.indices().delete(purchaseIndex, RequestOptions.DEFAULT);
 			restHighLevelClient.indices().delete(userIndex, RequestOptions.DEFAULT);
+			return true;
+		}
+		catch (ElasticsearchException | IOException exception) {
+			return false;
+		}
+	}
 
-			/*
-			 * PASO 2: Genero los indices
-			 * */
+	private boolean createIndexes(RestHighLevelClient restHighLevelClient) {
+		try {
 			CreateIndexRequest newCategoryIndex = new CreateIndexRequest("categories");
 			CreateIndexRequest newCreditCardPaymentIndex = new CreateIndexRequest("credit_card_payments");
 			CreateIndexRequest newDeliveryMethodIndex = new CreateIndexRequest("delivery_methods");
@@ -110,9 +107,28 @@ public class ElasticSearchApplication {
 
 			restHighLevelClient.indices().create(newUserIndex, RequestOptions.DEFAULT);
 
-			status = true;
-		} catch (ElasticsearchException | IOException exception) {
+			return true;
 		}
+		catch (ElasticsearchException | IOException exception) {
+			return false;
+		}
+	}
+
+	@Autowired
+	public boolean resetIndexes(RestHighLevelClient restHighLevelClient) throws ElasticsearchException {
+		/*
+		 * Mejorar proceso de eliminacion de indices
+		 * */
+		boolean status = false;
+		/*
+		* PASO 1: Elimino los indices si existieran
+		* */
+		status = this.deleteIndexes(restHighLevelClient);
+
+		/*
+		* PASO 2: Genero los indices
+		* */
+		status = this.createIndexes(restHighLevelClient);
 
 		return status;
 	}
