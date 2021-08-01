@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.grupo13.elasticSearch.models.Category;
 import com.grupo13.elasticSearch.repositories.CategoryRepository;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class CategoryService {
@@ -37,7 +36,7 @@ public class CategoryService {
 	 * @return la categoria creada
 	 * @throws ElasticSearchException
 	 */
-	public Category create(@PathVariable String name) throws ElasticSearchException {
+	public Category create(String name) throws ElasticSearchException {
 		ElasticSearchException ex = new ElasticSearchException();
 
 		if (this.findByName(name).isPresent()) ex.constraintViolation();

@@ -26,7 +26,7 @@ public class ProductOnSaleService {
      * @param id del producto en venta a buscar
      * @return
      */
-    public Optional<ProductOnSale> findById(Long id) {
+    public Optional<ProductOnSale> findById(String id) {
         return this.productOnSaleRepository.findById(id);
     }
 

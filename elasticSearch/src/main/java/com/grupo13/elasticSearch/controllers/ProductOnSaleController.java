@@ -22,7 +22,7 @@ public class ProductOnSaleController {
     }
 
     @GetMapping("/{id}")
-    public Optional<ProductOnSale> findById(@PathVariable Long id) {
+    public Optional<ProductOnSale> findById(@PathVariable String id) {
         return this.productOnSaleService.findById(id);
     }
 
