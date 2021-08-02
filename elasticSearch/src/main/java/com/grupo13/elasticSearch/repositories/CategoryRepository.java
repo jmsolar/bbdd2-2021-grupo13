@@ -8,5 +8,4 @@ import com.grupo13.elasticSearch.models.Category;
 @Repository
 public interface CategoryRepository extends ElasticsearchRepository<Category, String> {
 	Category findByName(String name);
-
 }

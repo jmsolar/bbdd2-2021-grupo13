@@ -44,6 +44,7 @@ public class ProductOnSaleService {
     public ProductOnSale create(Product product, Provider provider, Float price, Date initialDate) throws ElasticSearchException {
         ElasticSearchException ex = new ElasticSearchException();
 
+        /*
         ProductOnSale prodOnSale = this.productOnSaleRepository.findLastById(provider.getId(), product.getId());
         if (prodOnSale != null && prodOnSale.getInitialDate().after(initialDate)) ex.priceValidity();
 
@@ -54,9 +55,9 @@ public class ProductOnSaleService {
             prodOnSale.setFinalDate(cal.getTime());
             this.productOnSaleRepository.save(prodOnSale);
         }
-
+*/
         ProductOnSale newProductOnSale = new ProductOnSale(product, provider, price, initialDate);
-        product.getProductsOnSale().add(newProductOnSale);
+        //product.getProductsOnSale().add(newProductOnSale);
         this.productOnSaleRepository.save(newProductOnSale);
 
         return newProductOnSale;

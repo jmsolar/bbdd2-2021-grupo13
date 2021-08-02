@@ -20,7 +20,6 @@ public class Product {
     @Field(type = FieldType.Float)
     private Float weight;
 
-
     private Category category;
 
     private Set<ProductOnSale> productOnSale;

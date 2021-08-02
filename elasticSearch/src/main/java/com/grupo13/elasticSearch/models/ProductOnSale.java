@@ -13,8 +13,10 @@ public class ProductOnSale {
     @Field(type = FieldType.Auto)
     private String Id;
 
+    @Field(type = FieldType.Nested, includeInParent = true)
     private Product product;
 
+    @Field(type = FieldType.Nested, includeInParent = true)
     private Provider provider;
 
     @Field(type = FieldType.Float)
@@ -25,7 +27,6 @@ public class ProductOnSale {
 
     @Field(type = FieldType.Date)
     private Date finalDate;
-
 
     public Product getProduct() {
         return product;
