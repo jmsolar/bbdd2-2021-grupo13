@@ -5,7 +5,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "delivery_methods", createIndex = true)
+@Document(indexName = "bd2")
 public class DeliveryMethod {
     @Id
     @Field(type = FieldType.Auto)

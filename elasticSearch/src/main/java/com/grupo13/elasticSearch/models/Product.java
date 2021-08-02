@@ -8,7 +8,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.util.HashSet;
 import java.util.Set;
 
-@Document(indexName = "products", createIndex = true)
+@Document(indexName = "bd2")
 public class Product {
     @Id
     @Field(type = FieldType.Auto)

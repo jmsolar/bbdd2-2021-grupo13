@@ -6,7 +6,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
-@Document(indexName = "credit_card_payments", createIndex = true)
+@Document(indexName = "bd2")
 public class CreditCardPayment extends PaymentMethod {
     @Field(type = FieldType.Text)
     public String brand;
