@@ -14,16 +14,16 @@ public class User {
     @Field(type = FieldType.Auto)
     private String Id;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, name = "fullname")
     private String fullname;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, name = "email")
     private String email;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, name = "password")
     private String password;
 
-    @Field(type = FieldType.Date)
+    @Field(type = FieldType.Date, name = "dateOfBirth")
     private Date dayOfBirth;
 
     private Set<Purchase> purchases;

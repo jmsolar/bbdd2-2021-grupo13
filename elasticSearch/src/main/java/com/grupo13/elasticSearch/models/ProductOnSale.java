@@ -17,13 +17,13 @@ public class ProductOnSale {
 
     private Provider provider;
 
-    @Field(type = FieldType.Float)
+    @Field(type = FieldType.Float, name = "price")
     private Float price;
 
-    @Field(type = FieldType.Date)
+    @Field(type = FieldType.Date, name = "initialDate")
     private Date initialDate;
 
-    @Field(type = FieldType.Date)
+    @Field(type = FieldType.Date, name = "finalDate")
     private Date finalDate;
 
 

@@ -11,7 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/ondeliverypayment")
 public class OnDeliveryPaymentController {
-    private OnDeliveryPaymentService onDeliveryPaymentService;
+    private final OnDeliveryPaymentService onDeliveryPaymentService;
 
     @Autowired
     public OnDeliveryPaymentController(OnDeliveryPaymentService onDeliveryPaymentService) {
@@ -24,7 +24,7 @@ public class OnDeliveryPaymentController {
     }
 
     @PostMapping
-    public OnDeliveryPayment create(@PathVariable String name, @PathVariable Float promisedAmount) throws ElasticSearchException {
-        return this.onDeliveryPaymentService.create(name, promisedAmount);
+    public OnDeliveryPayment create(@RequestBody final OnDeliveryPayment onDeliveryPayment) throws ElasticSearchException {
+        return this.onDeliveryPaymentService.create(onDeliveryPayment.getName());
     }
 }

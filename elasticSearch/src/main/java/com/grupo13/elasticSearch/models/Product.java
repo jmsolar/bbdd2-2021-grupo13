@@ -14,12 +14,11 @@ public class Product {
     @Field(type = FieldType.Auto)
     public String id;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, name = "name")
     private String name;
 
-    @Field(type = FieldType.Float)
+    @Field(type = FieldType.Float, name = "weight")
     private Float weight;
-
 
     private Category category;
 

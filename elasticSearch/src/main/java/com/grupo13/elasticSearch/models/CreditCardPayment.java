@@ -8,19 +8,19 @@ import java.util.Date;
 
 @Document(indexName = "credit_card_payments", createIndex = true)
 public class CreditCardPayment extends PaymentMethod {
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, name = "brand")
     public String brand;
 
-    @Field(type = FieldType.Long)
+    @Field(type = FieldType.Long, name = "number")
     public Long number;
 
-    @Field(type = FieldType.Date)
+    @Field(type = FieldType.Date, name = "expiry")
     public Date expiry;
 
-    @Field(type = FieldType.Integer)
+    @Field(type = FieldType.Integer, name = "cvv")
     public Integer cvv;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, name = "owner")
     public String owner;
 
     public String getBrand() {

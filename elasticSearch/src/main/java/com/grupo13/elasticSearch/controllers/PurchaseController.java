@@ -12,7 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/purchase")
 public class PurchaseController {
-    private PurchaseService purchaseService;
+    private final PurchaseService purchaseService;
 
     @Autowired
     public PurchaseController(PurchaseService purchaseService) {
@@ -22,9 +22,10 @@ public class PurchaseController {
     @GetMapping("/{id}")
     public Optional<Purchase> findById(@PathVariable Long id) { return this.purchaseService.findById(id); }
 
+    // purchase.get
     @PostMapping
-    public Purchase create(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,
-                           PaymentMethod paymentMethod, String address, Float coordX, Float coordY, Date dateOfPurchase) throws ElasticSearchException {
-        return this.purchaseService.create(productOnSale, quantity, client, deliveryMethod, paymentMethod, address, coordX, coordY, dateOfPurchase);
+    public Purchase create(@RequestBody final Purchase purchase, ProductOnSale productOnSale, User client, DeliveryMethod deliveryMethod,
+                           PaymentMethod paymentMethod) throws ElasticSearchException {
+        return this.purchaseService.create(purchase.getId());
     }
 }

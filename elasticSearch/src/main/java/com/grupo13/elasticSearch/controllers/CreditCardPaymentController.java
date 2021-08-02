@@ -12,7 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/creditcardpayment")
 public class CreditCardPaymentController {
-    private CreditCardPaymentService creditCardPaymentService;
+    private final CreditCardPaymentService creditCardPaymentService;
 
     @Autowired
     public CreditCardPaymentController(CreditCardPaymentService creditCardPaymentService) {
@@ -24,8 +24,9 @@ public class CreditCardPaymentController {
         return this.creditCardPaymentService.findByName(name);
     }
 
+    // Se pide el number de creditCard?
     @PostMapping
-    public CreditCardPayment create(@PathVariable String name, @PathVariable String brand, @PathVariable Long number, @PathVariable Date expiry, @PathVariable Integer cvv, @PathVariable String owner) throws ElasticSearchException {
-        return this.creditCardPaymentService.create(name, brand, number, expiry, cvv, owner);
+    public CreditCardPayment create(@RequestBody final CreditCardPayment creditCardPayment) throws ElasticSearchException {
+        return this.creditCardPaymentService.create(creditCardPayment.getNumber());
     }
 }

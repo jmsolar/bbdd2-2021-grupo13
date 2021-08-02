@@ -11,16 +11,16 @@ public class DeliveryMethod {
     @Field(type = FieldType.Auto)
     private String Id;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, name = "name")
     private String name;
 
-    @Field(type = FieldType.Float)
+    @Field(type = FieldType.Float, name = "cost")
     private Float cost;
 
-    @Field(type = FieldType.Float)
+    @Field(type = FieldType.Float, name = "startWeight")
     private Float startWeight;
 
-    @Field(type = FieldType.Float)
+    @Field(type = FieldType.Float, name = "endWeight")
     private Float endWeight;
 
     private Purchase purchase;

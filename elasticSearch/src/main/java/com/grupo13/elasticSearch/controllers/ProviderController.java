@@ -11,7 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/provider")
 public class ProviderController {
-    private ProviderService providerService;
+    private final ProviderService providerService;
 
     @Autowired
     public ProviderController(ProviderService providerService) {
@@ -24,7 +24,7 @@ public class ProviderController {
     }
 
     @PostMapping
-    public Provider create(@PathVariable String name, @PathVariable Long cuit) throws ElasticSearchException {
-        return this.providerService.create(name, cuit);
+    public Provider create(@RequestBody final Provider provider) throws ElasticSearchException {
+        return this.providerService.create(provider.getCuit());
     }
 }

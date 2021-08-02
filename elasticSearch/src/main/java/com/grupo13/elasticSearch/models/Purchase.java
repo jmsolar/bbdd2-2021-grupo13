@@ -21,22 +21,22 @@ public class Purchase {
 
     private PaymentMethod paymentMethod;
 
-    @Field(type = FieldType.Integer)
+    @Field(type = FieldType.Integer, name = "quantity")
     private Integer quantity;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, name = "address")
     private String address;
 
-    @Field(type = FieldType.Float)
+    @Field(type = FieldType.Float, name = "coordX")
     private Float coordX;
 
-    @Field(type = FieldType.Float)
+    @Field(type = FieldType.Float, name = "coordY")
     private Float coordY;
 
-    @Field(type = FieldType.Float)
+    @Field(type = FieldType.Float, name = "amount")
     private Float amount;
 
-    @Field(type = FieldType.Date)
+    @Field(type = FieldType.Date, name = "dateOfPurchase")
     private Date dateOfPurchase;
 
     public ProductOnSale getProductOnSale() {

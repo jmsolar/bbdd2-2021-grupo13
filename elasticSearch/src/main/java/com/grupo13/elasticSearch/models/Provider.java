@@ -13,10 +13,10 @@ public class Provider {
     @Field(type = FieldType.Auto)
     private String Id;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, name = "name")
     private String name;
 
-    @Field(type = FieldType.Long)
+    @Field(type = FieldType.Long, name = "cuit")
     private Long cuit;
 
     private Set<ProductOnSale> productsOnSale;

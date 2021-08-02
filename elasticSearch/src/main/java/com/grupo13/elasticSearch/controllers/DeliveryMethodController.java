@@ -11,7 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/deliverymethod")
 public class DeliveryMethodController {
-    private DeliveryMethodService deliveryMethodService;
+    private final DeliveryMethodService deliveryMethodService;
 
     @Autowired
     public DeliveryMethodController(DeliveryMethodService deliveryMethodService) {
@@ -24,7 +24,7 @@ public class DeliveryMethodController {
     }
 
     @PostMapping
-    public DeliveryMethod create(@PathVariable String name, @PathVariable Float cost, @PathVariable Float startWeight, @PathVariable Float endWeight) throws ElasticSearchException {
-        return this.deliveryMethodService.create(name, cost, startWeight, endWeight);
+    public DeliveryMethod create(@RequestBody final DeliveryMethod deliveryMethod) throws ElasticSearchException {
+        return this.deliveryMethodService.create(deliveryMethod.getName());
     }
 }

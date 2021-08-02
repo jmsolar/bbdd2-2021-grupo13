@@ -11,7 +11,7 @@ public abstract class PaymentMethod {
     @Field(type = FieldType.Auto)
     private String Id;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, name = "name")
     private String name;
 
     private Purchase purchase;

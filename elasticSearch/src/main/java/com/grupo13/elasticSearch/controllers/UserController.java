@@ -12,7 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@PathVariable String email, @PathVariable String fullname, @PathVariable String password, @PathVariable Date dayOfBirth) throws ElasticSearchException {
-        return this.userService.create(email, fullname, password, dayOfBirth);
+    public User create(@RequestBody final User user) throws ElasticSearchException {
+        return this.userService.create(user.getEmail());
     }
 }

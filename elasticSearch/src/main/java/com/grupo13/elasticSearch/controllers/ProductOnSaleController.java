@@ -14,7 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/productonsale")
 public class ProductOnSaleController {
-    private ProductOnSaleService productOnSaleService;
+    private final ProductOnSaleService productOnSaleService;
 
     @Autowired
     public ProductOnSaleController(ProductOnSaleService productOnSaleService) {
@@ -26,8 +26,9 @@ public class ProductOnSaleController {
         return this.productOnSaleService.findById(id);
     }
 
+    // Se pide un price de productOnSale?
     @PostMapping
-    public ProductOnSale create(Product product, Provider provider, Float price, Date initialDate) throws ElasticSearchException {
-        return this.productOnSaleService.create(product, provider, price, initialDate);
+    public ProductOnSale create(@RequestBody final ProductOnSale productOnSale) throws ElasticSearchException {
+        return this.productOnSaleService.create(productOnSale.getId());
     }
 }

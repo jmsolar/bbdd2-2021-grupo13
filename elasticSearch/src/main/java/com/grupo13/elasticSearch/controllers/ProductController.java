@@ -12,7 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
-    private ProductService productService;
+    private final ProductService productService;
 
     @Autowired
     public ProductController(ProductService productService) {
@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product create(String name, Float weight, Category category) throws ElasticSearchException {
-        return this.productService.create(name, weight, category);
+    public Product create(@RequestBody final Product product) throws ElasticSearchException {
+        return this.productService.create(product.getName());
     }
 }
