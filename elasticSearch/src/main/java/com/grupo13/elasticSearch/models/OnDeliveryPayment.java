@@ -4,7 +4,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "on_delivery_payments", createIndex = true)
+@Document(indexName = "bd2")
 public class OnDeliveryPayment extends PaymentMethod {
     
     @Field(type = FieldType.Float, name= "promisedAmount")

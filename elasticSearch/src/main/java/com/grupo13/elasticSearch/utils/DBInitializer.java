@@ -260,7 +260,6 @@ public class DBInitializer {
         Product product080 = productService.create("Secador De Pelo 22000w", 1560.0F, artefactosparaelCabello);
         Product product081 = productService.create("Revloni Secador", 3138.0F, artefactosparaelCabello);
         Product product082 = productService.create("Planchita de pelo BaByliss PRO Nano Titanium 2091 BABNT2091T azul 220V", 1607.0F, artefactosparaelCabello);
-        /*
         ProductOnSale pos001 = productOnSaleService.create(product026, provider001, 94542.0F, sdf.parse("22/11/2019"));
         ProductOnSale pos002 = productOnSaleService.create(product026, provider001, 112504.0F, sdf.parse("8/3/2020"));
         ProductOnSale pos003 = productOnSaleService.create(product041, provider004, 94431.0F, sdf.parse("9/9/2019"));
@@ -467,7 +466,6 @@ public class DBInitializer {
         ProductOnSale pos204 = productOnSaleService.create(product056, provider007, 26892.0F, sdf.parse("5/3/2020"));
         ProductOnSale pos205 = productOnSaleService.create(product056, provider007, 35766.0F, sdf.parse("15/6/2020"));
         ProductOnSale pos206 = productOnSaleService.create(product056, provider007, 42203.0F, sdf.parse("23/8/2020"));
-        */
         DeliveryMethod delivery01 = deliveryMethodService.create("Moto menos 1kg", 250.0F, 0.01F, 999F);
         DeliveryMethod delivery02 = deliveryMethodService.create("Moto menos 1kg - inmediato", 450.0F, 0.01F, 999F);
         DeliveryMethod delivery03 = deliveryMethodService.create("Courier hasta 5kg", 400.0F, 0.01F, 5000F);
@@ -477,15 +475,10 @@ public class DBInitializer {
         DeliveryMethod delivery07 = deliveryMethodService.create("Flete - inmediato", 1000.0F, 5000.0F, 500000.0F);
         DeliveryMethod delivery08 = deliveryMethodService.create("Flete - prioritario", 2000.0F, 5000.0F, 500000.0F);
         CreditCardPayment purchase001_payment = creditCardPaymentService.create("Visa Paula Gallardo", "Visa", 184566595212L, sdf.parse("13/3/2025"), 11, "Paula Gallardo");
-        /*
         purchaseService.create(pos049, 2, user010, delivery05, purchase001_payment, "Calle 52 Nº1638", -34.910215F, -57.959533F, sdf.parse("1/3/2020"));
-        */
         OnDeliveryPayment purchase002_payment = onDeliveryPaymentService.create("Pago Efectivo pos063", 568660.0F);
-        /*
         purchaseService.create(pos063, 9, user032, delivery06, purchase002_payment, "Calle 38 Nº1897", -34.933699F, -57.924093F, sdf.parse("20/3/2021"));
-        */
         OnDeliveryPayment purchase003_payment = onDeliveryPaymentService.create("Pago Efectivo pos001", 380200.0F);
-        /*
         purchaseService.create(pos001, 4, user008, delivery08, purchase003_payment, "Calle 56 Nº422", -34.926278F, -57.989829F, sdf.parse("28/2/2020"));
         OnDeliveryPayment purchase004_payment = onDeliveryPaymentService.create("Pago Efectivo pos100", 76914.0F);
         purchaseService.create(pos100, 7, user071, delivery08, purchase004_payment, "Calle 33 Nº147", -34.915006F, -57.968775F, sdf.parse("19/4/2019"));
@@ -805,7 +798,5 @@ public class DBInitializer {
         purchaseService.create(pos003, 8, user043, delivery03, purchase161_payment, "Calle 62 Nº1188", -34.91924F, -57.93294F, sdf.parse("7/11/2019"));
         CreditCardPayment purchase162_payment = creditCardPaymentService.create("Amex Eduardo Romero", "Amex", 490267075827L, sdf.parse("2/5/2022"), 918, "Eduardo Romero");
         purchaseService.create(pos100, 9, user089, delivery07, purchase162_payment, "Calle 46 Nº1150", -34.90718F, -57.945807F, sdf.parse("27/4/2019"));
-        */
-
     }
 }

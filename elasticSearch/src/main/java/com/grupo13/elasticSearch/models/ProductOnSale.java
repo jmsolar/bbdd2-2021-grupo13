@@ -7,14 +7,16 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
-@Document(indexName = "products_on_sale", createIndex = true)
+@Document(indexName = "bd2")
 public class ProductOnSale {
     @Id
     @Field(type = FieldType.Auto)
     private String Id;
 
+    @Field(type = FieldType.Nested, includeInParent = true)
     private Product product;
 
+    @Field(type = FieldType.Nested, includeInParent = true)
     private Provider provider;
 
     @Field(type = FieldType.Float, name = "price")
@@ -25,7 +27,6 @@ public class ProductOnSale {
 
     @Field(type = FieldType.Date, name = "finalDate")
     private Date finalDate;
-
 
     public Product getProduct() {
         return product;
