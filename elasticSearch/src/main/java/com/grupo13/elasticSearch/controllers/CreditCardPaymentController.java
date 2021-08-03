@@ -6,7 +6,6 @@ import com.grupo13.elasticSearch.services.CreditCardPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -24,9 +23,8 @@ public class CreditCardPaymentController {
         return this.creditCardPaymentService.findByName(name);
     }
 
-    // Se pide el number de creditCard?
     @PostMapping
     public CreditCardPayment create(@RequestBody final CreditCardPayment creditCardPayment) throws ElasticSearchException {
-        return this.creditCardPaymentService.create(creditCardPayment.getNumber());
+        return this.creditCardPaymentService.create(creditCardPayment.getName(), creditCardPayment.getBrand(), creditCardPayment.getNumber(), creditCardPayment.getExpiry(), creditCardPayment.getCvv(), creditCardPayment.getOwner());
     }
 }

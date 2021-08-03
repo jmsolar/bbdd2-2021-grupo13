@@ -25,6 +25,6 @@ public class DeliveryMethodController {
 
     @PostMapping
     public DeliveryMethod create(@RequestBody final DeliveryMethod deliveryMethod) throws ElasticSearchException {
-        return this.deliveryMethodService.create(deliveryMethod.getName());
+        return this.deliveryMethodService.create(deliveryMethod.getName(), deliveryMethod.getCost(), deliveryMethod.getStartWeight(), deliveryMethod.getEndWeight());
     }
 }

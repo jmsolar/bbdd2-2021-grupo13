@@ -23,7 +23,9 @@ public class ProviderService {
      * @return
      */
     public Optional<Provider> findByCuit(Long cuit) {
-        return this.providerRepository.findByCuit(cuit);
+        Provider provider = this.providerRepository.findByCuit(cuit);
+        Optional<Provider> opt = Optional.ofNullable(provider);
+        return opt;
     }
 
     /**

@@ -22,7 +22,9 @@ public class OnDeliveryPaymentService {
      * @return
      */
     public Optional<OnDeliveryPayment> findByName(String name) {
-        return this.onDeliveryPaymentRepository.findByName(name);
+        OnDeliveryPayment onDeliveryPayment = this.onDeliveryPaymentRepository.findByName(name);
+        Optional<OnDeliveryPayment> opt = Optional.ofNullable(onDeliveryPayment);
+        return opt;
     }
 
     /**

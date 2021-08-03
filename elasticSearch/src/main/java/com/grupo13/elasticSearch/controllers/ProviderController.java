@@ -20,11 +20,11 @@ public class ProviderController {
 
     @GetMapping("/{cuit}")
     public Optional<Provider> findByCuit(@PathVariable Long cuit) {
-        return  this.providerService.findByCuit(cuit);
+        return this.providerService.findByCuit(cuit);
     }
 
     @PostMapping
     public Provider create(@RequestBody final Provider provider) throws ElasticSearchException {
-        return this.providerService.create(provider.getCuit());
+        return this.providerService.create(provider.getName(), provider.getCuit());
     }
 }

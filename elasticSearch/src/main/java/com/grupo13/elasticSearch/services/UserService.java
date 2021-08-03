@@ -23,7 +23,9 @@ public class UserService {
      * @return
      */
     public Optional<User> findByEmail(String email) {
-        return this.userRepository.findByEmail(email);
+        User user = this.userRepository.findByEmail(email);
+        Optional<User> opt = Optional.ofNullable(user);
+        return opt;
     }
 
     /**

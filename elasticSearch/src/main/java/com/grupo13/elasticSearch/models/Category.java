@@ -12,7 +12,7 @@ public class Category {
 	@Field(type = FieldType.Auto)
 	private String Id;
 	
-	@Field(type = FieldType.Text, name = "name")
+	@Field(type = FieldType.Text)
 	private String name;
 	
 	public String getId() {

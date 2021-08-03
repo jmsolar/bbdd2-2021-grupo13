@@ -20,9 +20,9 @@ public class PurchaseService {
 
     /**
      * @param id el id de la compra
-     * @return Provider
+     * @return Purchase
      */
-    public Optional<Purchase> findById(Long id) {
+    public Optional<Purchase> findById(String id) {
         return this.purchaseRepository.findById(id);
     }
 

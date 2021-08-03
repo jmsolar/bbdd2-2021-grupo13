@@ -22,7 +22,9 @@ public class DeliveryMethodService {
      * @return
      */
     public Optional<DeliveryMethod> findByName(String name) {
-        return this.deliveryMethodRepository.findByName(name);
+        DeliveryMethod deliveryMethod = this.deliveryMethodRepository.findByName(name);
+        Optional<DeliveryMethod> opt = Optional.ofNullable(deliveryMethod);
+        return opt;
     }
 
     /**

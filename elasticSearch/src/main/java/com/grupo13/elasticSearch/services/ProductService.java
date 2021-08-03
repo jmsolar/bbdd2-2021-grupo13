@@ -25,7 +25,9 @@ public class ProductService {
      */
     @GetMapping("/{name}")
     public Optional<Product> findByName(String name) {
-        return this.productRepository.findByName(name);
+        Product product = this.productRepository.findByName(name);
+        Optional<Product> opt = Optional.ofNullable(product);
+        return opt;
     }
 
     /**

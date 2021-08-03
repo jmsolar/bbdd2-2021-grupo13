@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PurchaseRepository extends ElasticsearchRepository<Purchase, Long> {
-    Optional<Purchase> findById(Long id);
+public interface PurchaseRepository extends ElasticsearchRepository<Purchase, String> {
+    Optional<Purchase> findById(String id);
 }

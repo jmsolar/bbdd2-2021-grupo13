@@ -20,12 +20,11 @@ public class PurchaseController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Purchase> findById(@PathVariable Long id) { return this.purchaseService.findById(id); }
+    public Optional<Purchase> findById(@PathVariable String id) { return this.purchaseService.findById(id); }
 
-    // purchase.get
     @PostMapping
-    public Purchase create(@RequestBody final Purchase purchase, ProductOnSale productOnSale, User client, DeliveryMethod deliveryMethod,
-                           PaymentMethod paymentMethod) throws ElasticSearchException {
-        return this.purchaseService.create(purchase.getId());
+    public Purchase create(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,
+                           PaymentMethod paymentMethod, String address, Float coordX, Float coordY, Date dateOfPurchase) throws ElasticSearchException {
+        return this.purchaseService.create(productOnSale, quantity, client, deliveryMethod, paymentMethod, address, coordX, coordY, dateOfPurchase);
     }
 }

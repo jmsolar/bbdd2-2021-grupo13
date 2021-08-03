@@ -23,7 +23,9 @@ public class CreditCardPaymentService {
      * @return
      */
     public Optional<CreditCardPayment> findByName(String name) {
-        return this.creditCardPaymentRepository.findByName(name);
+        CreditCardPayment creditCardPayment = this.creditCardPaymentRepository.findByName(name);
+        Optional<CreditCardPayment> opt = Optional.ofNullable(creditCardPayment);
+        return opt;
     }
 
     /**

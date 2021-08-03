@@ -25,6 +25,6 @@ public class OnDeliveryPaymentController {
 
     @PostMapping
     public OnDeliveryPayment create(@RequestBody final OnDeliveryPayment onDeliveryPayment) throws ElasticSearchException {
-        return this.onDeliveryPaymentService.create(onDeliveryPayment.getName());
+        return this.onDeliveryPaymentService.create(onDeliveryPayment.getName(), onDeliveryPayment.getPromisedAmount());
     }
 }
