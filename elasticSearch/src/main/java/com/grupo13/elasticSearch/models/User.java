@@ -1,5 +1,7 @@
 package com.grupo13.elasticSearch.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -8,11 +10,11 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.util.Date;
 import java.util.Set;
 
-@Document(indexName = "bd2")
+@Document(indexName = "users")
 public class User {
     @Id
     @Field(type = FieldType.Auto)
-    private String Id;
+    private String id;
 
     @Field(type = FieldType.Text, name = "fullname")
     private String fullname;
@@ -23,11 +25,12 @@ public class User {
     @Field(type = FieldType.Text, name = "password")
     private String password;
 
-    @Field(type = FieldType.Date, name = "dateOfBirth")
+    @Field(type = FieldType.Date, name = "dayOfBirth")
     private Date dayOfBirth;
-
+/*
+    @JsonProperty("purchases")
     private Set<Purchase> purchases;
-
+*/
     public String getFullname() {
         return fullname;
     }
@@ -53,22 +56,28 @@ public class User {
         this.dayOfBirth = dayOfBirth;
     }
     public String getId() {
-        return Id;
+        return id;
     }
     public void setId(String id) {
-        this.Id = id;
+        this.id = id;
     }
-
+/*
     public Set<Purchase> getPurchases() {
         return purchases;
     }
     public void setPurchases(Set<Purchase> purchases) {
         this.purchases = purchases;
     }
-
+*/
+    @JsonCreator
     public User() {}
 
-    public User (String email, String fullname, String password, Date dayOfBirth) {
+    @JsonCreator
+    public User (
+            @JsonProperty("email") String email,
+            @JsonProperty("fullname") String fullname,
+            @JsonProperty("password") String password,
+            @JsonProperty("dayOfBirth") Date dayOfBirth) {
         this.email = email;
         this.fullname = fullname;
         this.password = password;

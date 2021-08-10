@@ -1,5 +1,7 @@
 package com.grupo13.elasticSearch.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -7,18 +9,22 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
-@Document(indexName = "bd2")
+@Document(indexName = "purchases")
 public class Purchase {
     @Id
     @Field(type = FieldType.Auto)
-    private String Id;
+    private String id;
 
+    //@Field(type = FieldType.Nested, includeInParent = true)
     private ProductOnSale productOnSale;
 
+    //@Field(type = FieldType.Nested, includeInParent = true)
     private User client;
 
+    //@Field(type = FieldType.Nested, includeInParent = true)
     private DeliveryMethod deliveryMethod;
 
+    //@Field(type = FieldType.Nested, includeInParent = true)
     private PaymentMethod paymentMethod;
 
     @Field(type = FieldType.Integer, name = "quantity")
@@ -34,6 +40,7 @@ public class Purchase {
     private Float coordY;
 
     @Field(type = FieldType.Float, name = "amount")
+    @JsonProperty("amount")
     private Float amount;
 
     @Field(type = FieldType.Date, name = "dateOfPurchase")
@@ -65,12 +72,14 @@ public class Purchase {
     public void setDeliveryMethod(DeliveryMethod deliveryMethod) {
         this.deliveryMethod = deliveryMethod;
     }
+
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
+
     public String getAddress() {
         return address;
     }
@@ -96,11 +105,11 @@ public class Purchase {
         this.dateOfPurchase = dateOfPurchase;
     }
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public Float setAmount() {
@@ -115,10 +124,20 @@ public class Purchase {
         return amount;
     }
 
+    @JsonCreator
     public Purchase() {}
 
-    public Purchase(ProductOnSale productOnSale, Integer quantity, User client, DeliveryMethod deliveryMethod,
-                    PaymentMethod paymentMethod, String address, Float coordX, Float coordY, Date dateOfPurchase) {
+    @JsonCreator
+    public Purchase(
+            @JsonProperty("productOnSale")  ProductOnSale productOnSale,
+            @JsonProperty("quantity") Integer quantity,
+            @JsonProperty("client") User client,
+            @JsonProperty("deliveryMethod") DeliveryMethod deliveryMethod,
+            @JsonProperty("paymentMethod") PaymentMethod paymentMethod,
+            @JsonProperty("address") String address,
+            @JsonProperty("coordX") Float coordX,
+            @JsonProperty("coordY") Float coordY,
+            @JsonProperty("dateOfPurchase") Date dateOfPurchase) {
         this.productOnSale = productOnSale;
         this.quantity = quantity;
         this.client = client;

@@ -1,5 +1,7 @@
 package com.grupo13.elasticSearch.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -7,11 +9,11 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Set;
 
-@Document(indexName = "bd2")
+@Document(indexName = "providers")
 public class Provider {
     @Id
     @Field(type = FieldType.Auto)
-    private String Id;
+    private String id;
 
     @Field(type = FieldType.Text, name = "name")
     private String name;
@@ -38,11 +40,11 @@ public class Provider {
     }
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public Set<ProductOnSale> getProductsOnSale() {
@@ -52,9 +54,13 @@ public class Provider {
         this.productsOnSale = productsOnSale;
     }
 
+    @JsonCreator
     public Provider() {}
 
-    public Provider(String name, Long cuit) {
+    @JsonCreator
+    public Provider(
+            @JsonProperty("name") String name,
+            @JsonProperty("cuit") Long cuit) {
         this.name = name;
         this.cuit = cuit;
     }

@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface PurchaseRepository extends ElasticsearchRepository<Purchase, String> {
     Optional<Purchase> findById(String id);
+
 }

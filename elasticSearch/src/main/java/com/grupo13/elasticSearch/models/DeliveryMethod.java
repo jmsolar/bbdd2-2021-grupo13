@@ -1,15 +1,17 @@
 package com.grupo13.elasticSearch.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "bd2")
+@Document(indexName = "delivery_methods")
 public class DeliveryMethod {
     @Id
     @Field(type = FieldType.Auto)
-    private String Id;
+    private String id;
 
     @Field(type = FieldType.Text, name = "name")
     private String name;
@@ -57,10 +59,10 @@ public class DeliveryMethod {
         this.endWeight = endWeight;
     }
     public String getId() {
-        return Id;
+        return id;
     }
     public void setId(String id) {
-        this.Id = id;
+        this.id = id;
     }
     public Purchase getPurchase() {
         return purchase;
@@ -70,9 +72,15 @@ public class DeliveryMethod {
         this.purchase = purchase;
     }
 
+    @JsonCreator
     public DeliveryMethod() {}
 
-    public DeliveryMethod(String name, Float cost, Float startWeight, Float endWeight) {
+    @JsonCreator
+    public DeliveryMethod(
+            @JsonProperty("name") String name,
+            @JsonProperty("cost") Float cost,
+            @JsonProperty("startWeight") Float startWeight,
+            @JsonProperty("endWeight") Float endWeight) {
         this.name = name;
         this.cost = cost;
         this.startWeight = startWeight;

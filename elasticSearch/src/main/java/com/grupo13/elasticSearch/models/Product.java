@@ -1,14 +1,16 @@
 package com.grupo13.elasticSearch.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-@Document(indexName = "bd2")
+@Document(indexName = "products")
 public class Product {
     @Id
     @Field(type = FieldType.Auto)
@@ -20,9 +22,11 @@ public class Product {
     @Field(type = FieldType.Float, name = "weight")
     private Float weight;
 
+    @JsonProperty("category")
     private Category category;
 
-    private Set<ProductOnSale> productOnSale;
+    @JsonProperty("productOnSale")
+    private List<ProductOnSale> productOnSale;
 
     public String getName() {
         return name;
@@ -51,19 +55,24 @@ public class Product {
         this.id = id;
     }
 
-    public Set<ProductOnSale> getProductsOnSale() {
+    public List<ProductOnSale> getProductOnSale() {
         return productOnSale;
     }
-    public void setProductsOnSale(Set<ProductOnSale> productOnSale) {
+    public void setProductOnSale(List<ProductOnSale> productOnSale) {
         this.productOnSale = productOnSale;
     }
 
+    @JsonCreator
     public Product() {}
 
-    public Product(String name, Float weight, Category category) {
+    @JsonCreator
+    public Product(
+            @JsonProperty("name") String name,
+            @JsonProperty("weight") Float weight,
+            @JsonProperty("category") Category category) {
         this.name = name;
         this.weight = weight;
         this.category = category;
-        this.productOnSale = new HashSet<ProductOnSale>();
+        this.productOnSale = new ArrayList<ProductOnSale>();
     }
 }

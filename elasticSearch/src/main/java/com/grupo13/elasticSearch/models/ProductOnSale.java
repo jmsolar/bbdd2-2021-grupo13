@@ -1,5 +1,7 @@
 package com.grupo13.elasticSearch.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -7,16 +9,16 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
-@Document(indexName = "bd2")
+@Document(indexName = "products_on_sale")
 public class ProductOnSale {
     @Id
     @Field(type = FieldType.Auto)
-    private String Id;
+    private String id;
 
-    @Field(type = FieldType.Nested, includeInParent = true)
+    //@Field(type = FieldType.Nested, includeInParent = true)
     private Product product;
 
-    @Field(type = FieldType.Nested, includeInParent = true)
+    //@Field(type = FieldType.Nested, includeInParent = true)
     private Provider provider;
 
     @Field(type = FieldType.Float, name = "price")
@@ -54,10 +56,10 @@ public class ProductOnSale {
         this.initialDate = initialDate;
     }
     public String getId() {
-        return Id;
+        return id;
     }
     public void setId(String id) {
-        this.Id = id;
+        this.id = id;
     }
     public Date getFinalDate() {
         return finalDate;
@@ -66,11 +68,15 @@ public class ProductOnSale {
         this.finalDate = finalDate;
     }
 
-    public ProductOnSale() {
+    @JsonCreator
+    public ProductOnSale() {}
 
-    }
-
-    public ProductOnSale(Product product, Provider provider, Float price, Date initialDate) {
+    @JsonCreator
+    public ProductOnSale(
+            @JsonProperty("product") Product product,
+            @JsonProperty("provider") Provider provider,
+            @JsonProperty("price") Float price,
+            @JsonProperty("initialDate") Date initialDate) {
         this.product = product;
         this.provider = provider;
         this.price = price;
