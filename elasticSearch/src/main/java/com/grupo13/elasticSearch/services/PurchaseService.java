@@ -1,48 +1,29 @@
 package com.grupo13.elasticSearch.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grupo13.elasticSearch.exception.ElasticSearchException;
 import com.grupo13.elasticSearch.models.*;
 import com.grupo13.elasticSearch.repositories.PurchaseRepository;
-import org.apache.tomcat.util.json.JSONParser;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.core.SearchOperations;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.grupo13.elasticSearch.utils.Mapper.MapPurchase;
-import static com.grupo13.elasticSearch.utils.Mapper.MapUser;
 
 @Service
 public class PurchaseService {
     private PurchaseRepository purchaseRepository;
 
     @Autowired
-    private SearchOperations elasticSearchRestTemplate;
-    @Autowired
     private RestHighLevelClient client;
-@Autowired
-private ObjectMapper objectMapper;
 
     @Autowired
     public PurchaseService(PurchaseRepository purchaseRepository) {
@@ -87,7 +68,6 @@ private ObjectMapper objectMapper;
      * @param username
      * @return Una lista con todas las compras realizadas por el usuario con username <code>username</code>
      */
-
     public List<Purchase> getAllPurchasesMadeByUser(String username) {
         List<Purchase> purchasesOfUser = new ArrayList<Purchase>();
 
@@ -117,7 +97,6 @@ private ObjectMapper objectMapper;
      * @param endDate
      * @return una lista con las compras realizadas entre dos fechas
      */
-
     public List<Purchase> getPurchasesInPeriod(Date startDate, Date endDate) throws ParseException {
         List<Purchase> purchasesInPeriod = new ArrayList<Purchase>();
 
@@ -142,6 +121,10 @@ private ObjectMapper objectMapper;
         return purchasesInPeriod;
     }
 
+    /**
+     * @param amount
+     * @return una lista de los usuarios que han gastando más de <code>amount</code> en alguna compra en la plataforma
+     */
     public List<User> getUsersSpendingMoreThanInPurchase(Float amount) {
         List<User> usersThatSpendMore = new ArrayList<User>();
 
@@ -165,5 +148,34 @@ private ObjectMapper objectMapper;
         catch (Exception e) {}
 
         return usersThatSpendMore;
+    }
+
+    /**
+     * @param cuit
+     * @return una lista de las compras realizadas por el proveedor con cuit <code>cuit</code>
+     */
+    public List<Purchase> getPurchasesForProvider(String cuit) {
+        var cuitValue = Long.parseLong(cuit);
+        List<Purchase> purchasesForProvider = new ArrayList<Purchase>();
+
+        try {
+            SearchRequest searchRequest = new SearchRequest("purchases");
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+            MatchPhraseQueryBuilder matchPhraseQueryBuilder = new MatchPhraseQueryBuilder("productOnSale.provider.cuit", cuitValue);
+            searchSourceBuilder.query(matchPhraseQueryBuilder);
+            searchRequest.source(searchSourceBuilder);
+
+            SearchResponse res1 = client.search(searchRequest, RequestOptions.DEFAULT);
+            SearchHit[] hits = res1.getHits().getHits();
+
+            for(SearchHit hit : hits){
+                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+                Purchase purchase = MapPurchase(sourceAsMap);
+                purchasesForProvider.add(purchase);
+            }
+        }
+        catch (Exception e) {}
+
+        return purchasesForProvider;
     }
 }

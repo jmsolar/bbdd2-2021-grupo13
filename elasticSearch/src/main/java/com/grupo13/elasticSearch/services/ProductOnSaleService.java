@@ -4,18 +4,33 @@ import com.grupo13.elasticSearch.exception.ElasticSearchException;
 import com.grupo13.elasticSearch.models.Product;
 import com.grupo13.elasticSearch.models.ProductOnSale;
 import com.grupo13.elasticSearch.models.Provider;
+import com.grupo13.elasticSearch.models.Purchase;
 import com.grupo13.elasticSearch.repositories.ProductOnSaleRepository;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.BucketsAggregator;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Optional;
+import java.util.*;
+
+import static com.grupo13.elasticSearch.utils.Mapper.MapPurchase;
 
 @Service
 public class ProductOnSaleService {
     private ProductOnSaleRepository productOnSaleRepository;
+
+    @Autowired
+    private RestHighLevelClient client;
 
     @Autowired
     public ProductOnSaleService(ProductOnSaleRepository productOnSaleRepository) {
@@ -61,5 +76,34 @@ public class ProductOnSaleService {
         this.productOnSaleRepository.save(newProductOnSale);
 
         return newProductOnSale;
+    }
+
+    /**
+     * @param day
+     * @return una lista los productOnSale vendidos en un <code>day</code>
+     */
+    public List<ProductOnSale> getSoldProductsOn(Date day) {
+        List<ProductOnSale> soldProduct = new ArrayList<ProductOnSale>();
+
+        try {
+            SearchRequest searchRequest = new SearchRequest("purchases");
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+            MatchPhraseQueryBuilder matchPhraseQueryBuilder = new MatchPhraseQueryBuilder("dateOfPurchase", day);
+
+            searchSourceBuilder.query(matchPhraseQueryBuilder);
+            searchRequest.source(searchSourceBuilder);
+
+            SearchResponse res1 = client.search(searchRequest, RequestOptions.DEFAULT);
+            SearchHit[] hits = res1.getHits().getHits();
+
+            for(SearchHit hit : hits){
+                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+                Purchase purchase = MapPurchase(sourceAsMap);
+                soldProduct.add(purchase.getProductOnSale());
+            }
+        }
+        catch (Exception e) {}
+
+        return soldProduct;
     }
 }

@@ -4,8 +4,11 @@ import com.grupo13.elasticSearch.exception.ElasticSearchException;
 import com.grupo13.elasticSearch.models.ProductOnSale;
 import com.grupo13.elasticSearch.services.ProductOnSaleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,5 +29,10 @@ public class ProductOnSaleController {
     @PostMapping
     public ProductOnSale create(@RequestBody final ProductOnSale productOnSale) throws ElasticSearchException {
         return this.productOnSaleService.create(productOnSale.getProduct(), productOnSale.getProvider(), productOnSale.getPrice(), productOnSale.getInitialDate());
+    }
+
+    @GetMapping("/getSoldProductsOn/{day}")
+    public List<ProductOnSale> getSoldProductsOn(@PathVariable("day") @DateTimeFormat(pattern="yyyy-MM-dd") Date day) {
+        return this.productOnSaleService.getSoldProductsOn(day);
     }
 }

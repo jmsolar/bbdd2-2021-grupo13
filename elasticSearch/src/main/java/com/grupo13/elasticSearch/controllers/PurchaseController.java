@@ -4,12 +4,10 @@ import com.grupo13.elasticSearch.exception.ElasticSearchException;
 import com.grupo13.elasticSearch.models.*;
 import com.grupo13.elasticSearch.services.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -47,5 +45,10 @@ public class PurchaseController {
     @GetMapping("/getUsersSpendingMoreThanInPurchase/{amount}")
     public List<User> getUsersSpendingMoreThanInPurchase(@PathVariable Float amount) {
         return this.purchaseService.getUsersSpendingMoreThanInPurchase(amount);
+    }
+
+    @GetMapping("/getPurchasesForProvider/{cuit}")
+    public List<Purchase> getPurchasesForProvider(@PathVariable String cuit) {
+        return this.purchaseService.getPurchasesForProvider(cuit);
     }
 }
