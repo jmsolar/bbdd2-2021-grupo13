@@ -36,8 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.grupo13.elasticSearch.utils.Mapper.MapProductOnSale;
-import static com.grupo13.elasticSearch.utils.Mapper.MapPurchase;
+import static com.grupo13.elasticSearch.utils.Mapper.*;
 
 @Service
 public class ProductService {
@@ -85,9 +84,20 @@ public class ProductService {
      * @return el producto más pesado
      */
     public Product getHeaviestProduct() {
-        Page<Product> product = this.productRepository.getHeaviestProduct(PageRequest.of(0,1));
+        Product product = new Product();
+        try {
+            SearchRequest searchRequest = new SearchRequest("products");
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().size(1);
+            searchRequest.source(searchSourceBuilder.sort(new FieldSortBuilder("weight").order(SortOrder.DESC)));
 
-        return product.getContent().get(0);
+            SearchResponse res1 = client.search(searchRequest, RequestOptions.DEFAULT);
+            var mapProduct = res1.getHits().getAt(0).getSourceAsMap();
+
+            product = MapProduct(mapProduct);
+        }
+        catch (Exception e) {}
+
+        return product;
     }
 
     /**
