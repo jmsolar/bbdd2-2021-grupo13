@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,5 +33,10 @@ public class ProductController {
     @GetMapping("/getHeaviestProduct")
     public Product getHeaviestProduct() {
         return this.productService.getHeaviestProduct();
+    }
+
+    @GetMapping("/getTop3MoreExpensiveProducts")
+    public List<Product> getTop3MoreExpensiveProducts() {
+        return this.productService.getTop3MoreExpensiveProducts();
     }
 }

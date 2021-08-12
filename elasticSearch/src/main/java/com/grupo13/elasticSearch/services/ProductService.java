@@ -3,13 +3,27 @@ package com.grupo13.elasticSearch.services;
 import com.grupo13.elasticSearch.exception.ElasticSearchException;
 import com.grupo13.elasticSearch.models.Category;
 import com.grupo13.elasticSearch.models.Product;
+import com.grupo13.elasticSearch.models.ProductOnSale;
 import com.grupo13.elasticSearch.models.Purchase;
 import com.grupo13.elasticSearch.repositories.ProductRepository;
+import org.apache.lucene.index.Terms;
 import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.BucketOrder;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregator;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,12 +31,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import static com.grupo13.elasticSearch.utils.Mapper.MapProductOnSale;
+import static com.grupo13.elasticSearch.utils.Mapper.MapPurchase;
 
 @Service
 public class ProductService {
     private ProductRepository productRepository;
+
+    @Autowired
+    private RestHighLevelClient client;
 
     @Autowired
     public ProductService(ProductRepository productRepository) {
@@ -66,5 +88,31 @@ public class ProductService {
         Page<Product> product = this.productRepository.getHeaviestProduct(PageRequest.of(0,1));
 
         return product.getContent().get(0);
+    }
+
+    /**
+     * @return una lista con los 3 productos diferentes más costosos
+     */
+    public List<Product> getTop3MoreExpensiveProducts() {
+        List<Product> top3MoreExpensive = new ArrayList<Product>();
+
+        try {
+            SearchRequest searchRequest = new SearchRequest("products_on_sale");
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().size(3);
+            searchSourceBuilder.aggregation(AggregationBuilders.terms("products").field("price"));
+            searchRequest.source(searchSourceBuilder.sort(new FieldSortBuilder("price").order(SortOrder.DESC)));
+
+            SearchResponse res1 = client.search(searchRequest, RequestOptions.DEFAULT);
+            SearchHit[] hits  = res1.getHits().getHits();
+
+            for(SearchHit hit : hits){
+                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+                ProductOnSale productOnSale = MapProductOnSale(sourceAsMap);
+                top3MoreExpensive.add(productOnSale.getProduct());
+            }
+        }
+        catch (Exception e) {}
+
+        return top3MoreExpensive;
     }
 }

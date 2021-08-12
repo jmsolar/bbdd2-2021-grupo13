@@ -89,8 +89,7 @@ public class ProductOnSaleService {
             SearchRequest searchRequest = new SearchRequest("purchases");
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
             MatchPhraseQueryBuilder matchPhraseQueryBuilder = new MatchPhraseQueryBuilder("dateOfPurchase", day);
-
-            searchSourceBuilder.query(matchPhraseQueryBuilder);
+            searchSourceBuilder.query(matchPhraseQueryBuilder).aggregations();
             searchRequest.source(searchSourceBuilder);
 
             SearchResponse res1 = client.search(searchRequest, RequestOptions.DEFAULT);
