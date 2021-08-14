@@ -15,10 +15,10 @@ public class ProductOnSale {
     @Field(type = FieldType.Auto)
     private String id;
 
-    //@Field(type = FieldType.Nested, includeInParent = true)
+    @Field(type = FieldType.Nested, includeInParent = true)
     private Product product;
 
-    //@Field(type = FieldType.Nested, includeInParent = true)
+    @Field(type = FieldType.Nested, includeInParent = true)
     private Provider provider;
 
     @Field(type = FieldType.Float, name = "price")

@@ -27,4 +27,10 @@ public class DeliveryMethodController {
     public DeliveryMethod create(@RequestBody final DeliveryMethod deliveryMethod) throws ElasticSearchException {
         return this.deliveryMethodService.create(deliveryMethod.getName(), deliveryMethod.getCost(), deliveryMethod.getStartWeight(), deliveryMethod.getEndWeight());
     }
+
+    @GetMapping("/getMostUsedDeliveryMethod")
+    public DeliveryMethod getMostUsedDeliveryMethod() {
+        return this.deliveryMethodService.getMostUsedDeliveryMethod();
+    }
+
 }

@@ -10,19 +10,16 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.BucketsAggregator;
+import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static com.grupo13.elasticSearch.utils.Mapper.MapProductOnSale;
 import static com.grupo13.elasticSearch.utils.Mapper.MapPurchase;
 
 @Service
@@ -59,11 +56,10 @@ public class ProductOnSaleService {
     public ProductOnSale create(Product product, Provider provider, Float price, Date initialDate) throws ElasticSearchException {
         ElasticSearchException ex = new ElasticSearchException();
 
-        /*
-        ProductOnSale prodOnSale = this.productOnSaleRepository.findLastById(provider.getId(), product.getId());
-        if (prodOnSale != null && prodOnSale.getInitialDate().after(initialDate)) ex.priceValidity();
+        /*ProductOnSale prodOnSale = this.findLastById(provider.getId(), product.getId());
+        if (prodOnSale.getId() != null && prodOnSale.getInitialDate().after(initialDate)) ex.priceValidity();
 
-        if (prodOnSale != null) {
+        if (prodOnSale.getId() != null) {
             GregorianCalendar cal = new GregorianCalendar();
             cal.setTime(initialDate);
             cal.add(Calendar.DATE, -1);
@@ -72,10 +68,41 @@ public class ProductOnSaleService {
         }
 */
         ProductOnSale newProductOnSale = new ProductOnSale(product, provider, price, initialDate);
-        //product.getProductsOnSale().add(newProductOnSale);
+        //product.getProductOnSale().add(newProductOnSale);
         this.productOnSaleRepository.save(newProductOnSale);
 
         return newProductOnSale;
+    }
+
+    /**
+     * @param providerId del proveedor
+     * @param productId del producto
+     * @return ProductOnSale
+     */
+    private ProductOnSale findLastById(String providerId, String productId) {
+        ProductOnSale productOnSale = new ProductOnSale();
+
+        try {
+            SearchRequest searchRequest = new SearchRequest("products_on_sale");
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+            QueryBuilder query = QueryBuilders.boolQuery()
+                    .must(QueryBuilders.termQuery("provider.id.keyword", providerId))
+                    .must(QueryBuilders.termQuery("product.id.keyword", productId))
+                    .filter(QueryBuilders.existsQuery("finalDate"));
+            searchSourceBuilder.query(query);
+            searchRequest.source(searchSourceBuilder);
+
+            SearchResponse res1 = client.search(searchRequest, RequestOptions.DEFAULT);
+            SearchHit[] hits = res1.getHits().getHits();
+
+            for(SearchHit hit : hits){
+                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+                productOnSale = MapProductOnSale(sourceAsMap);
+            }
+        }
+        catch (Exception e) {}
+
+        return productOnSale;
     }
 
     /**
@@ -89,7 +116,7 @@ public class ProductOnSaleService {
             SearchRequest searchRequest = new SearchRequest("purchases");
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
             MatchPhraseQueryBuilder matchPhraseQueryBuilder = new MatchPhraseQueryBuilder("dateOfPurchase", day);
-            searchSourceBuilder.query(matchPhraseQueryBuilder).aggregations();
+            searchSourceBuilder.query(matchPhraseQueryBuilder);
             searchRequest.source(searchSourceBuilder);
 
             SearchResponse res1 = client.search(searchRequest, RequestOptions.DEFAULT);

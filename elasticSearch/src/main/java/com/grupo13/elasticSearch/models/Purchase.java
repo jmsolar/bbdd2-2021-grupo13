@@ -15,16 +15,16 @@ public class Purchase {
     @Field(type = FieldType.Auto)
     private String id;
 
-    //@Field(type = FieldType.Nested, includeInParent = true)
+    @Field(type = FieldType.Nested, includeInParent = true)
     private ProductOnSale productOnSale;
 
-    //@Field(type = FieldType.Nested, includeInParent = true)
+    @Field(type = FieldType.Nested, includeInParent = true)
     private User client;
 
-    //@Field(type = FieldType.Nested, includeInParent = true)
+    @Field(type = FieldType.Nested, includeInParent = true)
     private DeliveryMethod deliveryMethod;
 
-    //@Field(type = FieldType.Nested, includeInParent = true)
+    @Field(type = FieldType.Nested, includeInParent = true)
     private PaymentMethod paymentMethod;
 
     @Field(type = FieldType.Integer, name = "quantity")

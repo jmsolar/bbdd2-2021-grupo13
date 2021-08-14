@@ -9,9 +9,4 @@ import java.util.Optional;
 @Repository
 public interface ProductOnSaleRepository extends ElasticsearchRepository<ProductOnSale, String> {
     Optional<ProductOnSale> findById(String Id);
-    /*
-    @Query("FROM ProductOnSale POS JOIN FETCH POS.provider PRO WHERE PRO.id = ?1 AND POS.finalDate IS NULL AND POS.product.id = ?2")
-    ProductOnSale findLastById(String providerId, String productId);
-
-     */
 }

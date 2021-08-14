@@ -28,4 +28,9 @@ public class CategoryController {
 	public Category create(@RequestBody final Category category) throws ElasticSearchException {
 		return this.categoryService.create(category.getName());
 	}
+
+	@GetMapping("/getCategoryWithLessProducts")
+	public Category getCategoryWithLessProducts() {
+		return this.categoryService.getCategoryWithLessProducts();
+	}
 }
