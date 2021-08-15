@@ -6,6 +6,7 @@ import com.grupo13.elasticSearch.services.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,5 +27,10 @@ public class ProviderController {
     @PostMapping
     public Provider create(@RequestBody final Provider provider) throws ElasticSearchException {
         return this.providerService.create(provider.getName(), provider.getCuit());
+    }
+
+    @GetMapping("/getTopNProvidersInPurchases/{n}")
+    public List<Provider> getTopNProvidersInPurchases(@PathVariable int n) {
+        return this.providerService.getTopNProvidersInPurchases(n);
     }
 }
