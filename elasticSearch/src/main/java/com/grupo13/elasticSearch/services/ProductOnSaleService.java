@@ -13,6 +13,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -115,6 +116,7 @@ public class ProductOnSaleService {
         try {
             SearchRequest searchRequest = new SearchRequest("purchases");
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+            searchSourceBuilder.aggregation(AggregationBuilders.terms("productsOnSale").field("productsOnSale.id.keyword"));
             MatchPhraseQueryBuilder matchPhraseQueryBuilder = new MatchPhraseQueryBuilder("dateOfPurchase", day);
             searchSourceBuilder.query(matchPhraseQueryBuilder);
             searchRequest.source(searchSourceBuilder);
@@ -125,7 +127,12 @@ public class ProductOnSaleService {
             for(SearchHit hit : hits){
                 Map<String, Object> sourceAsMap = hit.getSourceAsMap();
                 Purchase purchase = MapPurchase(sourceAsMap);
-                soldProduct.add(purchase.getProductOnSale());
+
+                var pos = soldProduct.stream().filter(sp -> purchase.getProductOnSale().getId().equals(sp.getId())).findAny().orElse(null);
+                if (pos == null) {
+                    soldProduct.add(purchase.getProductOnSale());
+                }
+
             }
         }
         catch (Exception e) {}
