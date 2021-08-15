@@ -9,6 +9,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -111,5 +112,33 @@ public class ProductService {
         catch (Exception e) {}
 
         return top3MoreExpensive;
+    }
+
+    /**
+     * @param category
+     * @return una lista con todos los productos de la categoría <code> category </code>
+     */
+    public List<Product> getProductForCategory (Category category) {
+        List<Product> productsByCategory = new ArrayList<Product>();
+
+        try {
+            SearchRequest searchRequest = new SearchRequest("products");
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+            MatchPhraseQueryBuilder matchPhraseQueryBuilder = new MatchPhraseQueryBuilder("category.name", category.getName());
+            searchSourceBuilder.query(matchPhraseQueryBuilder);
+            searchRequest.source(searchSourceBuilder);
+
+            SearchResponse res1 = client.search(searchRequest, RequestOptions.DEFAULT);
+            SearchHit[] hits  = res1.getHits().getHits();
+
+            for(SearchHit hit : hits){
+                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+                Product products = MapProduct(sourceAsMap);
+                productsByCategory.add(products);
+            }
+        }
+        catch (Exception e) {}
+
+        return productsByCategory;
     }
 }

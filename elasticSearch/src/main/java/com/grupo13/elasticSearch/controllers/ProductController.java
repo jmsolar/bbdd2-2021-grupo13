@@ -1,6 +1,7 @@
 package com.grupo13.elasticSearch.controllers;
 
 import com.grupo13.elasticSearch.exception.ElasticSearchException;
+import com.grupo13.elasticSearch.models.Category;
 import com.grupo13.elasticSearch.models.Product;
 import com.grupo13.elasticSearch.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,10 @@ public class ProductController {
     @GetMapping("/getTop3MoreExpensiveProducts")
     public List<Product> getTop3MoreExpensiveProducts() {
         return this.productService.getTop3MoreExpensiveProducts();
+    }
+
+    @GetMapping("/getProductForCategory")
+    public List<Product> getProductForCategory(@RequestBody Category category) {
+        return this.productService.getProductForCategory(category);
     }
 }
